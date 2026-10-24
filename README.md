@@ -2,9 +2,9 @@
 
 A personal start page in **one HTML file**. There's no server, build step, account or database. Open `index.html` in a browser and it works. Your changes are saved in the browser's `localStorage`.
 
-It comes with three pages of links already set up — **Productivity** (Gmail, Google Calendar, Google Drive, Dropbox, GitHub, ChatGPT, Claude, Gemini, DuckDuckGo, Maps, YouTube, LinkedIn, WhatsApp, Instagram, X, Reddit, Windy weather and more), **News** (general, tech, AI and engineering blogs) and **Finance** (news, tools, commentary, economists and a group of paid sources) — and shows CST and London clocks with the local weather on the right. You can change all of these defaults by editing the file. That makes it easy to hand out one prepared dashboard to a team or class.
+It comes with three pages of links already set up — **Productivity** (Gmail, Google Calendar, Google Drive, Dropbox, GitHub, ChatGPT, Claude, Gemini, DuckDuckGo, Maps, YouTube, LinkedIn, WhatsApp, Instagram, X, Reddit, Windy weather and more), **News** (world news, politics, sports, tech, AI and engineering blogs) and **Finance** (news from Reuters and AP to Bloomberg, the FT and The Economist, plus tools, commentary and economists) — with a **Stocks** card of 7-day charts for Apple, Alphabet and Amazon on the Finance page, and CST and London clocks with the local weather on the right. You can change all of these defaults by editing the file. That makes it easy to hand out one prepared dashboard to a team or class.
 
-![A tour of the dashboard: shortcuts, search, pages, the hourly and 7-day weather, renaming a page tab, the bookmark editor, the bookmarks view, tags, the Look studio and light mode](docs/demo.gif)
+![A tour of the dashboard: shortcuts, search, pages, the stocks card and its price chart, renaming a page tab, the hourly and 7-day weather, the bookmark editor, the bookmarks view, tags, the Look studio and light mode](docs/demo.gif)
 
 ## Quick start
 
@@ -20,7 +20,7 @@ You can also host it on any static host, such as GitHub Pages, Netlify or an int
 
 ![The Productivity page in dark mode, with the CST and London clocks on the right, each showing its weather beside the time](docs/screenshot.png)
 
-- **Top left:** the dashboard title (double-click to rename it) and the **page tabs**. Click a tab, or press `1`–`9`, to switch pages. Double-click a tab to rename it (`Enter` saves, `Esc` cancels). The `+` tab adds a page.
+- **Top left:** the **Chevron logo** (a single engaged Stargate chevron) and the **page tabs**. Hover over the logo for the dashboard's title, which is also the browser tab's name. Double-click the logo to rename it. Click a tab, or press the number in its small box (`1`–`9`), to switch pages. Double-click a tab to rename it (`Enter` saves, `Esc` cancels). The `+` tab adds a page.
 - **Top right:** the toolbar, then the **clocks**. Each clock shows the city's current weather at its top left, beside the time (e.g. `🌙 51°F  03:17`), with the city and date underneath. Click a clock for its hourly forecast, then switch to the 7-day forecast. The toolbar buttons are, from left to right:
 
   | Button | Does | Key |
@@ -121,6 +121,16 @@ These come with the file. Type a shortcut on the dashboard to open the link. You
 | News | [AP News](https://apnews.com/) | `ap` |
 | News | [BBC News](https://www.bbc.com/news) | `bbc` |
 | News | [The Guardian](https://www.theguardian.com/) | `gu` |
+| News | [Al Jazeera](https://www.aljazeera.com/) | `aj` |
+| News | [The Age](https://www.theage.com.au/) | `ta` |
+| News | [Politico Europe](https://www.politico.eu/) | `pe` |
+| News | [AP Politics](https://apnews.com/politics) | `us` |
+| Sports | [ESPN](https://www.espn.com/) | `es` |
+| Sports | [BBC Sport](https://www.bbc.com/sport) | `bs` |
+| Sports | [BBC Football](https://www.bbc.com/sport/football) | `bf` |
+| Sports | [FotMob](https://www.fotmob.com/) | `fm` |
+| Sports | [Tennis.com](https://www.tennis.com/) | `tn` |
+| Sports | [Formula 1](https://www.formula1.com/) | `f1` |
 | Tech News | [Hacker News](https://news.ycombinator.com/) | `hn` |
 | Tech News | [Ars Technica](https://arstechnica.com/) | `at` |
 | Tech News | [Crunchbase News](https://news.crunchbase.com/) | `cb` |
@@ -139,10 +149,17 @@ These come with the file. Type a shortcut on the dashboard to open the link. You
 
 ### Finance page
 
+The page starts with the **Stocks** card (AAPL, GOOGL, AMZN), then these links:
+
 | Card | Link | Shortcut |
 | --- | --- | --- |
 | Finance News | [Reuters Business](https://www.reuters.com/business/) | `rt` |
 | Finance News | [AP Business](https://apnews.com/business) | `ab` |
+| Finance News | [Bloomberg](https://www.bloomberg.com/) | `bl` |
+| Finance News | [Financial Times](https://www.ft.com/) | `ft` |
+| Finance News | [The Economist](https://www.economist.com/) | `ec` |
+| Finance News | [Wall Street Journal](https://www.wsj.com/) | `wsj` |
+| Finance News | [Barron's](https://www.barrons.com/) | `ba` |
 | Finance Tools | [Google Finance](https://www.google.com/finance/) | `gf` |
 | Finance Tools | [Yahoo Finance](https://finance.yahoo.com/) | `yf` |
 | Finance Tools | [TradingView](https://www.tradingview.com/) | `tv` |
@@ -158,10 +175,6 @@ These come with the file. Type a shortcut on the dashboard to open the link. You
 | Commentary & Data | [Of Dollars and Data](https://ofdollarsanddata.com/) | `od` |
 | Commentary & Data | [Apollo Daily Spark](https://www.apolloacademy.com/the-daily-spark/) | `sp` |
 | Commentary & Data | [Federal Reserve](https://www.federalreserve.gov/) | `fed` |
-| Paid | [Bloomberg](https://www.bloomberg.com/) | `bl` |
-| Paid | [Financial Times](https://www.ft.com/) | `ft` |
-| Paid | [Wall Street Journal](https://www.wsj.com/) | `wsj` |
-| Paid | [Barron's](https://www.barrons.com/) | `ba` |
 | Economists | [Marginal Revolution](https://marginalrevolution.com/) | `mr` |
 | Economists | [Apricitas Economics](https://www.apricitas.io/) | `ae` |
 | Economists | [Claudia Sahm](https://stayathomemacro.substack.com/) | `cs` |
@@ -215,8 +228,8 @@ It holds plain JSON with the pages, categories, bookmarks, clocks, search finder
 | Field | Meaning |
 | --- | --- |
 | `storageKey` | Name used for the saved data. Give each copy of the file its own key so dashboards on the same machine don't share data. Browsers often treat every local `file://` page as the same site. |
-| `title` | The text in the top-left corner and the browser tab. |
-| `pages[].categories[]` | Cards on a page. `type` can be `bookmarks` (the default), `notes`, `calendar`, `clock`, `weather` or `search`. Optional fields: `icon` (emoji), `color`, `span` (`1` or `2` columns), `sort` (`manual`, `name`, `count`, `opened`, `added`) and `content` (Markdown for notes). |
+| `title` | The browser tab's name, also shown when you hover over the logo. |
+| `pages[].categories[]` | Cards on a page. `type` can be `bookmarks` (the default), `notes`, `calendar`, `clock`, `weather`, `stocks` or `search`. Optional fields: `icon` (emoji), `color`, `span` (`1` or `2` columns), `sort` (`manual`, `name`, `count`, `opened`, `added`), `content` (Markdown for notes) and `symbols` (for stocks, e.g. `["NASDAQ:AAPL", "NYSE:KO"]`). |
 | `bookmarks[]` | `name`, `url`, plus optional `tags`, `shortcut`, `notes`, `pinned`, and `icon` (an emoji or image URL). |
 | `inbox[]` | Optional links that start in the Inbox. |
 | `clocks[]` | `label` and an IANA `timeZone`, such as `America/Chicago` (switches between CST and CDT on its own), `Europe/London` or `Asia/Singapore`. Add `lat`, `lon` and `unit` (`celsius` or `fahrenheit`) to show that city's weather. |
@@ -298,6 +311,7 @@ Add them from the + menu or with `Shift W`:
 - **Calendar:** a month view.
 - **Clocks:** larger copies of your header clocks.
 - **Weather:** current conditions and a 5-day forecast for each clock city.
+- **Stocks:** 7-day price charts for a list of symbols. See [Stocks](#stocks).
 - **Web search:** a search box that uses your default finder.
 
 ### Clocks and weather
@@ -308,6 +322,13 @@ Add them from the + menu or with `Shift W`:
 - Choose °C or °F per city, 12- or 24-hour time, and whether to show seconds and the date. Weather can be turned off entirely.
 - Weather comes from [Open-Meteo](https://open-meteo.com/), a free forecast service that needs no account or API key. It refreshes at most every 30 minutes and is cached in the browser. Forecast data is licensed [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/), credited as "Weather data by Open-Meteo.com".
 - **Use my location** relies on the browser's location feature. Browsers usually only allow it on `https://` pages, so it may not work when you open the file directly. Searching for your city always works.
+
+### Stocks
+
+- The **Finance** page starts with a **Stocks** card showing the last 7 days for Apple (`NASDAQ:AAPL`), Alphabet (`NASDAQ:GOOGL`) and Amazon (`NASDAQ:AMZN`). Add the card to any page from the + menu or `Shift W`.
+- **Click a stock** for a larger chart. Switch the period between **1W, 1M, 3M, 6M, 1Y and 5Y** with the buttons or `1`–`6`, and between stocks with the chips or `←` `→`.
+- Change the list with the card's menu (`⋯`) → **Edit symbols…**. Use TradingView symbols such as `NASDAQ:MSFT`, `NYSE:KO` or `LSE:VOD`; a plain ticker like `MSFT` usually works too.
+- Charts are free [TradingView](https://www.tradingview.com/) widgets, with no account or API key. The sites that offer stock prices without a key (such as Yahoo Finance and Nasdaq) don't let other pages read their data, so the charts are embedded instead. They follow light and dark mode, and prices may be delayed.
 
 ### Look studio (`Shift A`)
 
@@ -360,7 +381,7 @@ Browsers don't let a page read another site's status code. So this only tells yo
 ### Other
 
 - Changes made in one tab show up in your other open tabs right away.
-- Double-click the title to rename it. Double-click a page tab to rename the page in place, or right-click it for more page options.
+- Double-click the logo to rename the dashboard. Double-click a page tab to rename the page in place, or right-click it for more page options.
 
 ## Keyboard shortcuts
 
@@ -411,6 +432,8 @@ Press `?` or `F1` in the app for a searchable list. Shortcuts don't fire while y
 | Bookmarks view | `h` | Show bookmarks that need attention |
 | Weather | `h` / `d` | Hourly / 7-day forecast |
 | Weather | `←` / `→` | Previous / next city |
+| Stock chart | `1`–`6` | 1 week, 1, 3 or 6 months, 1 or 5 years |
+| Stock chart | `←` / `→` | Previous / next stock |
 | Inbox | `t` | Turn triage mode on or off |
 | Triage mode | `o` `k` `s` `d` `e` `p` | Open, keep, snooze a week, delete, edit, promote |
 | Triage mode | `←` / `→` | Previous / next link |
@@ -421,10 +444,11 @@ Press `?` or `F1` in the app for a searchable list. Shortcuts don't fire while y
 | --- | --- |
 | Right-click a link, card header or page tab | Options menu |
 | Drag a link or card | Reorder or move it; drop on a page tab to move it there |
-| Double-click the title | Rename the dashboard |
+| Double-click the logo | Rename the dashboard |
 | Double-click a page tab | Rename the page |
 | Double-click a notes widget | Edit the notes |
 | Click a clock | Hourly and 7-day weather for that city |
+| Click a stock | Price chart, from 1 week to 5 years |
 
 ## Settings reference
 
@@ -460,6 +484,7 @@ Everything stays in your browser's `localStorage`. The page makes only these net
 - **Site icons,** from the icon service you choose. Set **Icons → Letters only** to stop these.
 - **Weather,** from Open-Meteo, at most every 30 minutes. Only each clock city's coordinates are sent, never your own location unless you use **Use my location**. Turn weather off in **Settings → Clocks & weather** to stop these.
 - **City search,** to Open-Meteo's place search, only when you search for a city.
+- **Stock charts,** loaded from TradingView while a Stocks card or chart is on screen. Remove the Stocks card to stop these.
 - **Link checks,** and only when you ask for one.
 
 Clearing your browser's site data erases your dashboard, so use **Export backup** if you've customised a lot.

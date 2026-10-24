@@ -102,7 +102,24 @@
           "bookmarks": [
             { "name": "AP News", "url": "https://apnews.com/", "tags": ["news"], "shortcut": "ap" },
             { "name": "BBC News", "url": "https://www.bbc.com/news", "tags": ["news"], "shortcut": "bbc" },
-            { "name": "The Guardian", "url": "https://www.theguardian.com/", "tags": ["news"], "shortcut": "gu" }
+            { "name": "The Guardian", "url": "https://www.theguardian.com/", "tags": ["news"], "shortcut": "gu" },
+            { "name": "Al Jazeera", "url": "https://www.aljazeera.com/", "tags": ["news", "world"], "shortcut": "aj" },
+            { "name": "The Age", "url": "https://www.theage.com.au/", "tags": ["news", "australia"], "shortcut": "ta" },
+            { "name": "Politico Europe", "url": "https://www.politico.eu/", "tags": ["news", "politics", "europe"], "shortcut": "pe" },
+            { "name": "AP Politics", "url": "https://apnews.com/politics", "tags": ["news", "politics", "us"], "shortcut": "us", "notes": "US politics from the AP wire" }
+          ]
+        },
+        {
+          "name": "Sports",
+          "icon": "🏅",
+          "color": "#f76b15",
+          "bookmarks": [
+            { "name": "ESPN", "url": "https://www.espn.com/", "tags": ["sports"], "shortcut": "es" },
+            { "name": "BBC Sport", "url": "https://www.bbc.com/sport", "tags": ["sports"], "shortcut": "bs" },
+            { "name": "BBC Football", "url": "https://www.bbc.com/sport/football", "tags": ["sports", "football", "soccer"], "shortcut": "bf" },
+            { "name": "FotMob", "url": "https://www.fotmob.com/", "tags": ["sports", "football", "soccer", "scores"], "shortcut": "fm" },
+            { "name": "Tennis.com", "url": "https://www.tennis.com/", "tags": ["sports", "tennis"], "shortcut": "tn" },
+            { "name": "Formula 1", "url": "https://www.formula1.com/", "tags": ["sports", "f1", "motorsport"], "shortcut": "f1" }
           ]
         },
         {
@@ -147,12 +164,23 @@
       "name": "Finance",
       "categories": [
         {
+          "name": "Stocks",
+          "icon": "📈",
+          "type": "stocks",
+          "symbols": ["NASDAQ:AAPL", "NASDAQ:GOOGL", "NASDAQ:AMZN"]
+        },
+        {
           "name": "Finance News",
           "icon": "💹",
           "color": "#30a46c",
           "bookmarks": [
             { "name": "Reuters Business", "url": "https://www.reuters.com/business/", "tags": ["finance", "news"], "shortcut": "rt", "notes": "Some articles need a free account" },
-            { "name": "AP Business", "url": "https://apnews.com/business", "tags": ["finance", "news"], "shortcut": "ab" }
+            { "name": "AP Business", "url": "https://apnews.com/business", "tags": ["finance", "news"], "shortcut": "ab" },
+            { "name": "Bloomberg", "url": "https://www.bloomberg.com/", "tags": ["finance", "news"], "shortcut": "bl" },
+            { "name": "Financial Times", "url": "https://www.ft.com/", "tags": ["finance", "news"], "shortcut": "ft" },
+            { "name": "The Economist", "url": "https://www.economist.com/", "tags": ["finance", "news", "economics"], "shortcut": "ec" },
+            { "name": "Wall Street Journal", "url": "https://www.wsj.com/", "tags": ["finance", "news"], "shortcut": "wsj" },
+            { "name": "Barron's", "url": "https://www.barrons.com/", "tags": ["finance", "investing"], "shortcut": "ba" }
           ]
         },
         {
@@ -182,17 +210,6 @@
             { "name": "Of Dollars and Data", "url": "https://ofdollarsanddata.com/", "tags": ["finance", "investing", "data"], "shortcut": "od" },
             { "name": "Apollo Daily Spark", "url": "https://www.apolloacademy.com/the-daily-spark/", "tags": ["finance", "economics", "data"], "shortcut": "sp", "notes": "Torsten Slok, Apollo chief economist" },
             { "name": "Federal Reserve", "url": "https://www.federalreserve.gov/", "tags": ["finance", "economics"], "shortcut": "fed" }
-          ]
-        },
-        {
-          "name": "Paid",
-          "icon": "🔒",
-          "color": "#64748b",
-          "bookmarks": [
-            { "name": "Bloomberg", "url": "https://www.bloomberg.com/", "tags": ["finance", "news", "paywall"], "shortcut": "bl", "notes": "Subscription required" },
-            { "name": "Financial Times", "url": "https://www.ft.com/", "tags": ["finance", "news", "paywall"], "shortcut": "ft", "notes": "Subscription required" },
-            { "name": "Wall Street Journal", "url": "https://www.wsj.com/", "tags": ["finance", "news", "paywall"], "shortcut": "wsj", "notes": "Subscription required" },
-            { "name": "Barron's", "url": "https://www.barrons.com/", "tags": ["finance", "investing", "paywall"], "shortcut": "ba", "notes": "Subscription required" }
           ]
         },
         {
@@ -271,12 +288,15 @@ small{color:var(--muted)}
 
 /* header */
 header.top{display:flex;align-items:center;gap:16px;padding:12px 24px;position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 82%,transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--border);flex-wrap:wrap}
-.brand{font-weight:700;font-size:18px;white-space:nowrap;cursor:default}
+.brand{display:flex;cursor:default;color:var(--text)}
+.brand svg{display:block;width:34px;height:34px}
+.brand:hover .lamp{filter:url(#chG) brightness(1.25)}
 .pages{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none}
 .pages button{background:none;border:1px solid transparent;padding:6px 10px;border-radius:8px;color:var(--muted);cursor:pointer;white-space:nowrap}
 .pages button:hover{color:var(--text)}
 .pages button.on{color:var(--text);background:var(--surface2);border-color:var(--border)}
-.pages .num{font-size:11px;opacity:.55;margin-right:6px;font-family:var(--mono)}
+.pages .num{display:inline-block;min-width:16px;padding:0 3px;margin-right:6px;font-size:10px;line-height:14px;text-align:center;font-family:var(--mono);border:1px solid var(--border);border-radius:4px;opacity:.8}
+.pages button:hover .num,.pages button.on .num{border-color:var(--muted)}
 .pages button.drop{outline:2px dashed var(--accent)}
 .pages input.tab-edit{font:inherit;color:var(--text);background:var(--surface2);border:1px solid var(--accent);padding:6px 10px;border-radius:8px;outline:none;min-width:60px}
 .spacer{flex:1}
@@ -299,7 +319,7 @@ header.top{display:flex;align-items:center;gap:16px;padding:12px 24px;position:s
 main{padding:24px;max-width:1600px;margin:0 auto}
 .pinned{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:var(--gap)}
 .pinned .bm{background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:5px 12px 5px 6px}
-.grid{display:grid;gap:var(--gap);grid-template-columns:repeat(auto-fill,minmax(250px,1fr));align-items:start}
+.grid{display:grid;gap:var(--gap);grid-template-columns:repeat(auto-fill,minmax(220px,1fr));align-items:start}
 
 /* cards */
 .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:var(--pad);min-width:0;transition:box-shadow .15s}
@@ -312,7 +332,6 @@ main{padding:24px;max-width:1600px;margin:0 auto}
 .card-h{display:flex;align-items:center;gap:8px;margin-bottom:8px;cursor:grab;user-select:none;min-height:26px}
 .card-h h2{font-size:12px;margin:0;flex:1;text-transform:uppercase;letter-spacing:.08em;color:var(--cat,var(--muted));overflow:hidden;text-overflow:ellipsis;white-space:nowrap;cursor:pointer}
 .card-h .ci{font-size:15px}
-.card-h .cnt{font-size:11px;color:var(--muted);font-family:var(--mono)}
 .card-h .ibtn{opacity:0}
 .card:hover .card-h .ibtn,.card-h .ibtn:focus{opacity:1}
 .card.collapsed .cb{display:none}
@@ -377,6 +396,15 @@ kbd{font:11px/1.5 var(--mono);background:var(--surface2);border:1px solid var(--
 .wxdays .dn{color:var(--muted)}
 .wxdays .hl{font-variant-numeric:tabular-nums}
 .wxdays .lo{color:var(--muted)}
+.stocks{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,220px),1fr));gap:10px}
+.stk{cursor:pointer;border-radius:8px;overflow:hidden;border:1px solid var(--border)}
+.stk:hover{border-color:var(--accent)}
+.stk .sh{display:flex;justify-content:space-between;padding:5px 8px;font-size:12px}
+.stk .sh b{font-family:var(--mono)}
+.stk .sc{height:120px;overflow:hidden}
+.stk iframe{display:block;width:125%;height:150px;border:0;pointer-events:none;transform:scale(.8);transform-origin:0 0} /* the chart needs ~240px to show its price axis */
+.stkchart{height:min(52vh,440px);border-radius:8px;overflow:hidden;border:1px solid var(--border)}
+.stkchart iframe{width:100%;height:100%;border:0;display:block}
 .wxfoot{font-size:11px;color:var(--muted);display:flex;gap:6px;align-items:center;flex-wrap:wrap}
 .wxfoot a{color:var(--muted)}
 .clock.haswx{cursor:pointer;border-radius:8px;padding:2px 6px;margin:-2px -6px}
@@ -540,7 +568,21 @@ h4.sec:first-child{margin-top:0}
 <body>
 
 <header class="top">
-  <div class="brand" id="brand" title="Double-click to rename"></div>
+  <div class="brand" id="brand" role="img"><svg viewBox="0 0 40 40" aria-hidden="true">
+    <defs>
+      <linearGradient id="chM" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c3c8cf"/><stop offset=".55" stop-color="#7b818b"/><stop offset="1" stop-color="#3d424a"/></linearGradient>
+      <linearGradient id="chH" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6b717a"/><stop offset="1" stop-color="#2b2f35"/></linearGradient>
+      <linearGradient id="chL" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffd36b"/><stop offset=".5" stop-color="#ff7d14"/><stop offset="1" stop-color="#d83200"/></linearGradient>
+      <filter id="chG" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="1.1" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    </defs>
+    <path d="M0 5 Q20 2.4 40 5 V12 Q20 9.4 0 12 Z" fill="#30343b" stroke="#16181c" stroke-width=".5"/>
+    <path d="M1.5 4 H38.5 L36.5 10.5 H31.5 L24.5 36.5 H15.5 L8.5 10.5 H3.5 Z" fill="url(#chH)" stroke="#15171b" stroke-width=".7" stroke-linejoin="round"/>
+    <path d="M9 6 H31 L23.4 33.5 H16.6 Z" fill="#1b1d22"/>
+    <path class="lamp" d="M10.2 6.8 H13.6 L20 24.6 L26.4 6.8 H29.8 L20 31 Z" fill="url(#chL)" filter="url(#chG)"/>
+    <path d="M14.6 5 H17.6 L20 11.6 L22.4 5 H25.4 L20 18.2 Z" fill="url(#chM)" stroke="#15171b" stroke-width=".5" stroke-linejoin="round"/>
+    <path class="lamp" d="M17.6 32.6 H22.4 L21.5 35.4 H18.5 Z" fill="#ff8a1f" filter="url(#chG)"/>
+    <circle cx="5" cy="7.2" r=".8" fill="#9aa0a8"/><circle cx="35" cy="7.2" r=".8" fill="#9aa0a8"/>
+  </svg></div>
   <nav class="pages" id="pages" aria-label="Pages"></nav>
   <div class="spacer"></div>
   <div class="actions">
@@ -591,6 +633,7 @@ const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const now = () => Date.now();
 const DAY = 864e5;
+const STOCK_DEFAULTS = ['NASDAQ:AAPL', 'NASDAQ:GOOGL', 'NASDAQ:AMZN'];
 const hashStr = s => { let h = 5381; for (let i = 0; i < s.length; i++) h = ((h << 5) + h + s.charCodeAt(i)) | 0; return (h >>> 0).toString(36); };
 const domain = u => { try { return new URL(u).hostname.replace(/^www\./, ''); } catch { return ''; } };
 const origin = u => { try { return new URL(u).origin; } catch { return ''; } };
@@ -691,6 +734,7 @@ function mkCat(c, pageId) {
   return {
     id: uid(), pageId, name: c.name || 'Category', icon: c.icon || '', color: c.color || '',
     type: c.type || 'bookmarks', span: c.span === 2 ? 2 : 1, sort: c.sort || 'manual', collapsed: !!c.collapsed, content: c.content || '',
+    ...(c.type === 'stocks' ? { symbols: Array.isArray(c.symbols) ? c.symbols.map(String) : [...STOCK_DEFAULTS] } : {}),
   };
 }
 function fromDefaultsObj(d) {
@@ -864,7 +908,7 @@ function applyLook() {
   const mb = $('#modeBtn');
   if (mb) mb.innerHTML = I(dark ? 'sun' : 'moon');
 }
-mq.addEventListener?.('change', () => { if (state.settings.mode === 'system') applyLook(); });
+mq.addEventListener?.('change', () => { if (state.settings.mode === 'system') { applyLook(); renderPage(); } });
 function toggleMode() {
   state.settings.mode = isDark() ? 'light' : 'dark';
   commit();
@@ -890,7 +934,8 @@ function renderAll() {
 }
 function renderHeader() {
   document.title = state.title;
-  $('#brand').textContent = state.title;
+  const brand = $('#brand');
+  brand.title = `${state.title} — double-click to rename`; brand.setAttribute('aria-label', state.title);
   // Only rebuild the tabs when the pages change, so switching pages keeps the same elements (double-click to rename needs that)
   const tabs = state.pages.map((p, i) =>
     `<button data-act="page" data-id="${p.id}" data-droppage="${p.id}" title="Page ${i + 1} — double-click to rename, right-click for options"><span class="num">${i + 1}</span>${esc(p.name)}</button>`
@@ -1072,28 +1117,79 @@ function wxModalRender() {
 setInterval(() => refreshWeather(), 5 * 60e3);
 document.addEventListener('visibilitychange', () => { if (!document.hidden) refreshWeather(); });
 
+/* ---------- stocks (TradingView embeds: no key, and frames aren't blocked by CORS) ---------- */
+const STOCK_RANGES = [['5D', '1W', '30'], ['1M', '1M', '60'], ['3M', '3M', 'D'], ['6M', '6M', 'D'], ['12M', '1Y', 'D'], ['60M', '5Y', 'W']];
+const STV = { cat: null, i: 0, range: '5D' };
+const tick = sym => sym.split(':').pop();
+function tvChart(sym, range, small) {
+  const iv = (STOCK_RANGES.find(r => r[0] === range) || STOCK_RANGES[0])[2];
+  const q = { symbol: sym, interval: iv, range, style: 3, theme: isDark() ? 'dark' : 'light', locale: 'en', timezone: 'exchange', hide_side_toolbar: 1, hide_top_toolbar: 1, symboledit: 0, saveimage: 0, withdateranges: 0 };
+  if (small) Object.assign(q, { hide_legend: 1, hide_volume: 1 });
+  return 'https://s.tradingview.com/widgetembed/?' + new URLSearchParams(q);
+}
+function openStock(catId, i) {
+  const c = catById(catId); if (!c || !c.symbols.length) return;
+  STV.cat = catId; STV.i = Math.min(i, c.symbols.length - 1); STV.range = '5D';
+  showModal('stock', 'Stock', '<div id="stkBody"></div>', {
+    wide: true, refresh: stockModalRender,
+    keys: e => {
+      const n = +e.key;
+      if (n >= 1 && n <= STOCK_RANGES.length) { STV.range = STOCK_RANGES[n - 1][0]; stockModalRender(); return true; }
+      if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') { const len = catById(STV.cat).symbols.length; STV.i = (STV.i + (e.key === 'ArrowRight' ? 1 : -1) + len) % len; stockModalRender(); return true; }
+      return false;
+    },
+  });
+  $('#stkBody').addEventListener('click', e => {
+    const r = e.target.closest('[data-stkr]'); if (r) { STV.range = r.dataset.stkr; stockModalRender(); return; }
+    const k = e.target.closest('[data-stki]'); if (k) { STV.i = +k.dataset.stki; stockModalRender(); }
+  });
+  stockModalRender();
+}
+function stockModalRender() {
+  if (modalKind !== 'stock') return;
+  const c = catById(STV.cat); if (!c || !c.symbols[STV.i]) return closeModal();
+  const sym = c.symbols[STV.i];
+  $('#modal .modal > header h3').textContent = tick(sym);
+  const syms = c.symbols.map((x, n) => `<span class="chip ${n === STV.i ? 'on' : ''}" data-stki="${n}">${esc(tick(x))}</span>`).join('');
+  const ranges = `<div class="seg">${STOCK_RANGES.map(([k, l]) => `<button data-stkr="${k}" class="${STV.range === k ? 'on' : ''}">${l}</button>`).join('')}</div>`;
+  $('#stkBody').innerHTML = `<div class="row" style="justify-content:space-between;margin-bottom:14px"><div>${syms}</div>${ranges}</div>
+    <div class="stkchart"><iframe src="${esc(tvChart(sym, STV.range))}" title="${esc(tick(sym))} price chart"></iframe></div>
+    <div class="wxfoot" style="margin-top:14px"><a href="https://www.tradingview.com/symbols/${esc(sym.replace(':', '-'))}/" target="_blank" rel="noopener noreferrer">Chart by TradingView</a> · <kbd>1</kbd>–<kbd>${STOCK_RANGES.length}</kbd> period <kbd>←</kbd><kbd>→</kbd> stock</div>`;
+}
+function editSymbols(id) {
+  const c = catById(id); if (!c) return;
+  const v = prompt('Symbols, separated by commas (e.g. NASDAQ:AAPL, NYSE:KO, MSFT)', c.symbols.join(', '));
+  if (v == null) return;
+  c.symbols = v.split(/[\s,]+/).map(x => x.trim().toUpperCase()).filter(Boolean);
+  commit();
+}
+
 function bmLink(b) {
   const s = state.settings;
   return `<a class="bm" href="${esc(safeHref(b.url))}" ${s.newTab ? 'target="_blank" rel="noopener noreferrer"' : ''} data-bm="${b.id}" draggable="true">${avatar(b)}<span class="nm">${esc(b.name)}</span>${b.check ? `<span class="dot ${b.check.ok ? 'ok' : 'bad'}" title="${b.check.ok ? 'Reachable · ' + b.check.ms + ' ms' : esc(b.check.err || 'Unreachable')}"></span>` : ''}${s.showShortcuts && b.shortcut ? `<kbd data-sc="${esc(b.shortcut)}">${esc(b.shortcut)}</kbd>` : ''}</a>`;
 }
 function cardHTML(c) {
-  let body = '', cnt = '';
+  let body = '';
   switch (c.type) {
     case 'notes': body = notesHTML(c); break;
     case 'calendar': body = calHTML(c); break;
     case 'clock': body = `<div class="wclocks">${state.clocks.map(k => `<div class="wclock" data-tz="${esc(k.timeZone)}"><div class="l">${esc(k.label)}</div><div class="t"></div><div class="d muted"></div></div>`).join('') || '<span class="muted">Add clocks in Settings → Clocks.</span>'}</div>`; break;
     case 'weather': body = `<div data-wxwidget>${wxWidgetBody()}</div>`; break;
+    case 'stocks': body = c.symbols.length
+      ? `<div class="stocks">${c.symbols.map((sym, n) => `<div class="stk" data-act="stock" data-id="${c.id}" data-i="${n}" title="Click for more time periods"><div class="sh"><b>${esc(tick(sym))}</b><span class="muted">7 days ›</span></div><div class="sc"><iframe src="${esc(tvChart(sym, '5D', true))}" loading="lazy" title="${esc(tick(sym))} price, last 7 days"></iframe></div></div>`).join('')}</div>`
+      : `<p class="muted">No symbols yet. Use the card menu → Edit symbols…</p>`;
+      break;
     case 'search': {
       const f = state.finders.find(f => f.key === state.settings.defaultFinder) || state.finders[0];
       body = `<form data-websearch><input placeholder="Search ${esc(f?.name || 'the web')}… (prefix with a finder key, e.g. yt cats)" aria-label="Web search"></form>`; break;
     }
     default: {
-      const bms = catBms(c.id); cnt = `<span class="cnt">${bms.length}</span>`;
+      const bms = catBms(c.id);
       body = `<ul class="bms">${bms.map(b => `<li>${bmLink(b)}</li>`).join('')}</ul><button class="addrow" data-act="addBm" data-cat="${c.id}">+ Add bookmark</button>`;
     }
   }
   return `<section class="card ${c.span === 2 ? 'span2' : ''} ${c.collapsed ? 'collapsed' : ''}" data-cat="${c.id}" ${c.color ? `style="--cat:${esc(c.color)}"` : ''}>
-    <header class="card-h" draggable="true" data-dragcat="${c.id}">${c.icon ? `<span class="ci">${esc(c.icon)}</span>` : ''}<h2 data-act="collapse" data-id="${c.id}" title="Click to collapse · drag to move">${esc(c.name)}</h2>${cnt}<button class="ibtn sm" data-act="catMenu" data-id="${c.id}" title="Options">${I('dots', 16)}</button></header>
+    <header class="card-h" draggable="true" data-dragcat="${c.id}">${c.icon ? `<span class="ci">${esc(c.icon)}</span>` : ''}<h2 data-act="collapse" data-id="${c.id}" title="Click to collapse · drag to move">${esc(c.name)}</h2><button class="ibtn sm" data-act="catMenu" data-id="${c.id}" title="Options">${I('dots', 16)}</button></header>
     <div class="cb">${body}</div></section>`;
 }
 function renderPage() {
@@ -1103,9 +1199,21 @@ function renderPage() {
   $('#pinned').innerHTML = pinned.map(bmLink).join('');
   $('#pinned').hidden = !pinned.length;
   const cats = pageCats();
-  grid.innerHTML = cats.map(cardHTML).join('') ||
-    `<div class="empty"><p>This page is empty.</p><div class="row" style="justify-content:center"><button class="btn primary" data-act="newCat">New category</button><button class="btn" data-act="add">Add widget…</button></div></div>`;
+  patchGrid(grid, cats.map(c => { const h = cardHTML(c); return c.type === 'stocks' ? h.replace('<section ', `<section data-sig="${hashStr(h)}" `) : h; }).join('') ||
+    `<div class="empty"><p>This page is empty.</p><div class="row" style="justify-content:center"><button class="btn primary" data-act="newCat">New category</button><button class="btn" data-act="add">Add widget…</button></div></div>`);
   tickClocks();
+}
+// Replace the grid's cards, but leave cards marked with an unchanged data-sig in place so their iframes don't reload
+function patchGrid(grid, html) {
+  const t = document.createElement('template'); t.innerHTML = html;
+  const old = new Map([...grid.children].filter(e => e.dataset.sig).map(e => [e.dataset.sig, e]));
+  [...grid.children].forEach(e => { if (!e.dataset.sig) e.remove(); });
+  let cur = grid.firstElementChild;
+  for (const n of [...t.content.children]) {
+    if (n.dataset.sig && old.get(n.dataset.sig) === cur) { old.delete(n.dataset.sig); cur = cur.nextElementSibling; continue; }
+    grid.insertBefore(n, cur);
+  }
+  old.forEach(e => e.remove());
 }
 let renderPageT;
 const renderPageSoon = () => { clearTimeout(renderPageT); renderPageT = setTimeout(() => { renderPage(); renderHeader(); }, 120); };
@@ -1190,8 +1298,8 @@ function newCategory(pid = state.activePage) {
   return c;
 }
 function addWidget(type) {
-  const names = { notes: 'Notes', calendar: 'Calendar', clock: 'Clocks', weather: 'Weather', search: 'Web search' };
-  const icons = { notes: '📝', calendar: '📅', clock: '🕒', weather: '🌤️', search: '🔎' };
+  const names = { notes: 'Notes', calendar: 'Calendar', clock: 'Clocks', weather: 'Weather', stocks: 'Stocks', search: 'Web search' };
+  const icons = { notes: '📝', calendar: '📅', clock: '🕒', weather: '🌤️', stocks: '📈', search: '🔎' };
   const c = mkCat({ name: names[type], icon: icons[type], type }, state.activePage);
   state.categories.push(c);
   if (type === 'notes') notesEditing.add(c.id);
@@ -1344,6 +1452,7 @@ function addMenu(x, y) {
     { label: 'Calendar', fn: () => addWidget('calendar') },
     { label: 'Clocks', fn: () => addWidget('clock') },
     { label: 'Weather', fn: () => { addWidget('weather'); refreshWeather(); } },
+    { label: 'Stocks', fn: () => addWidget('stocks') },
     { label: 'Web search', fn: () => addWidget('search') },
     '-', { label: 'Import file…', fn: () => $('#fileIn').click() },
   ]);
@@ -1367,6 +1476,7 @@ function catMenu(id, x, y) {
   const items = [];
   if (c.type === 'bookmarks') items.push({ label: 'Add bookmark', fn: () => newBookmark(id) });
   items.push({ label: 'Edit…', fn: () => editCategory(id) });
+  if (c.type === 'stocks') items.push({ label: 'Edit symbols…', fn: () => editSymbols(id) });
   if (c.type === 'bookmarks') {
     items.push('-', { header: 'Sort' });
     [['manual', 'Manual (drag)'], ['name', 'Name'], ['count', 'Most opened'], ['opened', 'Recently opened'], ['added', 'Recently added']]
@@ -1457,6 +1567,7 @@ document.addEventListener('mouseout', e => {
    ====================================================================== */
 const ACT = {
   page: el => goPage(el.dataset.id),
+  stock: el => openStock(el.dataset.id, +el.dataset.i),
   newPage: () => newPage(),
   newCat: () => newCategory(),
   search: () => openSearch(),
@@ -1745,6 +1856,7 @@ function commands() {
     ['Add calendar widget', '', () => addWidget('calendar')],
     ['Add clocks widget', '', () => addWidget('clock')],
     ['Add weather widget', '', () => { addWidget('weather'); refreshWeather(); }],
+    ['Add stocks widget', '', () => addWidget('stocks')],
     ['Refresh weather', '', () => { refreshWeather(true); toast('Refreshing weather…'); }],
     ['Weather forecast', 'Shift O', () => openWeather(Math.max(0, state.clocks.findIndex(hasLoc)))],
     ['Add web search widget', '', () => addWidget('search')],
@@ -2482,6 +2594,7 @@ function catToDef(c) {
   if (c.span === 2) o.span = 2;
   if (c.sort && c.sort !== 'manual') o.sort = c.sort;
   if (c.content) o.content = c.content;
+  if (c.type === 'stocks') o.symbols = c.symbols;
   if (c.type === 'bookmarks') o.bookmarks = catBms(c.id).map(b => {
     const x = { name: b.name, url: b.url };
     if (b.tags.length) x.tags = b.tags;
