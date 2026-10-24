@@ -21,9 +21,11 @@
    - Settings -> Data -> "Copy as defaults JSON" turns a dashboard you built
      in the browser into a block you can paste here.
 
+   Clock fields:    label, timeZone, and optionally lat, lon and unit
+                    (celsius | fahrenheit) to show that city's weather.
    Bookmark fields: name, url, tags[], shortcut, notes, pinned, icon
    Category fields: name, icon, color, type (bookmarks | notes | calendar |
-                    clock | search), span (1 | 2), sort, content (notes)
+                    clock | weather | search), span (1 | 2), sort, content (notes)
   ==========================================================================
 -->
 <script id="dash-defaults" type="application/json">
@@ -215,8 +217,8 @@
     }
   ],
   "clocks": [
-    { "label": "CST", "timeZone": "America/Chicago" },
-    { "label": "London", "timeZone": "Europe/London" }
+    { "label": "CST", "timeZone": "America/Chicago", "lat": 41.88, "lon": -87.63, "unit": "fahrenheit" },
+    { "label": "London", "timeZone": "Europe/London", "lat": 51.51, "lon": -0.13, "unit": "celsius" }
   ],
   "finders": [
     { "key": "g", "name": "Google", "url": "https://www.google.com/search?q=%s" },
@@ -286,7 +288,8 @@ header.top{display:flex;align-items:center;gap:16px;padding:12px 24px;position:s
 .clock{text-align:right;line-height:1.15}
 .clock .t{font-size:20px;font-weight:650;font-variant-numeric:tabular-nums;letter-spacing:-.01em}
 .clock .l{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;white-space:nowrap}
-.clock .l .d{text-transform:none;letter-spacing:0}
+.clock .l .d,.clock .l .wx{text-transform:none;letter-spacing:0}
+.clock .l .wx{color:var(--text)}
 
 .banner{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:16px 24px 0;padding:10px 14px;border:1px solid var(--accent);background:color-mix(in srgb,var(--accent) 12%,var(--surface));border-radius:10px}
 .banner span{flex:1;min-width:200px}
@@ -363,6 +366,36 @@ kbd{font:11px/1.5 var(--mono);background:var(--surface2);border:1px solid var(--
 .wclocks{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:10px}
 .wclock .t{font-size:26px;font-weight:650;font-variant-numeric:tabular-nums}
 .wclock .l{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.wxcity{padding:6px 0 10px;border-bottom:1px solid var(--border);margin-bottom:8px}
+.wxcity:last-of-type{border-bottom:0}
+.wxnow{display:flex;align-items:center;gap:10px}
+.wxnow .ic{font-size:28px;line-height:1}
+.wxnow .tp{font-size:24px;font-weight:650;font-variant-numeric:tabular-nums}
+.wxdays{display:grid;grid-template-columns:repeat(5,1fr);gap:4px;margin-top:8px;text-align:center;font-size:12px}
+.wxdays .dn{color:var(--muted)}
+.wxdays .hl{font-variant-numeric:tabular-nums}
+.wxdays .lo{color:var(--muted)}
+.wxfoot{font-size:11px;color:var(--muted);display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.wxfoot a{color:var(--muted)}
+.clock.haswx{cursor:pointer;border-radius:8px;padding:2px 6px;margin:-2px -6px}
+.clock.haswx:hover{background:var(--surface2)}
+.wxhead{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:14px}
+.wxhead .ic{font-size:44px;line-height:1}
+.wxhead .tp{font-size:36px;font-weight:650;font-variant-numeric:tabular-nums}
+.wxhours{display:flex;gap:4px;overflow-x:auto;padding-bottom:6px}
+.wxhours .h{flex:none;width:58px;text-align:center;padding:8px 0;border-radius:10px;background:var(--surface2);font-size:12px}
+.wxhours .h.now{box-shadow:inset 0 0 0 2px var(--accent)}
+.wxhours .h .ic{font-size:20px;margin:4px 0}
+.wxhours .h .tp{font-weight:650;font-size:14px;font-variant-numeric:tabular-nums}
+.wxhours .h .pp{color:var(--accent);font-size:11px;min-height:14px}
+.wxweek .r{display:grid;grid-template-columns:90px 34px 1fr 52px 44px 1.4fr 44px;gap:10px;align-items:center;padding:8px 0;border-bottom:1px solid var(--border)}
+.wxweek .r .ic{font-size:20px;text-align:center}
+.wxweek .pp{color:var(--accent);font-size:12px;text-align:right}
+.wxweek .lo{color:var(--muted);text-align:right;font-variant-numeric:tabular-nums}
+.wxweek .hi{font-variant-numeric:tabular-nums}
+.wxbar{position:relative;height:6px;border-radius:3px;background:var(--surface2)}
+.wxbar i{position:absolute;top:0;bottom:0;border-radius:3px;background:linear-gradient(90deg,#60a5fa,var(--accent),#f97316)}
+@media (max-width:640px){.wxweek .r{grid-template-columns:70px 28px 0 40px 36px 1fr 36px}.wxweek .r .ds{display:none}}
 
 .legend{text-align:center;color:var(--muted);font-size:12px;padding:8px 24px 28px}
 .legend kbd{margin:0 2px}
@@ -639,6 +672,7 @@ const BASE_SETTINGS = {
   radius: 12, density: 'comfortable', columns: 0, headerStyle: 'accent',
   newTab: true, favicons: 'google', showShortcuts: true, showPinned: true, previews: true, legend: true,
   pasteToInbox: true, hour12: false, showSeconds: false, showDate: true, weekStart: 0, defaultFinder: 'g', trashDays: 30,
+  weather: true,
 };
 
 function mkBm(b, catId) {
@@ -661,7 +695,7 @@ function fromDefaultsObj(d) {
   const s = {
     version: 1, title: d.title || 'Dashboard', pages: [], categories: [], bookmarks: [],
     collections: (d.collections || []).map(c => ({ id: uid(), name: c.name, query: c.query })),
-    clocks: (d.clocks || []).map(c => ({ label: c.label || '', timeZone: c.timeZone || 'UTC' })),
+    clocks: (d.clocks || []).map(normClock),
     finders: (d.finders || []).map(f => ({ key: f.key, name: f.name, url: f.url })),
     settings: { ...BASE_SETTINGS, ...(d.settings || {}) }, activePage: null,
   };
@@ -679,11 +713,18 @@ function fromDefaultsObj(d) {
   return s;
 }
 const fromDefaults = () => fromDefaultsObj(structuredClone(DEFAULTS));
+function normClock(c) {
+  const o = { label: c.label || '', timeZone: c.timeZone || 'UTC' };
+  if (c.lat !== '' && c.lat != null && c.lon !== '' && c.lon != null && isFinite(c.lat) && isFinite(c.lon)) { o.lat = +c.lat; o.lon = +c.lon; }
+  o.unit = c.unit === 'fahrenheit' ? 'fahrenheit' : 'celsius';
+  return o;
+}
 
 function sanitize(s) {
   s.settings = { ...BASE_SETTINGS, ...(s.settings || {}) };
   for (const k of ['pages', 'categories', 'bookmarks', 'collections', 'clocks', 'finders']) if (!Array.isArray(s[k])) s[k] = [];
   if (!s.pages.length) s.pages.push({ id: uid(), name: 'Home' });
+  s.clocks = s.clocks.map(normClock);
   if (!s.pages.some(p => p.id === s.activePage)) s.activePage = s.pages[0].id;
   const keepDays = (s.settings.trashDays || 30) * DAY;
   s.bookmarks = s.bookmarks.filter(b => !(b.deleted && now() - b.deleted > keepDays) && !(b._new && !b.url));
@@ -721,6 +762,7 @@ function commit() {
 addEventListener('beforeunload', saveNow);
 addEventListener('storage', e => {
   if (e.key === LS_KEY && e.newValue) { state = load(); _dup = null; renderAll(); if (modalRefresh) modalRefresh(); }
+  if (e.key === WX_KEY && e.newValue) { try { wx = JSON.parse(e.newValue) || {}; } catch { wx = {}; } renderWeather(); }
 });
 
 /* ======================================================================
@@ -855,7 +897,7 @@ function renderHeader() {
 }
 function renderClocks() {
   $('#clocks').innerHTML = state.clocks.map(c =>
-    `<div class="clock" data-tz="${esc(c.timeZone)}"><div class="t"></div><div class="l">${esc(c.label)}${state.settings.showDate ? ' · <span class="d"></span>' : ''}</div></div>`
+    `<div class="clock ${wxData(c)?.cur ? 'haswx' : ''}" data-tz="${esc(c.timeZone)}" title="${esc(wxTitle(c) + (wxData(c)?.cur ? ' · click for hourly and 7-day forecast' : ''))}" data-act="wxOpen" data-i="${state.clocks.indexOf(c)}"><div class="t"></div><div class="l">${esc(c.label)}${state.settings.showDate ? ' · <span class="d"></span>' : ''}${wxInline(c)}</div></div>`
   ).join('');
   $('#clocks').hidden = !state.clocks.length;
   tickClocks();
@@ -872,6 +914,159 @@ function tickClocks() {
 }
 setInterval(tickClocks, 1000);
 
+/* ---------- weather (Open-Meteo, no key; data CC BY 4.0) ---------- */
+const WX_KEY = NS + ':weather', WX_TTL = 30 * 60e3, WX_RETRY = 5 * 60e3;
+let wx = {};
+try { wx = JSON.parse(localStorage.getItem(WX_KEY)) || {}; } catch { wx = {}; }
+const WMO = {
+  0: ['Clear sky', '☀️', '🌙'], 1: ['Mainly clear', '🌤️', '🌙'], 2: ['Partly cloudy', '⛅', '☁️'], 3: ['Overcast', '☁️'],
+  45: ['Fog', '🌫️'], 48: ['Freezing fog', '🌫️'],
+  51: ['Light drizzle', '🌦️'], 53: ['Drizzle', '🌦️'], 55: ['Heavy drizzle', '🌧️'], 56: ['Freezing drizzle', '🌧️'], 57: ['Heavy freezing drizzle', '🌧️'],
+  61: ['Light rain', '🌦️'], 63: ['Rain', '🌧️'], 65: ['Heavy rain', '🌧️'], 66: ['Freezing rain', '🌧️'], 67: ['Heavy freezing rain', '🌧️'],
+  71: ['Light snow', '🌨️'], 73: ['Snow', '🌨️'], 75: ['Heavy snow', '❄️'], 77: ['Snow grains', '🌨️'],
+  80: ['Light showers', '🌦️'], 81: ['Showers', '🌧️'], 82: ['Violent showers', '⛈️'], 85: ['Snow showers', '🌨️'], 86: ['Heavy snow showers', '❄️'],
+  95: ['Thunderstorm', '⛈️'], 96: ['Thunderstorm with hail', '⛈️'], 99: ['Thunderstorm with heavy hail', '⛈️'],
+};
+const wxDesc = code => (WMO[code] || ['Unknown'])[0];
+const wxIcon = (code, day = 1) => { const w = WMO[code]; return w ? (!day && w[2]) || w[1] : '🌡️'; };
+const hasLoc = c => c && typeof c.lat === 'number' && typeof c.lon === 'number' && isFinite(c.lat) && isFinite(c.lon);
+const wxKey = c => `${c.lat.toFixed(2)},${c.lon.toFixed(2)},${c.unit === 'fahrenheit' ? 'F' : 'C'}`;
+const wxUnit = c => c.unit === 'fahrenheit' ? '°F' : '°C';
+const wxData = c => state.settings.weather && hasLoc(c) ? wx[wxKey(c)] : null;
+function wxInline(c) {
+  const w = wxData(c);
+  return w && w.cur ? ` · <span class="wx">${wxIcon(w.cur.code, w.cur.day)} ${Math.round(w.cur.t)}${wxUnit(c)}</span>` : '';
+}
+function wxTitle(c) {
+  const w = wxData(c);
+  if (!w || !w.cur) return w && w.err ? `Weather unavailable (${w.err})` : '';
+  const t = w.daily?.[0];
+  return `${c.label}: ${wxDesc(w.cur.code)}, ${Math.round(w.cur.t)}${wxUnit(c)}` + (t ? ` · high ${Math.round(t.hi)}° low ${Math.round(t.lo)}°` : '') + ` · updated ${ago(w.at)} · Weather data by Open-Meteo.com`;
+}
+const wxBusy = new Set();
+async function fetchWx(c, force) {
+  const k = wxKey(c), e = wx[k];
+  if (!force && e && ((e.v === 2 && e.cur && now() - e.at < WX_TTL) || (e.errAt && now() - e.errAt < WX_RETRY))) return;
+  if (wxBusy.has(k)) return;
+  wxBusy.add(k);
+  try {
+    const u = `https://api.open-meteo.com/v1/forecast?latitude=${c.lat}&longitude=${c.lon}&current=temperature_2m,apparent_temperature,weather_code,is_day&hourly=temperature_2m,weather_code,precipitation_probability,is_day&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max&timezone=auto&forecast_days=7&temperature_unit=${c.unit === 'fahrenheit' ? 'fahrenheit' : 'celsius'}`;
+    const r = await fetch(u, { credentials: 'omit', referrerPolicy: 'no-referrer' });
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    const j = await r.json();
+    const h = j.hourly || {}, hourNow = (j.current.time || '').slice(0, 13);
+    const start = Math.max(0, (h.time || []).findIndex(t => t.slice(0, 13) >= hourNow));
+    wx[k] = {
+      v: 2, at: now(),
+      cur: { t: j.current.temperature_2m, feels: j.current.apparent_temperature, code: j.current.weather_code, day: j.current.is_day },
+      hourly: (h.time || []).slice(start, start + 24).map((t, n) => ({ t, temp: h.temperature_2m[start + n], code: h.weather_code[start + n], pop: h.precipitation_probability?.[start + n], day: h.is_day?.[start + n] })),
+      daily: (j.daily?.time || []).map((d, i) => ({ d, code: j.daily.weather_code[i], hi: j.daily.temperature_2m_max[i], lo: j.daily.temperature_2m_min[i], pop: j.daily.precipitation_probability_max?.[i] })),
+    };
+  } catch (err) {
+    wx[k] = { ...(e || {}), errAt: now(), err: err.message || 'network error' };
+  } finally { wxBusy.delete(k); }
+}
+async function refreshWeather(force) {
+  if (!state.settings.weather) return;
+  const cs = state.clocks.filter(hasLoc);
+  await Promise.all(cs.map(c => fetchWx(c, force)));
+  const keep = new Set(cs.map(wxKey));
+  for (const k of Object.keys(wx)) if (!keep.has(k)) delete wx[k];
+  try { localStorage.setItem(WX_KEY, JSON.stringify(wx)); } catch { /* storage full or blocked */ }
+  renderWeather();
+}
+function renderWeather() {
+  renderClocks();
+  if (modalKind === 'weather' && modalRefresh) modalRefresh();
+  $$('[data-wxwidget]').forEach(el => { el.innerHTML = wxWidgetBody(); });
+}
+function wxWidgetBody() {
+  if (!state.settings.weather) return '<p class="muted">Weather is turned off in Settings → Clocks &amp; weather.</p>';
+  const cs = state.clocks.filter(hasLoc);
+  if (!cs.length) return '<p class="muted">Add a city in Settings → Clocks &amp; weather.</p>';
+  let at = 0;
+  const html = cs.map(c => {
+    const w = wx[wxKey(c)];
+    if (!w || !w.cur) return `<div class="wxcity"><div class="wclock"><div class="l">${esc(c.label)}</div></div><span class="muted">${w && w.err ? 'Weather unavailable: ' + esc(w.err) : 'Loading…'}</span></div>`;
+    at = Math.max(at, w.at);
+    const days = (w.daily || []).slice(0, 5).map(d => `<div><div class="dn">${new Date(d.d + 'T12:00').toLocaleDateString([], { weekday: 'short' })}</div><div title="${esc(wxDesc(d.code))}">${wxIcon(d.code)}</div><div class="hl">${Math.round(d.hi)}° <span class="lo">${Math.round(d.lo)}°</span></div></div>`).join('');
+    return `<div class="wxcity" data-act="wxOpen" data-i="${state.clocks.indexOf(c)}" style="cursor:pointer" title="Click for hourly and 7-day forecast"><div class="wclock"><div class="l">${esc(c.label)}</div></div><div class="wxnow"><span class="ic">${wxIcon(w.cur.code, w.cur.day)}</span><span class="tp">${Math.round(w.cur.t)}${wxUnit(c)}</span><span class="muted">${esc(wxDesc(w.cur.code))}</span></div><div class="wxdays">${days}</div></div>`;
+  }).join('');
+  return html + `<div class="wxfoot"><a href="https://open-meteo.com/" target="_blank" rel="noopener noreferrer">Weather data by Open-Meteo.com</a>${at ? ' · updated ' + ago(at) : ''} · <button class="btn sm" data-act="wxRefresh">Refresh</button></div>`;
+}
+async function searchCity(q) {
+  const r = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(q)}&count=6&language=en&format=json`, { credentials: 'omit', referrerPolicy: 'no-referrer' });
+  if (!r.ok) throw new Error('HTTP ' + r.status);
+  return (await r.json()).results || [];
+}
+function useMyLocation(after) {
+  const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+  const unit = /-US$/i.test(navigator.language || '') ? 'fahrenheit' : 'celsius';
+  const add = (lat, lon) => {
+    state.clocks.push(normClock({ label: 'Local', timeZone: tz, lat, lon, unit }));
+    commit(); refreshWeather(true); after?.();
+  };
+  if (!navigator.geolocation) { add(); toast('This browser has no location support. Search for your city instead.', { ms: 8000 }); return; }
+  navigator.geolocation.getCurrentPosition(
+    p => add(+p.coords.latitude.toFixed(2), +p.coords.longitude.toFixed(2)),
+    () => { add(); toast('The browser did not share your location (they often refuse for local files). Added a clock without weather — search for your city instead.', { ms: 9000 }); },
+    { timeout: 10000, maximumAge: 3600e3 });
+}
+const WXV = { i: 0, view: 'hourly' };
+function wxHour(t) {
+  const h = +t.slice(11, 13);
+  return state.settings.hour12 ? `${h % 12 || 12} ${h < 12 ? 'AM' : 'PM'}` : `${String(h).padStart(2, '0')}:00`;
+}
+function openWeather(i, view) {
+  const c = state.clocks[i];
+  if (!c || !hasLoc(c) || !state.settings.weather) { openSettings('clocks'); return; }
+  WXV.i = i; if (view) WXV.view = view;
+  showModal('weather', 'Weather', '<div id="wxBody"></div>', {
+    refresh: wxModalRender,
+    keys: e => {
+      const list = state.clocks.map((c, n) => n).filter(n => hasLoc(state.clocks[n]));
+      if (e.key === 'h') { WXV.view = 'hourly'; wxModalRender(); return true; }
+      if (e.key === 'd' || e.key === '7') { WXV.view = 'week'; wxModalRender(); return true; }
+      if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') { const p = list.indexOf(WXV.i); WXV.i = list[(p + (e.key === 'ArrowRight' ? 1 : -1) + list.length) % list.length]; wxModalRender(); return true; }
+      return false;
+    },
+  });
+  $('#wxBody').addEventListener('click', e => {
+    const v = e.target.closest('[data-wxv]'); if (v) { WXV.view = v.dataset.wxv; wxModalRender(); return; }
+    const ci = e.target.closest('[data-wxc]'); if (ci) { WXV.i = +ci.dataset.wxc; wxModalRender(); }
+  });
+  wxModalRender();
+  refreshWeather();
+}
+function wxModalRender() {
+  if (modalKind !== 'weather') return;
+  const c = state.clocks[WXV.i]; if (!c) return closeModal();
+  const w = wxData(c), u = wxUnit(c), deg = n => Math.round(n) + '°';
+  $('#modal .modal > header h3').textContent = `${c.label} weather`;
+  const cities = state.clocks.map((x, n) => hasLoc(x) ? `<span class="chip ${n === WXV.i ? 'on' : ''}" data-wxc="${n}">${esc(x.label)}</span>` : '').join('');
+  const views = `<div class="seg"><button data-wxv="hourly" class="${WXV.view === 'hourly' ? 'on' : ''}">Hourly</button><button data-wxv="week" class="${WXV.view === 'week' ? 'on' : ''}">7-day</button></div>`;
+  let h = `<div class="row" style="justify-content:space-between;margin-bottom:14px"><div>${cities}</div>${views}</div>`;
+  if (!w || !w.cur) {
+    h += `<p class="muted">${w && w.err ? 'Weather unavailable: ' + esc(w.err) : 'Loading the forecast…'}</p>`;
+  } else {
+    const t = w.daily?.[0];
+    h += `<div class="wxhead"><span class="ic">${wxIcon(w.cur.code, w.cur.day)}</span><span class="tp">${Math.round(w.cur.t)}${u}</span><div><div>${esc(wxDesc(w.cur.code))}</div><div class="muted">${w.cur.feels != null ? 'Feels like ' + deg(w.cur.feels) + ' · ' : ''}${t ? 'H ' + deg(t.hi) + ' L ' + deg(t.lo) : ''}</div></div></div>`;
+    if (WXV.view === 'hourly') {
+      const hrs = w.hourly || [];
+      h += hrs.length ? `<h4 class="sec">Next 24 hours</h4><div class="wxhours">${hrs.map((x, n) => `<div class="h ${n === 0 ? 'now' : ''}" title="${esc(wxDesc(x.code))}"><div class="muted">${n === 0 ? 'Now' : wxHour(x.t)}</div><div class="ic">${wxIcon(x.code, x.day)}</div><div class="tp">${deg(x.temp)}</div><div class="pp">${x.pop ? x.pop + '%' : ''}</div></div>`).join('')}</div><p class="muted" style="font-size:12px">Percentages are the chance of rain or snow. Times are local to ${esc(c.label)}.</p>` : '<p class="muted">No hourly data yet. Try Refresh.</p>';
+      h += `<div class="row" style="margin-top:8px"><button class="btn" data-wxv="week">View 7-day forecast →</button></div>`;
+    } else {
+      const ds = w.daily || [], lo = Math.min(...ds.map(d => d.lo)), hi = Math.max(...ds.map(d => d.hi)), span = Math.max(1, hi - lo);
+      h += `<h4 class="sec">7-day forecast</h4><div class="wxweek">${ds.map((d, n) => `<div class="r"><div>${n === 0 ? 'Today' : new Date(d.d + 'T12:00').toLocaleDateString([], { weekday: 'long' })}</div><div class="ic" title="${esc(wxDesc(d.code))}">${wxIcon(d.code)}</div><div class="ds muted">${esc(wxDesc(d.code))}</div><div class="pp">${d.pop ? d.pop + '%' : ''}</div><div class="lo">${deg(d.lo)}</div><div class="wxbar"><i style="left:${((d.lo - lo) / span) * 100}%;right:${100 - ((d.hi - lo) / span) * 100}%"></i></div><div class="hi">${deg(d.hi)}</div></div>`).join('')}</div>`;
+      h += `<div class="row" style="margin-top:12px"><button class="btn" data-wxv="hourly">← Back to hourly</button></div>`;
+    }
+  }
+  h += `<div class="wxfoot" style="margin-top:14px"><a href="https://open-meteo.com/" target="_blank" rel="noopener noreferrer">Weather data by Open-Meteo.com</a>${w && w.at ? ' · updated ' + ago(w.at) : ''} · <button class="btn sm" data-act="wxRefresh">Refresh</button> · <kbd>h</kbd> hourly <kbd>d</kbd> 7-day <kbd>←</kbd><kbd>→</kbd> city</div>`;
+  $('#wxBody').innerHTML = h;
+}
+setInterval(() => refreshWeather(), 5 * 60e3);
+document.addEventListener('visibilitychange', () => { if (!document.hidden) refreshWeather(); });
+
 function bmLink(b) {
   const s = state.settings;
   return `<a class="bm" href="${esc(safeHref(b.url))}" ${s.newTab ? 'target="_blank" rel="noopener noreferrer"' : ''} data-bm="${b.id}" draggable="true">${avatar(b)}<span class="nm">${esc(b.name)}</span>${b.check ? `<span class="dot ${b.check.ok ? 'ok' : 'bad'}" title="${b.check.ok ? 'Reachable · ' + b.check.ms + ' ms' : esc(b.check.err || 'Unreachable')}"></span>` : ''}${s.showShortcuts && b.shortcut ? `<kbd data-sc="${esc(b.shortcut)}">${esc(b.shortcut)}</kbd>` : ''}</a>`;
@@ -882,6 +1077,7 @@ function cardHTML(c) {
     case 'notes': body = notesHTML(c); break;
     case 'calendar': body = calHTML(c); break;
     case 'clock': body = `<div class="wclocks">${state.clocks.map(k => `<div class="wclock" data-tz="${esc(k.timeZone)}"><div class="l">${esc(k.label)}</div><div class="t"></div><div class="d muted"></div></div>`).join('') || '<span class="muted">Add clocks in Settings → Clocks.</span>'}</div>`; break;
+    case 'weather': body = `<div data-wxwidget>${wxWidgetBody()}</div>`; break;
     case 'search': {
       const f = state.finders.find(f => f.key === state.settings.defaultFinder) || state.finders[0];
       body = `<form data-websearch><input placeholder="Search ${esc(f?.name || 'the web')}… (prefix with a finder key, e.g. yt cats)" aria-label="Web search"></form>`; break;
@@ -989,8 +1185,8 @@ function newCategory(pid = state.activePage) {
   return c;
 }
 function addWidget(type) {
-  const names = { notes: 'Notes', calendar: 'Calendar', clock: 'Clocks', search: 'Web search' };
-  const icons = { notes: '📝', calendar: '📅', clock: '🕒', search: '🔎' };
+  const names = { notes: 'Notes', calendar: 'Calendar', clock: 'Clocks', weather: 'Weather', search: 'Web search' };
+  const icons = { notes: '📝', calendar: '📅', clock: '🕒', weather: '🌤️', search: '🔎' };
   const c = mkCat({ name: names[type], icon: icons[type], type }, state.activePage);
   state.categories.push(c);
   if (type === 'notes') notesEditing.add(c.id);
@@ -1142,6 +1338,7 @@ function addMenu(x, y) {
     { label: 'Notes', fn: () => addWidget('notes') },
     { label: 'Calendar', fn: () => addWidget('calendar') },
     { label: 'Clocks', fn: () => addWidget('clock') },
+    { label: 'Weather', fn: () => { addWidget('weather'); refreshWeather(); } },
     { label: 'Web search', fn: () => addWidget('search') },
     '-', { label: 'Import file…', fn: () => $('#fileIn').click() },
   ]);
@@ -1254,6 +1451,8 @@ const ACT = {
   closeModal: () => closeModal(),
   closeEditor: () => closeEditor(),
   notesDone: el => { notesEditing.delete(el.dataset.id); renderPage(); },
+  wxRefresh: el => { el.textContent = 'Refreshing…'; refreshWeather(true); },
+  wxOpen: el => openWeather(+el.dataset.i),
   calNav: el => { const d = +el.dataset.d; calOff[el.dataset.id] = d ? (calOff[el.dataset.id] || 0) + d : 0; renderPage(); },
   catColorClear: el => { catById(el.dataset.id).color = ''; save(); renderPage(); },
   catDelete: el => { closeModal(); deleteCategory(el.dataset.id); },
@@ -1404,6 +1603,7 @@ const SHIFT_KEYS = {
   T: () => openTrash(), S: () => openSettings(), A: () => openLook(), D: toggleMode, R: randomTheme,
   Z: () => { state.settings.showShortcuts = state.settings.legend = !state.settings.legend; commit(); },
   L: () => checkAll(),
+  O: () => openWeather(Math.max(0, state.clocks.findIndex(hasLoc))),
 };
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape') {
@@ -1521,6 +1721,9 @@ function commands() {
     ['Add notes widget', '', () => addWidget('notes')],
     ['Add calendar widget', '', () => addWidget('calendar')],
     ['Add clocks widget', '', () => addWidget('clock')],
+    ['Add weather widget', '', () => { addWidget('weather'); refreshWeather(); }],
+    ['Refresh weather', '', () => { refreshWeather(true); toast('Refreshing weather…'); }],
+    ['Weather forecast', 'Shift O', () => openWeather(Math.max(0, state.clocks.findIndex(hasLoc)))],
     ['Add web search widget', '', () => addWidget('search')],
     ['Bookmarks view', 'Shift B', () => openBookmarksView()],
     ['Inbox', 'Shift I', () => openInbox()],
@@ -2085,6 +2288,7 @@ function settingInput(e) {
   if (k === 'hour12') v = v === true || v === 'true';
   state.settings[k] = v;
   save(); applyLook(); renderHeader(); renderClocks(); renderPage(); renderLegend();
+  if (k === 'weather' && v) refreshWeather();
   const lab = e.target.closest('label.f')?.querySelector('span');
   if (lab && e.target.type === 'range') lab.textContent = lab.textContent.replace(/·.*$/, '· ' + v + (k === 'radius' ? 'px' : '%'));
 }
@@ -2092,7 +2296,7 @@ function settingInput(e) {
 /* ======================================================================
    Settings
    ====================================================================== */
-let stTab = 'general';
+let stTab = 'general', wxEditT, cityResults = [];
 function openSettings(tab) {
   if (tab) stTab = tab;
   showModal('settings', 'Settings', `<div class="tabs" id="stTabs" style="margin:-16px -18px 16px"></div><div id="stBody"></div>`, { refresh: () => { if (!$('#stBody')?.contains(document.activeElement)) stRefresh(); } });
@@ -2101,17 +2305,26 @@ function openSettings(tab) {
   body.addEventListener('input', e => {
     if (e.target.dataset.set) return settingInput(e);
     if (e.target.dataset.top) { state[e.target.dataset.top] = e.target.value; save(); renderHeader(); return; }
-    const ci = e.target.dataset.clock; if (ci != null) { state.clocks[+ci][e.target.dataset.k] = e.target.value; save(); renderClocks(); renderPage(); return; }
+    const ci = e.target.dataset.clock;
+    if (ci != null) {
+      const c = state.clocks[+ci], k = e.target.dataset.k, v = e.target.value;
+      if (k === 'lat' || k === 'lon') { if (v.trim() === '' || !isFinite(v)) delete c[k]; else c[k] = +v; }
+      else c[k] = v;
+      save(); renderClocks(); renderPage();
+      if (k !== 'label') { clearTimeout(wxEditT); wxEditT = setTimeout(() => refreshWeather(), 800); }
+      return;
+    }
     const fi = e.target.dataset.finder; if (fi != null) { state.finders[+fi][e.target.dataset.k] = e.target.value.trim(); save(); return; }
     const pi = e.target.dataset.pagename; if (pi) { pageById(pi).name = e.target.value; save(); renderHeader(); }
   });
   body.addEventListener('change', e => { if (e.target.tagName === 'SELECT' && e.target.dataset.set) settingInput(e); });
   body.addEventListener('click', stClick);
+  body.addEventListener('keydown', e => { if (e.target.id === 'citySearch' && e.key === 'Enter') { e.preventDefault(); $('[data-sta=citySearch]')?.click(); } });
   stRefresh();
 }
 function stRefresh() {
   if (modalKind !== 'settings') return;
-  const tabs = [['general', 'General'], ['clocks', 'Clocks'], ['search', 'Search'], ['pages', 'Pages'], ['data', 'Data'], ['stats', 'Statistics']];
+  const tabs = [['general', 'General'], ['clocks', 'Clocks & weather'], ['search', 'Search'], ['pages', 'Pages'], ['data', 'Data'], ['stats', 'Statistics']];
   $('#stTabs').innerHTML = tabs.map(([k, l]) => `<button data-st="${k}" class="${k === stTab ? 'on' : ''}">${l}</button>`).join('');
   const s = state.settings, chk = (k, l) => `<label class="chk"><input type="checkbox" data-set="${k}" ${s[k] ? 'checked' : ''}> ${l}</label>`;
   let h = '';
@@ -2123,10 +2336,16 @@ function stRefresh() {
       <p><button class="btn" data-act="look">Open Look studio…</button></p>`;
   } else if (stTab === 'clocks') {
     const zones = (Intl.supportedValuesOf?.('timeZone') || ['UTC', 'America/Chicago', 'America/New_York', 'America/Los_Angeles', 'Europe/London', 'Europe/Paris', 'Asia/Singapore', 'Asia/Tokyo', 'Australia/Sydney']);
-    h = `<p class="muted">Clocks appear on the right of the header and in the Clocks widget. Time zones use IANA names such as <code>America/Chicago</code> (US Central, switches between CST and CDT automatically).</p>
+    h = `<p class="muted">Clocks appear on the right of the header and in the Clocks widget. Time zones use IANA names such as <code>America/Chicago</code> (US Central, switches between CST and CDT automatically). Give a clock a latitude and longitude to show that city's weather next to it.</p>
       <datalist id="tzList">${zones.map(z => `<option value="${esc(z)}">`).join('')}</datalist>
-      <table class="tbl"><tr><th>Label</th><th>Time zone</th><th></th><th></th></tr>${state.clocks.map((c, i) => `<tr><td><input data-clock="${i}" data-k="label" value="${esc(c.label)}"></td><td><input data-clock="${i}" data-k="timeZone" value="${esc(c.timeZone)}" list="tzList"></td><td style="white-space:nowrap"><button class="ibtn sm" data-sta="clockUp" data-i="${i}" title="Move up">↑</button></td><td><button class="ibtn sm" data-sta="clockDel" data-i="${i}" title="Remove">${I('x', 14)}</button></td></tr>`).join('')}</table>
-      <div class="row" style="margin-top:10px"><button class="btn" data-sta="clockAdd">+ Add clock</button><button class="btn" data-sta="clockLocal">+ Add my local time</button></div>
+      <table class="tbl"><tr><th>Label</th><th>Time zone</th><th style="width:90px">Latitude</th><th style="width:90px">Longitude</th><th style="width:70px">Unit</th><th></th><th></th></tr>${state.clocks.map((c, i) => `<tr><td><input data-clock="${i}" data-k="label" value="${esc(c.label)}"></td><td><input data-clock="${i}" data-k="timeZone" value="${esc(c.timeZone)}" list="tzList"></td><td><input data-clock="${i}" data-k="lat" value="${hasLoc(c) ? c.lat : ''}" inputmode="decimal" placeholder="none"></td><td><input data-clock="${i}" data-k="lon" value="${hasLoc(c) ? c.lon : ''}" inputmode="decimal" placeholder="none"></td><td><select data-clock="${i}" data-k="unit"><option value="celsius">°C</option><option value="fahrenheit" ${c.unit === 'fahrenheit' ? 'selected' : ''}>°F</option></select></td><td style="white-space:nowrap"><button class="ibtn sm" data-sta="clockUp" data-i="${i}" title="Move up">↑</button></td><td><button class="ibtn sm" data-sta="clockDel" data-i="${i}" title="Remove">${I('x', 14)}</button></td></tr>`).join('')}</table>
+      <div class="row" style="margin-top:10px"><button class="btn" data-sta="clockAdd">+ Add clock</button><button class="btn" data-sta="clockLocal" title="Uses your browser's location; may not work when the file is opened locally">Use my location</button></div>
+      <h4 class="sec">Add a city</h4>
+      <div class="row"><input id="citySearch" placeholder="e.g. Singapore, Paris, Austin" style="flex:1;width:auto"><button class="btn" data-sta="citySearch">Search</button></div>
+      <div id="cityResults" style="margin-top:6px">${cityResults.map((r, i) => `<div class="irow"><div class="t">${esc(r.name)}<div class="muted" style="font-size:12px">${esc([r.admin1, r.country].filter(Boolean).join(', '))} · ${esc(r.timezone || '')}</div></div><button class="btn sm" data-sta="cityAdd" data-i="${i}">Add clock</button></div>`).join('')}</div>
+      <h4 class="sec">Weather</h4>
+      ${chk('weather', 'Show the weather next to each clock that has a location')}
+      <p class="muted">Forecasts come from <a href="https://open-meteo.com/" target="_blank" rel="noopener noreferrer">Open-Meteo.com</a> (free, no account; data licensed CC BY 4.0). Only each clock's coordinates are sent, at most every 30 minutes. Add a Weather widget from the + menu for a 5-day forecast. <button class="btn sm" data-sta="wxRefresh">Refresh now</button></p>
       <h4 class="sec">Format</h4>
       <div class="row"><label class="f"><span>Hours</span><select data-set="hour12"><option value="false" ${!s.hour12 ? 'selected' : ''}>24-hour</option><option value="true" ${s.hour12 ? 'selected' : ''}>12-hour</option></select></label></div>
       ${chk('showSeconds', 'Show seconds')}${chk('showDate', 'Show the date under each clock')}`;
@@ -2174,7 +2393,21 @@ function stClick(e) {
   const re = () => { commit(); stRefresh(); };
   switch (a) {
     case 'clockAdd': state.clocks.push({ label: 'UTC', timeZone: 'UTC' }); re(); break;
-    case 'clockLocal': { const tz = Intl.DateTimeFormat().resolvedOptions().timeZone; state.clocks.push({ label: 'Local', timeZone: tz }); re(); break; }
+    case 'clockLocal': useMyLocation(() => stRefresh()); break;
+    case 'citySearch': {
+      const q = $('#citySearch').value.trim(); if (!q) break;
+      el.textContent = 'Searching…';
+      searchCity(q).then(rs => { cityResults = rs; if (!rs.length) toast('No places found for “' + q + '”.'); }, err => toast('City search failed: ' + err.message))
+        .finally(() => { stRefresh(); const i = $('#citySearch'); if (i) { i.value = q; i.focus(); } });
+      break;
+    }
+    case 'cityAdd': {
+      const r = cityResults[i]; if (!r) break;
+      state.clocks.push(normClock({ label: r.name, timeZone: r.timezone || 'UTC', lat: +r.latitude.toFixed(2), lon: +r.longitude.toFixed(2), unit: r.country_code === 'US' ? 'fahrenheit' : 'celsius' }));
+      cityResults = []; re(); refreshWeather(true); toast(`Added ${r.name}`);
+      break;
+    }
+    case 'wxRefresh': refreshWeather(true); toast('Refreshing weather…'); break;
     case 'clockDel': state.clocks.splice(i, 1); re(); break;
     case 'clockUp': if (i > 0) { [state.clocks[i - 1], state.clocks[i]] = [state.clocks[i], state.clocks[i - 1]]; re(); } break;
     case 'finderAdd': state.finders.push({ key: 'x', name: 'New finder', url: 'https://example.com/search?q=%s' }); re(); break;
@@ -2203,7 +2436,7 @@ const KEYS = [
   ['Shift N', 'New bookmark'], ['Shift C', 'New category'], ['Shift P', 'New page'], ['Shift W', 'Add widget'],
   ['Shift B', 'Bookmarks view'], ['Shift I', 'Inbox'], ['/', 'Tag cloud'], ['Shift T', 'Trash'], ['Shift S', 'Settings'],
   ['Shift A', 'Look studio'], ['Shift D', 'Toggle light / dark'], ['Shift R', 'Random theme'], ['Shift Z', 'Toggle shortcut badges & key legend'],
-  ['Shift L', 'Check all links'], [':', 'Command palette'], ['? · F1', 'This cheat sheet'], ['Esc', 'Close the top panel'], ['Ctrl/⌘ V', 'Paste a link to save it to the Inbox'],
+  ['Shift L', 'Check all links'], ['Shift O · click a clock', 'Weather: hourly and 7-day forecast'], ['Weather: h d ← →', 'Hourly, 7-day, previous / next city'], [':', 'Command palette'], ['? · F1', 'This cheat sheet'], ['Esc', 'Close the top panel'], ['Ctrl/⌘ V', 'Paste a link to save it to the Inbox'],
   ['Right-click', 'Bookmark, category or page options'], ['Drag', 'Reorder bookmarks & categories; drop on a page tab to move there'], ['Double-click', 'Rename title / edit notes'],
   ['Search: ↑ ↓ Enter', 'Move and open'], ['Search: Shift Enter', 'Edit the bookmark'], ['Search: Ctrl/⌘ Enter', 'Open in a new tab'], ['Search: Tab', 'Switch mode (All, Commands, Tags, Web)'],
   ['Search: g query', 'Search with a finder (see Settings → Search)'],
@@ -2394,7 +2627,11 @@ function mergeDefaults() {
       d.bookmarks.filter(b => b.categoryId === dc.id).forEach(b => { if (!have.has(ukey(b.url))) { state.bookmarks.push({ ...b, id: uid(), categoryId: c.id }); added++; } });
     });
   });
-  d.clocks.forEach(c => { if (!state.clocks.some(x => x.timeZone === c.timeZone)) state.clocks.push(c); });
+  d.clocks.forEach(c => {
+    const mine = state.clocks.find(x => x.timeZone === c.timeZone);
+    if (!mine) state.clocks.push(c);
+    else if (!hasLoc(mine) && hasLoc(c)) Object.assign(mine, { lat: c.lat, lon: c.lon, unit: c.unit });
+  });
   d.finders.forEach(f => { if (!state.finders.some(x => x.key === f.key)) state.finders.push(f); });
   localStorage.setItem(LS_HASH, DEFAULTS_HASH);
   commit(); toast(added ? `Added ${added} default link(s).` : 'You already have every default link.');
@@ -2405,6 +2642,7 @@ function mergeDefaults() {
    ====================================================================== */
 $$('[data-icon]').forEach(b => b.insertAdjacentHTML('afterbegin', I(b.dataset.icon)));
 renderAll();
+refreshWeather();
 })();
 </script>
 </body>
