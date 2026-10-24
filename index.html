@@ -268,7 +268,7 @@
 }
 *{box-sizing:border-box}
 html,body{margin:0;min-height:100%}
-body{background:var(--bg);color:var(--text);font:14px/1.45 var(--font);min-height:100vh;-webkit-font-smoothing:antialiased}
+body{background:var(--bg);color:var(--text);font:14px/1.45 var(--font);min-height:100vh;-webkit-font-smoothing:antialiased;display:flex;flex-direction:column}
 body[data-font=mono]{--font:var(--mono)}
 body[data-font=serif]{--font:ui-serif,Georgia,"Times New Roman",serif}
 body[data-font=rounded]{--font:ui-rounded,"SF Pro Rounded","Nunito",var(--sans)}
@@ -316,7 +316,7 @@ header.top{display:flex;align-items:center;gap:16px;padding:12px 24px;position:s
 .banner{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:16px 24px 0;padding:10px 14px;border:1px solid var(--accent);background:color-mix(in srgb,var(--accent) 12%,var(--surface));border-radius:10px}
 .banner span{flex:1;min-width:200px}
 
-main{padding:24px;max-width:1600px;margin:0 auto}
+main{padding:24px;max-width:1600px;margin:0 auto;width:100%;box-sizing:border-box;flex:1 0 auto} /* grows so the key legend sits at the bottom of short pages */
 .pinned{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:var(--gap)}
 .pinned .bm{background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:5px 12px 5px 6px}
 .grid{display:grid;gap:var(--gap);grid-template-columns:repeat(auto-fill,minmax(220px,1fr));align-items:start}
