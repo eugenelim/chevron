@@ -278,6 +278,7 @@ header.top{display:flex;align-items:center;gap:16px;padding:12px 24px;position:s
 .pages button.on{color:var(--text);background:var(--surface2);border-color:var(--border)}
 .pages .num{font-size:11px;opacity:.55;margin-right:6px;font-family:var(--mono)}
 .pages button.drop{outline:2px dashed var(--accent)}
+.pages input.tab-edit{font:inherit;color:var(--text);background:var(--surface2);border:1px solid var(--accent);padding:6px 10px;border-radius:8px;outline:none;min-width:60px}
 .spacer{flex:1}
 .actions{display:flex;gap:2px}
 .ibtn{width:34px;height:34px;display:inline-grid;place-items:center;border-radius:8px;border:1px solid transparent;background:none;cursor:pointer;color:var(--muted);position:relative;padding:0;flex:none}
@@ -890,9 +891,12 @@ function renderAll() {
 function renderHeader() {
   document.title = state.title;
   $('#brand').textContent = state.title;
-  $('#pages').innerHTML = state.pages.map((p, i) =>
-    `<button data-act="page" data-id="${p.id}" data-droppage="${p.id}" class="${p.id === state.activePage ? 'on' : ''}" title="Page ${i + 1} — right-click for options"><span class="num">${i + 1}</span>${esc(p.name)}</button>`
+  // Only rebuild the tabs when the pages change, so switching pages keeps the same elements (double-click to rename needs that)
+  const tabs = state.pages.map((p, i) =>
+    `<button data-act="page" data-id="${p.id}" data-droppage="${p.id}" title="Page ${i + 1} — double-click to rename, right-click for options"><span class="num">${i + 1}</span>${esc(p.name)}</button>`
   ).join('') + `<button data-act="newPage" title="New page (Shift P)">+</button>`;
+  if (tabs !== renderHeader.tabs) { $('#pages').innerHTML = tabs; renderHeader.tabs = tabs; }
+  $$('#pages [data-droppage]').forEach(b => b.classList.toggle('on', b.dataset.droppage === state.activePage));
   const n = inboxVisible().length, badge = $('#inboxBadge');
   badge.hidden = !n; badge.textContent = n > 99 ? '99+' : n;
 }
@@ -1379,13 +1383,31 @@ function catMenu(id, x, y) {
 function pageMenu(id, x, y) {
   const p = pageById(id);
   showMenu(x, y, [
-    { label: 'Rename…', fn: () => { const n = prompt('Page name', p.name); if (n != null) { p.name = n.trim() || p.name; commit(); } } },
+    { label: 'Rename…', fn: () => renamePage(id) },
     { label: 'Move left', fn: () => movePage(id, -1) },
     { label: 'Move right', fn: () => movePage(id, 1) },
     { label: 'New category here', fn: () => { goPage(id); newCategory(id); } },
     { label: 'Share as template…', fn: () => exportPageTemplate(id) },
     '-', { label: 'Delete page', danger: true, fn: () => deletePage(id) },
   ]);
+}
+function renamePage(id) {
+  const p = pageById(id), tab = $(`#pages [data-droppage="${id}"]`); if (!p || !tab) return;
+  const inp = document.createElement('input');
+  inp.className = 'tab-edit'; inp.value = p.name; inp.setAttribute('aria-label', 'Page name');
+  const fit = () => { inp.style.width = `calc(${Math.max(inp.value.length, 4) + 1}ch + 22px)`; };
+  let done = false;
+  const finish = ok => {
+    if (done) return; done = true;
+    const n = inp.value.trim();
+    inp.remove(); tab.hidden = false;
+    if (ok && n && n !== p.name) { p.name = n; commit(); }
+  };
+  inp.addEventListener('input', fit);
+  inp.addEventListener('keydown', e => { e.stopPropagation(); if (e.key === 'Enter') finish(true); else if (e.key === 'Escape') finish(false); });
+  inp.addEventListener('blur', () => finish(true));
+  ['click', 'dblclick', 'mousedown', 'contextmenu'].forEach(t => inp.addEventListener(t, e => e.stopPropagation()));
+  tab.hidden = true; tab.after(inp); fit(); inp.focus(); inp.select();
 }
 function editCategory(id) {
   const c = catById(id); if (!c) return;
@@ -1479,7 +1501,7 @@ document.addEventListener('contextmenu', e => {
   else if (p) { e.preventDefault(); pageMenu(p.dataset.droppage, e.clientX, e.clientY); }
 });
 $('#brand').addEventListener('dblclick', () => { const t = prompt('Dashboard title', state.title); if (t != null) { state.title = t.trim() || 'Dashboard'; commit(); } });
-$('#pages').addEventListener('dblclick', e => { const p = e.target.closest('[data-droppage]'); if (p) pageMenu(p.dataset.droppage, e.clientX, e.clientY); });
+$('#pages').addEventListener('dblclick', e => { const p = e.target.closest('[data-droppage]'); if (p) renamePage(p.dataset.droppage); });
 $('#grid').addEventListener('dblclick', e => {
   const v = e.target.closest('[data-notesview]');
   if (v && !e.target.closest('a,input')) { notesEditing.add(v.dataset.notesview); renderPage(); const ta = $(`[data-notes="${v.dataset.notesview}"]`); ta?.focus(); }

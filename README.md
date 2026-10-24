@@ -4,7 +4,7 @@ A personal start page in **one HTML file**. There's no server, build step, accou
 
 It comes with three pages of links already set up — **Productivity** (Gmail, Google Calendar, Google Drive, Dropbox, GitHub, ChatGPT, Claude, Gemini, DuckDuckGo, Maps, YouTube, LinkedIn, WhatsApp, Instagram, X, Reddit, Windy weather and more), **News** (general, tech, AI and engineering blogs) and **Finance** (news, tools, commentary, economists and a group of paid sources) — and shows CST and London clocks with the local weather on the right. You can change all of these defaults by editing the file. That makes it easy to hand out one prepared dashboard to a team or class.
 
-![A tour of the dashboard: shortcuts, search, pages, the hourly and 7-day weather, the bookmark editor, the bookmarks view, tags, the Look studio and light mode](docs/demo.gif)
+![A tour of the dashboard: shortcuts, search, pages, the hourly and 7-day weather, renaming a page tab, the bookmark editor, the bookmarks view, tags, the Look studio and light mode](docs/demo.gif)
 
 ## Quick start
 
@@ -20,7 +20,7 @@ You can also host it on any static host, such as GitHub Pages, Netlify or an int
 
 ![The Productivity page in dark mode, with the CST and London clocks on the right, each showing its weather beside the time](docs/screenshot.png)
 
-- **Top left:** the dashboard title (double-click to rename it) and the **page tabs**. Click a tab, or press `1`–`9`, to switch pages. The `+` tab adds a page.
+- **Top left:** the dashboard title (double-click to rename it) and the **page tabs**. Click a tab, or press `1`–`9`, to switch pages. Double-click a tab to rename it (`Enter` saves, `Esc` cancels). The `+` tab adds a page.
 - **Top right:** the toolbar, then the **clocks**. Each clock shows the city's current weather at its top left, beside the time (e.g. `🌙 51°F  03:17`), with the city and date underneath. Click a clock for its hourly forecast, then switch to the 7-day forecast. The toolbar buttons are, from left to right:
 
   | Button | Does | Key |
@@ -360,7 +360,7 @@ Browsers don't let a page read another site's status code. So this only tells yo
 ### Other
 
 - Changes made in one tab show up in your other open tabs right away.
-- Double-click the title to rename it. Double-click a page tab for page options.
+- Double-click the title to rename it. Double-click a page tab to rename the page in place, or right-click it for more page options.
 
 ## Keyboard shortcuts
 
@@ -422,7 +422,7 @@ Press `?` or `F1` in the app for a searchable list. Shortcuts don't fire while y
 | Right-click a link, card header or page tab | Options menu |
 | Drag a link or card | Reorder or move it; drop on a page tab to move it there |
 | Double-click the title | Rename the dashboard |
-| Double-click a page tab | Page options |
+| Double-click a page tab | Rename the page |
 | Double-click a notes widget | Edit the notes |
 | Click a clock | Hourly and 7-day weather for that city |
 
@@ -463,6 +463,16 @@ Everything stays in your browser's `localStorage`. The page makes only these net
 - **Link checks,** and only when you ask for one.
 
 Clearing your browser's site data erases your dashboard, so use **Export backup** if you've customised a lot.
+
+## Re-recording the tour
+
+`docs/demo.gif` and `docs/screenshot.png` are generated from `index.html`. After changing the UI, run:
+
+```sh
+uv run tools/record-demo.py
+```
+
+It needs [uv](https://docs.astral.sh/uv/) and Microsoft Edge or Google Chrome. Each frame and its caption are listed in the script. Pass frame names (e.g. `07b-rename`) to re-render only those.
 
 ## Browser support
 
