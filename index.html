@@ -1,0 +1,2411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dashboard</title>
+
+<!--
+  ==========================================================================
+   EDIT THE DEFAULTS HERE
+  --------------------------------------------------------------------------
+   The JSON below is what everyone sees the first time they open this file
+   (and what "Reset to defaults" restores). Change pages, categories,
+   bookmarks, clocks, search finders and look settings, then save the file.
+
+   - Once a visitor changes something, their copy is kept in the browser's
+     localStorage. If you later edit these defaults, they will see a banner
+     offering to add the new links, replace their copy, or keep their own.
+   - "storageKey" keeps several dashboards on the same machine apart.
+     Give each copy of this file its own key.
+   - Settings -> Data -> "Copy as defaults JSON" turns a dashboard you built
+     in the browser into a block you can paste here.
+
+   Bookmark fields: name, url, tags[], shortcut, notes, pinned, icon
+   Category fields: name, icon, color, type (bookmarks | notes | calendar |
+                    clock | search), span (1 | 2), sort, content (notes)
+  ==========================================================================
+-->
+<script id="dash-defaults" type="application/json">
+{
+  "storageKey": "dashboard",
+  "title": "Dashboard",
+  "pages": [
+    {
+      "name": "Productivity",
+      "categories": [
+        {
+          "name": "Mail & Calendar",
+          "icon": "📬",
+          "color": "#4f8cff",
+          "bookmarks": [
+            { "name": "Gmail", "url": "https://mail.google.com/", "tags": ["google", "email"], "shortcut": "gm" },
+            { "name": "Google Calendar", "url": "https://calendar.google.com/", "tags": ["google", "calendar"], "shortcut": "gc" }
+          ]
+        },
+        {
+          "name": "Tools",
+          "icon": "🛠️",
+          "color": "#a78bfa",
+          "bookmarks": [
+            { "name": "GitHub", "url": "https://github.com/", "tags": ["dev", "code"], "shortcut": "gh" },
+            { "name": "ChatGPT", "url": "https://chatgpt.com/", "tags": ["ai"], "shortcut": "ai" },
+            { "name": "Claude", "url": "https://claude.ai/", "tags": ["ai"], "shortcut": "cl" },
+            { "name": "Gemini", "url": "https://gemini.google.com/", "tags": ["ai", "google"], "shortcut": "gi" },
+            { "name": "DuckDuckGo", "url": "https://duckduckgo.com/", "tags": ["search", "privacy"], "shortcut": "dd" }
+          ]
+        },
+        {
+          "name": "Files",
+          "icon": "📁",
+          "color": "#0061fe",
+          "bookmarks": [
+            { "name": "Google Drive", "url": "https://drive.google.com/", "tags": ["google", "files"], "shortcut": "gd" },
+            { "name": "Dropbox", "url": "https://www.dropbox.com/home", "tags": ["files", "storage"], "shortcut": "db" }
+          ]
+        },
+        {
+          "name": "Personal",
+          "icon": "🧭",
+          "color": "#22c55e",
+          "bookmarks": [
+            { "name": "Google Maps", "url": "https://www.google.com/maps", "tags": ["google", "maps", "travel"], "shortcut": "map" },
+            { "name": "YouTube", "url": "https://www.youtube.com/", "tags": ["video", "google"], "shortcut": "yt" },
+            { "name": "Google Flights", "url": "https://www.google.com/travel/flights", "tags": ["google", "travel"], "shortcut": "fl" },
+            { "name": "Every Time Zone", "url": "https://everytimezone.com/", "tags": ["time", "meetings"], "shortcut": "et" },
+            { "name": "Windy", "url": "https://www.windy.com/", "tags": ["weather"], "shortcut": "wi" }
+          ]
+        },
+        {
+          "name": "Social",
+          "icon": "💬",
+          "color": "#ec4899",
+          "bookmarks": [
+            { "name": "LinkedIn", "url": "https://www.linkedin.com/", "tags": ["social", "work"], "shortcut": "li" },
+            { "name": "WhatsApp Web", "url": "https://web.whatsapp.com/", "tags": ["social", "messaging"], "shortcut": "wa" },
+            { "name": "Instagram", "url": "https://www.instagram.com/", "tags": ["social"], "shortcut": "ig" },
+            { "name": "X", "url": "https://x.com/", "tags": ["social"], "shortcut": "x" },
+            { "name": "Reddit", "url": "https://www.reddit.com/", "tags": ["social", "forums"], "shortcut": "rd" }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "News",
+      "categories": [
+        {
+          "name": "News",
+          "icon": "📰",
+          "color": "#e5484d",
+          "bookmarks": [
+            { "name": "AP News", "url": "https://apnews.com/", "tags": ["news"], "shortcut": "ap" },
+            { "name": "BBC News", "url": "https://www.bbc.com/news", "tags": ["news"], "shortcut": "bbc" },
+            { "name": "The Guardian", "url": "https://www.theguardian.com/", "tags": ["news"], "shortcut": "gu" }
+          ]
+        },
+        {
+          "name": "Tech News",
+          "icon": "💻",
+          "color": "#ff6600",
+          "bookmarks": [
+            { "name": "Hacker News", "url": "https://news.ycombinator.com/", "tags": ["tech", "news"], "shortcut": "hn" },
+            { "name": "Ars Technica", "url": "https://arstechnica.com/", "tags": ["tech", "news"], "shortcut": "at" },
+            { "name": "Crunchbase News", "url": "https://news.crunchbase.com/", "tags": ["tech", "news", "startups", "venture"], "shortcut": "cb" }
+          ]
+        },
+        {
+          "name": "AI",
+          "icon": "🤖",
+          "color": "#d97757",
+          "bookmarks": [
+            { "name": "Anthropic News", "url": "https://www.anthropic.com/news", "tags": ["ai", "news"], "shortcut": "an" },
+            { "name": "OpenAI News", "url": "https://openai.com/news/", "tags": ["ai", "news"], "shortcut": "oa" },
+            { "name": "Google DeepMind Blog", "url": "https://deepmind.google/blog/", "tags": ["ai", "news", "google"], "shortcut": "dm" },
+            { "name": "Latent Space", "url": "https://latent.space/", "tags": ["ai", "blog"], "shortcut": "ls" },
+            { "name": "Simon Willison", "url": "https://simonwillison.net/", "tags": ["ai", "blog"], "shortcut": "sw", "notes": "Simon Willison's Weblog" }
+          ]
+        },
+        {
+          "name": "Engineering",
+          "icon": "⚙️",
+          "color": "#0ea5e9",
+          "bookmarks": [
+            { "name": "Cloudflare Blog", "url": "https://blog.cloudflare.com/", "tags": ["engineering", "blog"], "shortcut": "cf" },
+            { "name": "Stripe Engineering", "url": "https://stripe.dev/blog/topic/engineering", "tags": ["engineering", "blog"], "shortcut": "st" },
+            { "name": "Netflix Tech Blog", "url": "https://netflixtechblog.com/", "tags": ["engineering", "blog"], "shortcut": "nf" },
+            { "name": "GitHub Engineering", "url": "https://github.blog/engineering/", "tags": ["engineering", "blog"], "shortcut": "ge" },
+            { "name": "Jane Street Tech Blog", "url": "https://blog.janestreet.com/", "tags": ["engineering", "blog"], "shortcut": "js" },
+            { "name": "Meta Engineering", "url": "https://engineering.fb.com/", "tags": ["engineering", "blog"], "shortcut": "me" },
+            { "name": "Google Research Blog", "url": "https://research.google/blog/", "tags": ["engineering", "research", "blog", "google"], "shortcut": "gr" }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Finance",
+      "categories": [
+        {
+          "name": "Finance News",
+          "icon": "💹",
+          "color": "#30a46c",
+          "bookmarks": [
+            { "name": "Reuters Business", "url": "https://www.reuters.com/business/", "tags": ["finance", "news"], "shortcut": "rt", "notes": "Some articles need a free account" },
+            { "name": "AP Business", "url": "https://apnews.com/business", "tags": ["finance", "news"], "shortcut": "ab" }
+          ]
+        },
+        {
+          "name": "Finance Tools",
+          "icon": "📊",
+          "color": "#f5a524",
+          "bookmarks": [
+            { "name": "Google Finance", "url": "https://www.google.com/finance/", "tags": ["finance", "markets", "google"], "shortcut": "gf" },
+            { "name": "Yahoo Finance", "url": "https://finance.yahoo.com/", "tags": ["finance", "markets"], "shortcut": "yf" },
+            { "name": "TradingView", "url": "https://www.tradingview.com/", "tags": ["finance", "charts"], "shortcut": "tv" },
+            { "name": "Finviz", "url": "https://finviz.com/", "tags": ["finance", "screener"], "shortcut": "fv" },
+            { "name": "FRED", "url": "https://fred.stlouisfed.org/", "tags": ["finance", "economics", "data"], "shortcut": "fr" },
+            { "name": "SEC EDGAR", "url": "https://www.sec.gov/edgar/search/", "tags": ["finance", "filings"], "shortcut": "sec" },
+            { "name": "Morningstar", "url": "https://www.morningstar.com/", "tags": ["finance", "funds"], "shortcut": "ms", "notes": "Some features need a paid plan" },
+            { "name": "Portfolio Visualizer", "url": "https://www.portfoliovisualizer.com/", "tags": ["finance", "portfolio"], "shortcut": "pv", "notes": "Some features need a paid plan" },
+            { "name": "Bogleheads", "url": "https://www.bogleheads.org/", "tags": ["finance", "investing"], "shortcut": "bh" }
+          ]
+        },
+        {
+          "name": "Commentary & Data",
+          "icon": "📈",
+          "color": "#8b5cf6",
+          "bookmarks": [
+            { "name": "Abnormal Returns", "url": "https://abnormalreturns.com/", "tags": ["finance", "investing", "commentary"], "shortcut": "ar" },
+            { "name": "Calculated Risk", "url": "https://www.calculatedriskblog.com/", "tags": ["finance", "economics", "data"], "shortcut": "cr" },
+            { "name": "A Wealth of Common Sense", "url": "https://awealthofcommonsense.com/", "tags": ["finance", "investing", "commentary"], "shortcut": "wc" },
+            { "name": "Of Dollars and Data", "url": "https://ofdollarsanddata.com/", "tags": ["finance", "investing", "data"], "shortcut": "od" },
+            { "name": "Apollo Daily Spark", "url": "https://www.apolloacademy.com/the-daily-spark/", "tags": ["finance", "economics", "data"], "shortcut": "sp", "notes": "Torsten Slok, Apollo chief economist" },
+            { "name": "Federal Reserve", "url": "https://www.federalreserve.gov/", "tags": ["finance", "economics"], "shortcut": "fed" }
+          ]
+        },
+        {
+          "name": "Paid",
+          "icon": "🔒",
+          "color": "#64748b",
+          "bookmarks": [
+            { "name": "Bloomberg", "url": "https://www.bloomberg.com/", "tags": ["finance", "news", "paywall"], "shortcut": "bl", "notes": "Subscription required" },
+            { "name": "Financial Times", "url": "https://www.ft.com/", "tags": ["finance", "news", "paywall"], "shortcut": "ft", "notes": "Subscription required" },
+            { "name": "Wall Street Journal", "url": "https://www.wsj.com/", "tags": ["finance", "news", "paywall"], "shortcut": "wsj", "notes": "Subscription required" },
+            { "name": "Barron's", "url": "https://www.barrons.com/", "tags": ["finance", "investing", "paywall"], "shortcut": "ba", "notes": "Subscription required" }
+          ]
+        },
+        {
+          "name": "Economists",
+          "icon": "🎓",
+          "color": "#14b8a6",
+          "bookmarks": [
+            { "name": "Marginal Revolution", "url": "https://marginalrevolution.com/", "tags": ["economics", "blog"], "shortcut": "mr", "notes": "Tyler Cowen & Alex Tabarrok" },
+            { "name": "Apricitas Economics", "url": "https://www.apricitas.io/", "tags": ["economics", "data"], "shortcut": "ae", "notes": "Joseph Politano" },
+            { "name": "Claudia Sahm", "url": "https://stayathomemacro.substack.com/", "tags": ["economics", "blog"], "shortcut": "cs", "notes": "Stay-at-Home Macro" },
+            { "name": "Conversable Economist", "url": "https://conversableeconomist.com/", "tags": ["economics", "blog"], "shortcut": "ce", "notes": "Timothy Taylor" },
+            { "name": "The Grumpy Economist", "url": "https://www.johnhcochrane.com/", "tags": ["economics", "blog"], "shortcut": "jc", "notes": "John Cochrane" },
+            { "name": "Paul Krugman", "url": "https://paulkrugman.substack.com/", "tags": ["economics", "blog"], "shortcut": "pk" },
+            { "name": "Brad DeLong", "url": "https://braddelong.substack.com/", "tags": ["economics", "blog"], "shortcut": "bd", "notes": "Grasping Reality" },
+            { "name": "Adam Tooze – Chartbook", "url": "https://adamtooze.substack.com/", "tags": ["economics", "blog"], "shortcut": "tz" },
+            { "name": "Noahpinion", "url": "https://www.noahpinion.blog/", "tags": ["economics", "blog"], "shortcut": "np", "notes": "Noah Smith" },
+            { "name": "Robert Shiller Data", "url": "https://shillerdata.com/", "tags": ["economics", "data"], "shortcut": "rs", "notes": "Long-run stock (CAPE) and home price data" },
+            { "name": "Peterson Institute (PIIE)", "url": "https://www.piie.com/", "tags": ["economics", "research"], "shortcut": "pi", "notes": "Think tank; scholars include Olivier Blanchard" }
+          ]
+        }
+      ]
+    }
+  ],
+  "clocks": [
+    { "label": "CST", "timeZone": "America/Chicago" },
+    { "label": "London", "timeZone": "Europe/London" }
+  ],
+  "finders": [
+    { "key": "g", "name": "Google", "url": "https://www.google.com/search?q=%s" },
+    { "key": "d", "name": "DuckDuckGo", "url": "https://duckduckgo.com/?q=%s" },
+    { "key": "gm", "name": "Gmail", "url": "https://mail.google.com/mail/u/0/#search/%s" },
+    { "key": "gh", "name": "GitHub", "url": "https://github.com/search?q=%s" },
+    { "key": "yt", "name": "YouTube", "url": "https://www.youtube.com/results?search_query=%s" },
+    { "key": "w", "name": "Wikipedia", "url": "https://en.wikipedia.org/w/index.php?search=%s" },
+    { "key": "m", "name": "Maps", "url": "https://www.google.com/maps/search/%s" },
+    { "key": "$", "name": "Google Finance", "url": "https://www.google.com/finance?q=%s" },
+    { "key": "fred", "name": "FRED", "url": "https://fred.stlouisfed.org/searchresults/?st=%s" }
+  ],
+  "settings": {
+    "theme": "cocoa",
+    "mode": "system",
+    "hour12": false,
+    "defaultFinder": "g"
+  }
+}
+</script>
+
+<style>
+:root{
+  --bg:#0f1115;--surface:#171a21;--surface2:#1f232c;--text:#e6e8ee;--muted:#8b93a7;--accent:#4f8cff;--border:#2a2f3a;
+  --on-accent:#fff;--danger:#ef5b5b;--ok:#3ecf8e;--warn:#f0b429;
+  --radius:12px;--gap:16px;--pad:14px;--row:6px;--bd-int:.35;
+  --sans:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --mono:ui-monospace,"SF Mono",Menlo,Consolas,"Source Code Pro",monospace;
+  --font:var(--sans);
+}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%}
+body{background:var(--bg);color:var(--text);font:14px/1.45 var(--font);min-height:100vh;-webkit-font-smoothing:antialiased}
+body[data-font=mono]{--font:var(--mono)}
+body[data-font=serif]{--font:ui-serif,Georgia,"Times New Roman",serif}
+body[data-font=rounded]{--font:ui-rounded,"SF Pro Rounded","Nunito",var(--sans)}
+body[data-density=compact]{--pad:10px;--row:3px;--gap:12px}
+body[data-density=spacious]{--pad:20px;--row:9px;--gap:22px}
+body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:var(--bd-int)}
+body[data-backdrop=dots]::before{background-image:radial-gradient(var(--muted) 1px,transparent 1.4px);background-size:22px 22px}
+body[data-backdrop=grid]::before{background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);background-size:32px 32px}
+body[data-backdrop=gradient]::before{background:radial-gradient(1100px 600px at 0% -10%,var(--accent),transparent 60%),radial-gradient(900px 500px at 110% 110%,var(--accent),transparent 60%)}
+body[data-backdrop=aurora]::before{background:linear-gradient(115deg,var(--accent) 0%,transparent 35%,color-mix(in srgb,var(--accent) 50%,#c084fc) 65%,transparent 100%);filter:blur(70px)}
+body[data-backdrop=stripes]::before{background:repeating-linear-gradient(45deg,var(--border) 0 2px,transparent 2px 14px)}
+a{color:inherit}
+button{font:inherit;color:inherit}
+[hidden]{display:none!important}
+.muted{color:var(--muted)}
+small{color:var(--muted)}
+
+/* header */
+header.top{display:flex;align-items:center;gap:16px;padding:12px 24px;position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 82%,transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--border);flex-wrap:wrap}
+.brand{font-weight:700;font-size:18px;white-space:nowrap;cursor:default}
+.pages{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none}
+.pages button{background:none;border:1px solid transparent;padding:6px 10px;border-radius:8px;color:var(--muted);cursor:pointer;white-space:nowrap}
+.pages button:hover{color:var(--text)}
+.pages button.on{color:var(--text);background:var(--surface2);border-color:var(--border)}
+.pages .num{font-size:11px;opacity:.55;margin-right:6px;font-family:var(--mono)}
+.pages button.drop{outline:2px dashed var(--accent)}
+.spacer{flex:1}
+.actions{display:flex;gap:2px}
+.ibtn{width:34px;height:34px;display:inline-grid;place-items:center;border-radius:8px;border:1px solid transparent;background:none;cursor:pointer;color:var(--muted);position:relative;padding:0;flex:none}
+.ibtn:hover{background:var(--surface2);color:var(--text)}
+.ibtn.sm{width:26px;height:26px}
+.badge{position:absolute;top:1px;right:1px;background:var(--accent);color:var(--on-accent);font-size:10px;font-weight:700;border-radius:8px;padding:0 4px;line-height:15px;min-width:15px}
+.clocks{display:flex;gap:18px;padding-left:16px;border-left:1px solid var(--border)}
+.clock{text-align:right;line-height:1.15}
+.clock .t{font-size:20px;font-weight:650;font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+.clock .l{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;white-space:nowrap}
+.clock .l .d{text-transform:none;letter-spacing:0}
+
+.banner{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:16px 24px 0;padding:10px 14px;border:1px solid var(--accent);background:color-mix(in srgb,var(--accent) 12%,var(--surface));border-radius:10px}
+.banner span{flex:1;min-width:200px}
+
+main{padding:24px;max-width:1600px;margin:0 auto}
+.pinned{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:var(--gap)}
+.pinned .bm{background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:5px 12px 5px 6px}
+.grid{display:grid;gap:var(--gap);grid-template-columns:repeat(auto-fill,minmax(250px,1fr));align-items:start}
+
+/* cards */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:var(--pad);min-width:0;transition:box-shadow .15s}
+.card.span2{grid-column:span 2}
+@media (max-width:640px){.card.span2{grid-column:auto}}
+.card.dragging{opacity:.4}
+.card.drop-before{box-shadow:-3px 0 0 var(--accent)}
+.card.drop-after{box-shadow:3px 0 0 var(--accent)}
+.card.drop-in{outline:2px dashed var(--accent);outline-offset:2px}
+.card-h{display:flex;align-items:center;gap:8px;margin-bottom:8px;cursor:grab;user-select:none;min-height:26px}
+.card-h h2{font-size:12px;margin:0;flex:1;text-transform:uppercase;letter-spacing:.08em;color:var(--cat,var(--muted));overflow:hidden;text-overflow:ellipsis;white-space:nowrap;cursor:pointer}
+.card-h .ci{font-size:15px}
+.card-h .cnt{font-size:11px;color:var(--muted);font-family:var(--mono)}
+.card-h .ibtn{opacity:0}
+.card:hover .card-h .ibtn,.card-h .ibtn:focus{opacity:1}
+.card.collapsed .cb{display:none}
+.card.collapsed .card-h{margin-bottom:0}
+body[data-header=filled] .card-h{background:color-mix(in srgb,var(--cat,var(--accent)) 16%,transparent);margin:calc(var(--pad) * -1) calc(var(--pad) * -1) 10px;padding:8px var(--pad);border-radius:var(--radius) var(--radius) 0 0}
+body[data-header=underline] .card-h{border-bottom:2px solid var(--cat,var(--accent));padding-bottom:6px}
+body[data-header=plain] .card-h h2{color:var(--text)}
+
+/* styles */
+body[data-style=glass] .card,body[data-style=glass] .pinned .bm{background:color-mix(in srgb,var(--surface) 55%,transparent);backdrop-filter:blur(16px) saturate(140%);-webkit-backdrop-filter:blur(16px) saturate(140%);border-color:color-mix(in srgb,var(--text) 12%,transparent)}
+body[data-style=outline] .card{background:transparent}
+body[data-style=soft] .card{border-color:transparent;box-shadow:0 1px 2px rgba(0,0,0,.12),0 8px 24px rgba(0,0,0,.12)}
+body[data-style=terminal]{--font:var(--mono)}
+body[data-style=terminal] .card{border-style:dashed;border-radius:2px;background:transparent}
+body[data-style=terminal] .card-h h2::before{content:"> ";color:var(--accent)}
+body[data-style=terminal] .av{border-radius:2px}
+
+.bms{list-style:none;margin:0;padding:0}
+.bm{display:flex;align-items:center;gap:10px;padding:var(--row) 8px;border-radius:8px;text-decoration:none;color:var(--text);min-width:0}
+.bm:hover,.bm.hl{background:var(--surface2)}
+.bm .nm{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bm.drop-before{box-shadow:inset 0 2px 0 var(--accent)}
+.bm.drop-after{box-shadow:inset 0 -2px 0 var(--accent)}
+.bm.hl kbd{background:var(--accent);color:var(--on-accent);border-color:var(--accent)}
+.av{width:20px;height:20px;border-radius:5px;display:inline-grid;place-items:center;font-size:11px;font-weight:700;color:#fff;background:hsl(var(--h,220) 55% 45%);position:relative;flex:none;overflow:hidden}
+.av img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:var(--surface)}
+.av img.broken{display:none}
+.av.emoji{background:none;font-size:16px}
+kbd{font:11px/1.5 var(--mono);background:var(--surface2);border:1px solid var(--border);border-bottom-width:2px;border-radius:4px;padding:0 5px;color:var(--muted);white-space:nowrap}
+.dot{width:7px;height:7px;border-radius:50%;flex:none}
+.dot.ok{background:var(--ok)}.dot.bad{background:var(--danger)}
+.addrow{display:block;width:100%;text-align:left;background:none;border:1px dashed transparent;color:var(--muted);padding:4px 8px;border-radius:8px;cursor:pointer;margin-top:4px;opacity:0}
+.card:hover .addrow{opacity:1;border-color:var(--border)}
+.empty{grid-column:1/-1;text-align:center;padding:60px 20px;color:var(--muted);border:1px dashed var(--border);border-radius:var(--radius)}
+
+/* widgets */
+.md{min-height:40px;cursor:text;overflow-wrap:anywhere}
+.md p,.md ul,.md ol{margin:0 0 6px}
+.md h1,.md h2,.md h3{margin:6px 0;font-size:15px}
+.md ul{padding-left:18px}
+.md ul.task{list-style:none;padding-left:0}
+.md ul.task li{display:flex;gap:6px;align-items:flex-start}
+.md ul.task li.done span{text-decoration:line-through;color:var(--muted)}
+.md code{font-family:var(--mono);background:var(--surface2);padding:0 4px;border-radius:4px}
+.md a{color:var(--accent)}
+.notes-ta{min-height:140px;font-family:var(--mono);font-size:13px}
+.cal-h{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+.cal-h b{cursor:pointer}
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;text-align:center;font-size:12px}
+.cal .wd{color:var(--muted);font-size:11px;padding:2px 0}
+.cal .dd{padding:4px 0;border-radius:6px}
+.cal .today{background:var(--accent);color:var(--on-accent);font-weight:700}
+.wclocks{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:10px}
+.wclock .t{font-size:26px;font-weight:650;font-variant-numeric:tabular-nums}
+.wclock .l{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+
+.legend{text-align:center;color:var(--muted);font-size:12px;padding:8px 24px 28px}
+.legend kbd{margin:0 2px}
+
+/* forms */
+input,select,textarea{font:inherit;color:var(--text);background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:7px 10px;width:100%}
+textarea{resize:vertical}
+input[type=checkbox],input[type=radio],input[type=color],input[type=range]{width:auto;padding:0}
+input[type=color]{height:32px;width:44px;border-radius:6px;background:none}
+input:focus,select:focus,textarea:focus{outline:2px solid color-mix(in srgb,var(--accent) 45%,transparent);border-color:var(--accent)}
+label.f{display:block;margin-bottom:12px}
+label.f>span{display:block;font-size:12px;color:var(--muted);margin-bottom:4px}
+label.chk{display:flex;gap:8px;align-items:center;margin:8px 0;cursor:pointer}
+.btn{padding:6px 12px;border-radius:8px;border:1px solid var(--border);background:var(--surface2);cursor:pointer;white-space:nowrap}
+.btn:hover{border-color:var(--muted)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.btn.danger{color:var(--danger)}
+.btn.sm{padding:3px 9px;font-size:12px}
+.btn.on{border-color:var(--accent);color:var(--accent)}
+.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.seg{display:inline-flex;border:1px solid var(--border);border-radius:8px;overflow:hidden}
+.seg button{background:none;border:0;padding:6px 12px;cursor:pointer;color:var(--muted)}
+.seg button.on{background:var(--accent);color:var(--on-accent)}
+.chip{display:inline-flex;gap:4px;align-items:center;padding:1px 8px;border-radius:999px;background:var(--surface2);border:1px solid var(--border);font-size:12px;color:var(--muted);cursor:pointer;white-space:nowrap;margin:1px}
+.chip:hover{color:var(--text)}
+.chip.on{border-color:var(--accent);color:var(--accent)}
+h4.sec{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin:18px 0 8px}
+h4.sec:first-child{margin-top:0}
+
+/* overlays */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);display:flex;align-items:flex-start;justify-content:center;padding:6vh 16px 16px;z-index:50}
+.modal{background:var(--surface);border:1px solid var(--border);border-radius:14px;width:min(760px,100%);max-height:88vh;display:flex;flex-direction:column;box-shadow:0 30px 80px rgba(0,0,0,.4);overflow:hidden}
+.modal.wide{width:min(1240px,100%);height:88vh}
+.modal>header{display:flex;align-items:center;gap:12px;padding:12px 14px 12px 18px;border-bottom:1px solid var(--border)}
+.modal>header h3{margin:0;font-size:16px;flex:1}
+.mbody{padding:16px 18px;overflow:auto;flex:1;min-height:0}
+.mbody.flush{padding:0;display:flex;flex-direction:column}
+.tabs{display:flex;gap:2px;border-bottom:1px solid var(--border);padding:0 14px;overflow-x:auto;flex:none}
+.tabs button{background:none;border:0;border-bottom:2px solid transparent;padding:10px 10px;cursor:pointer;color:var(--muted);white-space:nowrap}
+.tabs button.on{color:var(--text);border-color:var(--accent)}
+
+/* search */
+.sbox{background:var(--surface);border:1px solid var(--border);border-radius:14px;width:min(700px,100%);box-shadow:0 30px 80px rgba(0,0,0,.45);overflow:hidden}
+.sbox .stabs{display:flex;gap:4px;padding:8px 10px 0}
+.sbox input.q{border:0;background:transparent;font-size:18px;padding:12px 18px 14px;border-radius:0;outline:none;border-bottom:1px solid var(--border)}
+.res{list-style:none;margin:0;padding:6px;max-height:56vh;overflow:auto}
+.res li{display:flex;gap:10px;align-items:center;padding:8px 10px;border-radius:8px;cursor:pointer;min-width:0}
+.res li.on{background:var(--surface2)}
+.res li .t{flex:1;min-width:0}
+.res li .t>div{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.res .sub{color:var(--muted);font-size:12px}
+.res .grp{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);padding:8px 10px 2px;cursor:default}
+.res .ico{width:20px;text-align:center;flex:none}
+.shint{font-size:11.5px;color:var(--muted);padding:8px 14px;border-top:1px solid var(--border)}
+
+/* drawer */
+.drawer{position:fixed;top:0;right:0;bottom:0;width:min(440px,100%);background:var(--surface);border-left:1px solid var(--border);z-index:70;display:flex;flex-direction:column;box-shadow:-20px 0 60px rgba(0,0,0,.3);transform:translateX(105%);transition:transform .18s ease}
+.drawer:not(.open){visibility:hidden;box-shadow:none}
+.drawer.open{transform:none}
+.drawer{transition:transform .18s ease,visibility .18s}
+.drawer>header{display:flex;align-items:center;gap:10px;padding:12px 14px 12px 18px;border-bottom:1px solid var(--border)}
+.drawer>header h3{margin:0;font-size:16px;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.drawer .dbody{padding:16px 18px;overflow:auto;flex:1}
+.drawer footer{display:flex;gap:8px;padding:12px 18px;border-top:1px solid var(--border)}
+.warn{color:var(--warn);font-size:12px}
+.checks{list-style:none;padding:0;margin:0}
+.checks li{display:flex;gap:8px;padding:6px 0;border-bottom:1px solid var(--border)}
+.bars{display:flex;align-items:flex-end;gap:2px;height:70px;margin:8px 0;border-bottom:1px solid var(--border)}
+.bars i{flex:1;background:var(--accent);border-radius:2px 2px 0 0;min-height:1px;opacity:.85}
+.kv{display:grid;grid-template-columns:140px 1fr;gap:6px 12px}
+.kv dt{color:var(--muted)}.kv dd{margin:0}
+
+/* bookmarks view */
+.bv{display:grid;grid-template-columns:230px 1fr;height:100%;min-height:0}
+.rail{border-right:1px solid var(--border);padding:10px;overflow:auto}
+.rail button{display:flex;width:100%;gap:6px;justify-content:space-between;background:none;border:0;padding:5px 8px;border-radius:6px;cursor:pointer;color:var(--muted);text-align:left}
+.rail button span:first-child{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rail button:hover{color:var(--text)}
+.rail button.on{background:var(--surface2);color:var(--text)}
+.rail h4{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin:14px 8px 4px}
+.rail .sub1{padding-left:20px}
+.bvmain{display:flex;flex-direction:column;min-height:0;min-width:0}
+.toolbar{padding:10px 12px;border-bottom:1px solid var(--border)}
+.toolbar select{width:auto}
+.bulk{padding:8px 12px;background:color-mix(in srgb,var(--accent) 12%,var(--surface));border-bottom:1px solid var(--border)}
+.bulk select,.bulk input{width:auto}
+.list{overflow:auto;flex:1}
+.list .r{display:grid;grid-template-columns:22px 22px minmax(140px,2fr) minmax(90px,1.2fr) minmax(90px,1.3fr) 44px 86px 40px 30px;gap:8px;align-items:center;padding:5px 12px;border-bottom:1px solid var(--border);font-size:13px}
+.list .r:hover{background:var(--surface2)}
+.list .r.hd{position:sticky;top:0;background:var(--surface);z-index:1;color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.06em}
+.list .r>*{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.list .r a{text-decoration:none}
+.list .r a:hover{text-decoration:underline}
+.list .gh{padding:10px 12px 4px;font-weight:600;color:var(--muted);font-size:12px}
+.num{text-align:right;font-variant-numeric:tabular-nums}
+.score{font:11px var(--mono);padding:1px 5px;border-radius:5px;text-align:center}
+.score.hi{background:color-mix(in srgb,var(--ok) 20%,transparent);color:var(--ok)}
+.score.mid{background:color-mix(in srgb,var(--warn) 20%,transparent);color:var(--warn)}
+.score.lo{background:color-mix(in srgb,var(--danger) 20%,transparent);color:var(--danger)}
+@media (max-width:800px){.bv{grid-template-columns:1fr}.rail{display:none}.list .r{grid-template-columns:22px 22px 1fr 40px 30px}.list .r>:nth-child(4),.list .r>:nth-child(5),.list .r>:nth-child(6),.list .r>:nth-child(7){display:none}}
+
+.irow{display:flex;gap:10px;align-items:center;padding:8px 0;border-bottom:1px solid var(--border);flex-wrap:wrap}
+.irow .t{flex:1;min-width:180px}
+.irow .t a{text-decoration:none;font-weight:500}
+.irow select{width:auto;max-width:180px}
+.triage{border:1px solid var(--border);border-radius:12px;padding:24px;text-align:center}
+.triage h2{margin:4px 0}
+.cloud{line-height:2.1}
+.cloud .chip{font-size:var(--fs,12px)}
+.themes{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:8px}
+.theme{border:2px solid var(--border);border-radius:10px;padding:0;cursor:pointer;overflow:hidden;text-align:left;background:none}
+.theme.on{border-color:var(--accent)}
+.theme .sw{display:flex;height:34px}
+.theme .sw i{flex:1}
+.theme .nm{display:block;padding:5px 8px;font-size:12px;background:var(--surface2)}
+.stats{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px}
+.stat{background:var(--surface2);border-radius:10px;padding:10px 12px}
+.stat b{display:block;font-size:22px}
+.stat span{font-size:12px;color:var(--muted)}
+.tbl{width:100%;border-collapse:collapse}
+.tbl td,.tbl th{padding:4px 6px 4px 0;text-align:left;vertical-align:middle}
+.tbl th{font-size:11px;color:var(--muted);font-weight:500;text-transform:uppercase;letter-spacing:.06em}
+
+/* menu, preview, toasts */
+.menu{position:fixed;z-index:90;background:var(--surface);border:1px solid var(--border);border-radius:10px;box-shadow:0 12px 40px rgba(0,0,0,.35);padding:4px;min-width:200px;max-height:70vh;overflow:auto}
+.menu button{display:flex;width:100%;gap:8px;justify-content:space-between;background:none;border:0;padding:6px 10px;border-radius:6px;cursor:pointer;text-align:left}
+.menu button:hover{background:var(--surface2)}
+.menu button.danger{color:var(--danger)}
+.menu hr{border:0;border-top:1px solid var(--border);margin:4px 0}
+.menu .mh{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;padding:6px 10px 2px}
+.preview{position:fixed;z-index:80;max-width:320px;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px 12px;box-shadow:0 12px 40px rgba(0,0,0,.35);pointer-events:none;font-size:13px}
+.preview .u{color:var(--muted);font-size:12px;word-break:break-all}
+.preview .n{margin-top:6px;white-space:pre-wrap}
+.toasts{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);z-index:100;display:flex;flex-direction:column;gap:8px;align-items:center}
+.toast{display:flex;gap:12px;align-items:center;background:var(--text);color:var(--bg);padding:8px 10px 8px 14px;border-radius:10px;box-shadow:0 10px 30px rgba(0,0,0,.3);font-size:13px}
+.toast .btn{background:transparent;color:var(--bg);border-color:color-mix(in srgb,var(--bg) 40%,transparent)}
+@media (max-width:720px){header.top{padding:10px 14px}.clocks{border-left:0;padding-left:0;width:100%;justify-content:flex-end}main{padding:14px}}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="brand" id="brand" title="Double-click to rename"></div>
+  <nav class="pages" id="pages" aria-label="Pages"></nav>
+  <div class="spacer"></div>
+  <div class="actions">
+    <button class="ibtn" data-act="search" data-icon="search" title="Search (Ctrl/⌘ K)"></button>
+    <button class="ibtn" data-act="add" data-icon="plus" title="Add (Shift N)"></button>
+    <button class="ibtn" data-act="inbox" data-icon="inbox" title="Inbox (Shift I)"><span class="badge" id="inboxBadge" hidden></span></button>
+    <button class="ibtn" data-act="bv" data-icon="list" title="Bookmarks view (Shift B)"></button>
+    <button class="ibtn" data-act="tags" data-icon="tag" title="Tags (/)"></button>
+    <button class="ibtn" data-act="mode" data-icon="moon" title="Light / dark (Shift D)" id="modeBtn"></button>
+    <button class="ibtn" data-act="look" data-icon="palette" title="Look studio (Shift A)"></button>
+    <button class="ibtn" data-act="settings" data-icon="sliders" title="Settings (Shift S)"></button>
+  </div>
+  <div class="clocks" id="clocks"></div>
+</header>
+
+<div id="banner" class="banner" hidden></div>
+
+<main>
+  <div id="pinned" class="pinned" hidden></div>
+  <div id="grid" class="grid"></div>
+</main>
+<footer id="legend" class="legend"></footer>
+
+<div id="search" class="overlay" hidden>
+  <div class="sbox" role="dialog" aria-label="Search">
+    <div class="stabs" id="stabs"></div>
+    <input class="q" id="q" autocomplete="off" spellcheck="false" placeholder="Search bookmarks, :commands, #tags, or g query…">
+    <ul class="res" id="res"></ul>
+    <div class="shint">↑↓ move · Enter open · Shift+Enter edit · Tab mode · <code>tag:x</code> <code>-tag:x</code> <code>is:pinned</code> <code>added:&lt;7d</code> <code>opened:never</code> <code>/name</code> · <code>g query</code> web search</div>
+  </div>
+</div>
+<div id="modal" class="overlay" hidden></div>
+<aside id="drawer" class="drawer" aria-label="Edit bookmark"></aside>
+<div id="preview" class="preview" hidden></div>
+<div id="toasts" class="toasts"></div>
+<input type="file" id="fileIn" hidden accept=".json,.html,.htm,.csv,.txt">
+
+<script>
+(() => {
+'use strict';
+
+/* ======================================================================
+   Utilities
+   ====================================================================== */
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const now = () => Date.now();
+const DAY = 864e5;
+const hashStr = s => { let h = 5381; for (let i = 0; i < s.length; i++) h = ((h << 5) + h + s.charCodeAt(i)) | 0; return (h >>> 0).toString(36); };
+const domain = u => { try { return new URL(u).hostname.replace(/^www\./, ''); } catch { return ''; } };
+const origin = u => { try { return new URL(u).origin; } catch { return ''; } };
+const normUrl = u => { u = (u || '').trim(); if (!u) return ''; if (!/^[a-z][a-z0-9+.-]*:/i.test(u)) u = 'https://' + u; return u; };
+const validUrl = u => { try { const x = new URL(u); return /^(https?|ftp|file|mailto):$/.test(x.protocol); } catch { return false; } };
+const safeHref = u => /^(https?|ftp|mailto|file):/i.test(u || '') ? u : '#';
+const looksUrl = t => /^https?:\/\/\S+$/i.test(t) || /^(www\.)?[a-z0-9-]+(\.[a-z0-9-]+)*\.[a-z]{2,}(:\d+)?(\/\S*)?$/i.test(t);
+const ukey = u => (u || '').toLowerCase().replace(/^[a-z]+:\/\//, '').replace(/^www\./, '').replace(/[/#?]+$/, '');
+const normTag = t => String(t || '').trim().toLowerCase().replace(/^#/, '').replace(/\s+/g, '-');
+const parseTags = s => [...new Set(String(s || '').split(/[,;]/).map(normTag).filter(Boolean))];
+const hue = s => { let h = 0; for (const c of String(s)) h = (h * 31 + c.charCodeAt(0)) % 360; return h; };
+const isTyping = el => el && (el.matches?.('input,textarea,select') || el.isContentEditable);
+const ago = ts => {
+  if (!ts) return 'never';
+  const s = (now() - ts) / 1000;
+  if (s < 60) return 'just now';
+  if (s < 3600) return Math.floor(s / 60) + 'm ago';
+  if (s < 86400) return Math.floor(s / 3600) + 'h ago';
+  if (s < 86400 * 60) return Math.floor(s / 86400) + 'd ago';
+  if (s < 86400 * 730) return Math.floor(s / 86400 / 30) + 'mo ago';
+  return Math.floor(s / 86400 / 365) + 'y ago';
+};
+const fmtDate = ts => ts ? new Date(ts).toLocaleString([], { dateStyle: 'medium', timeStyle: 'short' }) : '—';
+function download(name, text, type = 'text/plain') {
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([text], { type }));
+  a.download = name; document.body.append(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+}
+const today = () => new Date().toISOString().slice(0, 10);
+
+const ICONS = {
+  search: '<circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/>',
+  plus: '<path d="M12 5v14M5 12h14"/>',
+  inbox: '<path d="M22 12h-6l-2 3h-4l-2-3H2"/><path d="M5.5 5h13L22 12v6a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-6z"/>',
+  list: '<path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/>',
+  tag: '<path d="M20.6 13.4l-7.2 7.2a2 2 0 0 1-2.8 0L3 13V3h10l7.6 7.6a2 2 0 0 1 0 2.8z"/><circle cx="7.5" cy="7.5" r="1.2"/>',
+  palette: '<circle cx="12" cy="12" r="9"/><circle cx="7.5" cy="11" r="1"/><circle cx="12" cy="7.5" r="1"/><circle cx="16.5" cy="11" r="1"/><path d="M12 21a2.5 2.5 0 0 1 0-5h2.5a3 3 0 0 0 3-3"/>',
+  sliders: '<path d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3M1 14h6M9 8h6M17 16h6"/>',
+  moon: '<path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/>',
+  sun: '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>',
+  x: '<path d="M18 6 6 18M6 6l12 12"/>',
+  dots: '<circle cx="5" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/>',
+  edit: '<path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/>',
+};
+const I = (n, s = 18) => `<svg viewBox="0 0 24 24" width="${s}" height="${s}" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONS[n]}</svg>`;
+
+/* ======================================================================
+   Themes: [bg, surface, surface2, text, muted, accent, border]
+   ====================================================================== */
+const THEMES = {
+  cocoa:     { name: 'Cocoa',      dark: ['#11111b', '#1e1e2e', '#313244', '#cdd6f4', '#a6adc8', '#cba6f7', '#45475a'], light: ['#dce0e8', '#eff1f5', '#e6e9ef', '#4c4f69', '#6c6f85', '#8839ef', '#ccd0da'] },
+  nightcity: { name: 'Night City', dark: ['#16161e', '#1a1b26', '#24283b', '#c0caf5', '#9aa5ce', '#7aa2f7', '#292e42'], light: ['#d0d5e3', '#e1e2e7', '#d5d6db', '#3760bf', '#6172b0', '#2e7de9', '#b7c1e3'] },
+  slate:     { name: 'Slate',      dark: ['#0f1115', '#171a21', '#1f232c', '#e6e8ee', '#8b93a7', '#4f8cff', '#2a2f3a'], light: ['#f4f5f8', '#ffffff', '#eef0f4', '#1b1f27', '#646c7e', '#2f6fec', '#dfe2e8'] },
+  fjord:     { name: 'Fjord',      dark: ['#2e3440', '#3b4252', '#434c5e', '#eceff4', '#aab3c4', '#88c0d0', '#4c566a'], light: ['#e5e9f0', '#f4f6f9', '#eceff4', '#2e3440', '#5e6779', '#5e81ac', '#d8dee9'] },
+  dusk:      { name: 'Dusk',       dark: ['#1e1f29', '#282a36', '#343746', '#f8f8f2', '#a0a4c0', '#bd93f9', '#44475a'], light: ['#f3f3f8', '#ffffff', '#ececf4', '#282a36', '#6c6f85', '#7c4dff', '#dedeea'] },
+  ember:     { name: 'Ember',      dark: ['#1d2021', '#282828', '#32302f', '#ebdbb2', '#a89984', '#fabd2f', '#3c3836'], light: ['#f2e5bc', '#fbf1c7', '#f2e5bc', '#3c3836', '#7c6f64', '#b57614', '#e0cfa0'] },
+  solar:     { name: 'Solar',      dark: ['#002b36', '#073642', '#0b3e4b', '#eee8d5', '#93a1a1', '#2aa198', '#174652'], light: ['#eee8d5', '#fdf6e3', '#f4eedb', '#073642', '#657b83', '#268bd2', '#ddd5bd'] },
+  rose:      { name: 'Rose',       dark: ['#191724', '#1f1d2e', '#26233a', '#e0def4', '#908caa', '#ebbcba', '#2f2b45'], light: ['#f2e9e1', '#fffaf3', '#faf4ed', '#575279', '#797593', '#d7827e', '#e4d9cf'] },
+  forest:    { name: 'Forest',     dark: ['#232a2e', '#2d353b', '#343f44', '#d3c6aa', '#9da9a0', '#a7c080', '#3d484d'], light: ['#efebd4', '#fdf6e3', '#f4f0d9', '#5c6a72', '#829181', '#8da101', '#e0dcc7'] },
+  ocean:     { name: 'Ocean',      dark: ['#0b1622', '#0f2033', '#152a42', '#dbe7f3', '#7f97b0', '#22d3ee', '#1d3550'], light: ['#e6f1f8', '#ffffff', '#eef5fa', '#0f2033', '#53687e', '#0891b2', '#cfe0ec'] },
+  sunset:    { name: 'Sunset',     dark: ['#1a1214', '#24181b', '#2f2024', '#f5e6e8', '#b39499', '#ff7a59', '#3a282c'], light: ['#fbefe9', '#ffffff', '#fdf3ee', '#3a1f1a', '#8a6a64', '#e8552f', '#f0d8ce'] },
+  mono:      { name: 'Mono',       dark: ['#0a0a0a', '#141414', '#1e1e1e', '#f0f0f0', '#8a8a8a', '#f0f0f0', '#2a2a2a'], light: ['#f2f2f2', '#ffffff', '#f5f5f5', '#111111', '#6a6a6a', '#111111', '#e2e2e2'] },
+  matrix:    { name: 'Phosphor',   dark: ['#000a00', '#001200', '#001a00', '#7dff7d', '#3fb13f', '#00ff41', '#003300'], light: ['#eaf7ea', '#ffffff', '#f0fbf0', '#003300', '#2f6f2f', '#008f11', '#c8e6c8'] },
+};
+const THEME_KEYS = ['bg', 'surface', 'surface2', 'text', 'muted', 'accent', 'border'];
+const lum = hex => { const m = /^#?([0-9a-f]{6})$/i.exec(hex || ''); if (!m) return 0; const n = parseInt(m[1], 16); return (0.299 * (n >> 16) + 0.587 * ((n >> 8) & 255) + 0.114 * (n & 255)) / 255; };
+
+/* ======================================================================
+   Defaults & storage
+   ====================================================================== */
+const DEFAULTS_TEXT = document.getElementById('dash-defaults').textContent;
+let DEFAULTS;
+try { DEFAULTS = JSON.parse(DEFAULTS_TEXT); } catch (e) { alert('The defaults JSON in this file is invalid:\n' + e.message); DEFAULTS = {}; }
+const DEFAULTS_HASH = hashStr(DEFAULTS_TEXT.replace(/\s+/g, ''));
+const NS = (DEFAULTS.storageKey || 'dashboard').replace(/[^\w.-]/g, '');
+const LS_KEY = NS + ':data:v1', LS_HASH = NS + ':defaultsHash';
+
+const BASE_SETTINGS = {
+  theme: 'cocoa', mode: 'system', style: 'solid', font: 'sans', accent: '', backdrop: 'dots', backdropIntensity: 35,
+  radius: 12, density: 'comfortable', columns: 0, headerStyle: 'accent',
+  newTab: true, favicons: 'google', showShortcuts: true, showPinned: true, previews: true, legend: true,
+  pasteToInbox: true, hour12: false, showSeconds: false, showDate: true, weekStart: 0, defaultFinder: 'g', trashDays: 30,
+};
+
+function mkBm(b, catId) {
+  const url = normUrl(b.url);
+  return {
+    id: uid(), categoryId: catId || null, name: b.name || domain(url) || 'Untitled', url,
+    tags: (Array.isArray(b.tags) ? b.tags : parseTags(b.tags)).map(normTag).filter(Boolean),
+    notes: b.notes || '', shortcut: String(b.shortcut || '').toLowerCase().replace(/[^a-z0-9]/g, ''),
+    pinned: !!b.pinned, icon: b.icon || '', created: b.created || now(), opened: 0, openCount: 0, hist: {},
+    deleted: 0, snooze: 0, check: null,
+  };
+}
+function mkCat(c, pageId) {
+  return {
+    id: uid(), pageId, name: c.name || 'Category', icon: c.icon || '', color: c.color || '',
+    type: c.type || 'bookmarks', span: c.span === 2 ? 2 : 1, sort: c.sort || 'manual', collapsed: !!c.collapsed, content: c.content || '',
+  };
+}
+function fromDefaultsObj(d) {
+  const s = {
+    version: 1, title: d.title || 'Dashboard', pages: [], categories: [], bookmarks: [],
+    collections: (d.collections || []).map(c => ({ id: uid(), name: c.name, query: c.query })),
+    clocks: (d.clocks || []).map(c => ({ label: c.label || '', timeZone: c.timeZone || 'UTC' })),
+    finders: (d.finders || []).map(f => ({ key: f.key, name: f.name, url: f.url })),
+    settings: { ...BASE_SETTINGS, ...(d.settings || {}) }, activePage: null,
+  };
+  (d.pages || []).forEach(p => {
+    const pid = uid();
+    s.pages.push({ id: pid, name: p.name || 'Page' });
+    (p.categories || []).forEach(c => {
+      const cat = mkCat(c, pid); s.categories.push(cat);
+      (c.bookmarks || []).forEach(b => s.bookmarks.push(mkBm(b, cat.id)));
+    });
+  });
+  (d.inbox || []).forEach(b => s.bookmarks.push(mkBm(b, null)));
+  if (!s.pages.length) s.pages.push({ id: uid(), name: 'Home' });
+  s.activePage = s.pages[0].id;
+  return s;
+}
+const fromDefaults = () => fromDefaultsObj(structuredClone(DEFAULTS));
+
+function sanitize(s) {
+  s.settings = { ...BASE_SETTINGS, ...(s.settings || {}) };
+  for (const k of ['pages', 'categories', 'bookmarks', 'collections', 'clocks', 'finders']) if (!Array.isArray(s[k])) s[k] = [];
+  if (!s.pages.length) s.pages.push({ id: uid(), name: 'Home' });
+  if (!s.pages.some(p => p.id === s.activePage)) s.activePage = s.pages[0].id;
+  const keepDays = (s.settings.trashDays || 30) * DAY;
+  s.bookmarks = s.bookmarks.filter(b => !(b.deleted && now() - b.deleted > keepDays) && !(b._new && !b.url));
+  s.bookmarks.forEach(b => { delete b._new; b.tags = b.tags || []; b.hist = b.hist || {}; });
+  return s;
+}
+function load() {
+  let s = null;
+  try { s = JSON.parse(localStorage.getItem(LS_KEY)); } catch { /* corrupt or blocked */ }
+  if (!s || !Array.isArray(s.pages)) s = fromDefaults();
+  return sanitize(s);
+}
+
+let state = load();
+let _dup = null;
+let saveT;
+function save() {
+  _dup = null;
+  clearTimeout(saveT);
+  saveT = setTimeout(saveNow, 150);
+}
+function saveNow() {
+  clearTimeout(saveT);
+  try {
+    localStorage.setItem(LS_KEY, JSON.stringify(state));
+    if (!localStorage.getItem(LS_HASH)) localStorage.setItem(LS_HASH, DEFAULTS_HASH);
+  } catch (e) { toast('Could not save: ' + e.message); }
+}
+function commit() {
+  save();
+  renderAll();
+  if (modalRefresh) modalRefresh();
+  if (editing && !$('#drawer').contains(document.activeElement)) renderEditor();
+}
+addEventListener('beforeunload', saveNow);
+addEventListener('storage', e => {
+  if (e.key === LS_KEY && e.newValue) { state = load(); _dup = null; renderAll(); if (modalRefresh) modalRefresh(); }
+});
+
+/* ======================================================================
+   Lookups & helpers
+   ====================================================================== */
+const bmById = id => state.bookmarks.find(b => b.id === id);
+const catById = id => state.categories.find(c => c.id === id);
+const pageById = id => state.pages.find(p => p.id === id);
+const live = () => state.bookmarks.filter(b => !b.deleted);
+const isInbox = b => !b.categoryId || !catById(b.categoryId);
+const catOf = b => isInbox(b) ? null : catById(b.categoryId);
+const pageOf = b => { const c = catOf(b); return c ? pageById(c.pageId) : null; };
+const pageCats = (pid = state.activePage) => state.categories.filter(c => c.pageId === pid);
+const catPath = b => { const c = catOf(b); return c ? `${pageById(c.pageId)?.name || ''} › ${c.name}` : 'Inbox'; };
+const inboxVisible = () => state.bookmarks.filter(b => !b.deleted && isInbox(b) && !(b.snooze > now()));
+function sortBms(list, sort) {
+  if (sort === 'name') list.sort((a, b) => a.name.localeCompare(b.name));
+  else if (sort === 'count') list.sort((a, b) => (b.openCount || 0) - (a.openCount || 0));
+  else if (sort === 'opened') list.sort((a, b) => (b.opened || 0) - (a.opened || 0));
+  else if (sort === 'added') list.sort((a, b) => b.created - a.created);
+  return list;
+}
+const catBms = cid => sortBms(state.bookmarks.filter(b => !b.deleted && b.categoryId === cid), catById(cid)?.sort);
+function dupMap() {
+  if (!_dup) { _dup = new Map(); live().forEach(b => { const k = ukey(b.url); if (k) _dup.set(k, (_dup.get(k) || 0) + 1); }); }
+  return _dup;
+}
+const isDup = b => (dupMap().get(ukey(b.url)) || 0) > 1;
+function tagCounts() {
+  const m = new Map();
+  live().forEach(b => b.tags.forEach(t => m.set(t, (m.get(t) || 0) + 1)));
+  return m;
+}
+function score(b) {
+  let s = 100; const issues = [];
+  if (!validUrl(b.url)) { s -= 40; issues.push('Invalid URL'); }
+  else if (/^http:/i.test(b.url)) { s -= 10; issues.push('Not HTTPS'); }
+  if (!b.tags.length) { s -= 10; issues.push('No tags'); }
+  if (isDup(b)) { s -= 25; issues.push('Duplicate'); }
+  if (!b.openCount) { if (now() - b.created > 14 * DAY) { s -= 15; issues.push('Never opened'); } }
+  else if (now() - b.opened > 60 * DAY) { s -= 15; issues.push('Not opened in 60 days'); }
+  if (b.check && !b.check.ok) { s -= 30; issues.push('Unreachable at last check'); }
+  return { s: Math.max(0, s), issues };
+}
+const scoreCls = s => s >= 85 ? 'hi' : s >= 65 ? 'mid' : 'lo';
+function catOptions(sel) {
+  return state.pages.map(p => {
+    const cs = pageCats(p.id).filter(c => c.type === 'bookmarks');
+    return cs.length ? `<optgroup label="${esc(p.name)}">${cs.map(c => `<option value="${c.id}" ${c.id === sel ? 'selected' : ''}>${esc(c.name)}</option>`).join('')}</optgroup>` : '';
+  }).join('');
+}
+function firstBmCat(pid = state.activePage, create = true) {
+  let c = pageCats(pid).find(c => c.type === 'bookmarks');
+  if (!c && create) { c = mkCat({ name: 'Bookmarks' }, pid); state.categories.push(c); }
+  return c;
+}
+function unsortedCat() {
+  let c = state.categories.find(c => c.type === 'bookmarks' && c.name === 'Unsorted');
+  if (!c) { c = mkCat({ name: 'Unsorted', icon: '📥' }, state.pages[0].id); state.categories.push(c); }
+  return c;
+}
+function faviconUrl(url) {
+  const h = (() => { try { return new URL(url).hostname; } catch { return ''; } })();
+  if (!h || !/^https?:/i.test(url)) return '';
+  switch (state.settings.favicons) {
+    case 'google': return `https://www.google.com/s2/favicons?domain=${encodeURIComponent(h)}&sz=64`;
+    case 'duckduckgo': return `https://icons.duckduckgo.com/ip3/${encodeURIComponent(h)}.ico`;
+    case 'site': return origin(url) + '/favicon.ico';
+    default: return '';
+  }
+}
+function avatar(b) {
+  if (b.icon && !/^(https?:|data:)/i.test(b.icon)) return `<span class="av emoji">${esc(b.icon)}</span>`;
+  const letter = esc((b.name || '?').trim().charAt(0).toUpperCase() || '?');
+  const src = b.icon || faviconUrl(b.url);
+  return `<span class="av" style="--h:${hue(domain(b.url) || b.name)}">${letter}${src ? `<img class="fav" src="${esc(src)}" alt="" loading="lazy" referrerpolicy="no-referrer">` : ''}</span>`;
+}
+document.addEventListener('error', e => { if (e.target.matches?.('img.fav')) e.target.classList.add('broken'); }, true);
+
+/* ======================================================================
+   Look
+   ====================================================================== */
+const mq = matchMedia('(prefers-color-scheme: dark)');
+const isDark = () => state.settings.mode === 'system' ? mq.matches : state.settings.mode === 'dark';
+function applyLook() {
+  const s = state.settings, dark = isDark();
+  const t = (THEMES[s.theme] || THEMES.cocoa)[dark ? 'dark' : 'light'];
+  const r = document.documentElement.style;
+  THEME_KEYS.forEach((k, i) => r.setProperty('--' + k, t[i]));
+  const accent = s.accent || t[5];
+  r.setProperty('--accent', accent);
+  r.setProperty('--on-accent', lum(accent) > 0.6 ? '#111' : '#fff');
+  r.setProperty('--radius', (s.radius ?? 12) + 'px');
+  r.setProperty('--bd-int', (s.backdropIntensity ?? 35) / 100);
+  r.colorScheme = dark ? 'dark' : 'light';
+  Object.assign(document.body.dataset, { style: s.style, backdrop: s.backdrop, density: s.density, font: s.font, header: s.headerStyle });
+  const mb = $('#modeBtn');
+  if (mb) mb.innerHTML = I(dark ? 'sun' : 'moon');
+}
+mq.addEventListener?.('change', () => { if (state.settings.mode === 'system') applyLook(); });
+function toggleMode() {
+  state.settings.mode = isDark() ? 'light' : 'dark';
+  commit();
+  toast(`${state.settings.mode === 'dark' ? 'Dark' : 'Light'} mode`);
+}
+function randomTheme() {
+  const ks = Object.keys(THEMES).filter(k => k !== state.settings.theme);
+  state.settings.theme = ks[Math.floor(Math.random() * ks.length)];
+  commit();
+  toast('Theme: ' + THEMES[state.settings.theme].name);
+}
+
+/* ======================================================================
+   Render: header, clocks, page
+   ====================================================================== */
+function renderAll() {
+  applyLook();
+  renderHeader();
+  renderClocks();
+  renderPage();
+  renderLegend();
+  renderBanner();
+}
+function renderHeader() {
+  document.title = state.title;
+  $('#brand').textContent = state.title;
+  $('#pages').innerHTML = state.pages.map((p, i) =>
+    `<button data-act="page" data-id="${p.id}" data-droppage="${p.id}" class="${p.id === state.activePage ? 'on' : ''}" title="Page ${i + 1} — right-click for options"><span class="num">${i + 1}</span>${esc(p.name)}</button>`
+  ).join('') + `<button data-act="newPage" title="New page (Shift P)">+</button>`;
+  const n = inboxVisible().length, badge = $('#inboxBadge');
+  badge.hidden = !n; badge.textContent = n > 99 ? '99+' : n;
+}
+function renderClocks() {
+  $('#clocks').innerHTML = state.clocks.map(c =>
+    `<div class="clock" data-tz="${esc(c.timeZone)}"><div class="t"></div><div class="l">${esc(c.label)}${state.settings.showDate ? ' · <span class="d"></span>' : ''}</div></div>`
+  ).join('');
+  $('#clocks').hidden = !state.clocks.length;
+  tickClocks();
+}
+function tickClocks() {
+  const d = new Date(), s = state.settings;
+  $$('[data-tz]').forEach(el => {
+    const tz = el.dataset.tz, t = el.querySelector('.t'), dd = el.querySelector('.d');
+    try {
+      t.textContent = d.toLocaleTimeString([], { timeZone: tz, hour: '2-digit', minute: '2-digit', second: s.showSeconds ? '2-digit' : undefined, hour12: !!s.hour12 });
+      if (dd) dd.textContent = d.toLocaleDateString([], { timeZone: tz, weekday: 'short', day: 'numeric', month: 'short' });
+    } catch { t.textContent = '??:??'; if (dd) dd.textContent = 'bad time zone'; }
+  });
+}
+setInterval(tickClocks, 1000);
+
+function bmLink(b) {
+  const s = state.settings;
+  return `<a class="bm" href="${esc(safeHref(b.url))}" ${s.newTab ? 'target="_blank" rel="noopener noreferrer"' : ''} data-bm="${b.id}" draggable="true">${avatar(b)}<span class="nm">${esc(b.name)}</span>${b.check ? `<span class="dot ${b.check.ok ? 'ok' : 'bad'}" title="${b.check.ok ? 'Reachable · ' + b.check.ms + ' ms' : esc(b.check.err || 'Unreachable')}"></span>` : ''}${s.showShortcuts && b.shortcut ? `<kbd data-sc="${esc(b.shortcut)}">${esc(b.shortcut)}</kbd>` : ''}</a>`;
+}
+function cardHTML(c) {
+  let body = '', cnt = '';
+  switch (c.type) {
+    case 'notes': body = notesHTML(c); break;
+    case 'calendar': body = calHTML(c); break;
+    case 'clock': body = `<div class="wclocks">${state.clocks.map(k => `<div class="wclock" data-tz="${esc(k.timeZone)}"><div class="l">${esc(k.label)}</div><div class="t"></div><div class="d muted"></div></div>`).join('') || '<span class="muted">Add clocks in Settings → Clocks.</span>'}</div>`; break;
+    case 'search': {
+      const f = state.finders.find(f => f.key === state.settings.defaultFinder) || state.finders[0];
+      body = `<form data-websearch><input placeholder="Search ${esc(f?.name || 'the web')}… (prefix with a finder key, e.g. yt cats)" aria-label="Web search"></form>`; break;
+    }
+    default: {
+      const bms = catBms(c.id); cnt = `<span class="cnt">${bms.length}</span>`;
+      body = `<ul class="bms">${bms.map(b => `<li>${bmLink(b)}</li>`).join('')}</ul><button class="addrow" data-act="addBm" data-cat="${c.id}">+ Add bookmark</button>`;
+    }
+  }
+  return `<section class="card ${c.span === 2 ? 'span2' : ''} ${c.collapsed ? 'collapsed' : ''}" data-cat="${c.id}" ${c.color ? `style="--cat:${esc(c.color)}"` : ''}>
+    <header class="card-h" draggable="true" data-dragcat="${c.id}">${c.icon ? `<span class="ci">${esc(c.icon)}</span>` : ''}<h2 data-act="collapse" data-id="${c.id}" title="Click to collapse · drag to move">${esc(c.name)}</h2>${cnt}<button class="ibtn sm" data-act="catMenu" data-id="${c.id}" title="Options">${I('dots', 16)}</button></header>
+    <div class="cb">${body}</div></section>`;
+}
+function renderPage() {
+  const s = state.settings, grid = $('#grid');
+  grid.style.gridTemplateColumns = +s.columns ? `repeat(${+s.columns},minmax(0,1fr))` : '';
+  const pinned = s.showPinned ? live().filter(b => b.pinned && !isInbox(b)) : [];
+  $('#pinned').innerHTML = pinned.map(bmLink).join('');
+  $('#pinned').hidden = !pinned.length;
+  const cats = pageCats();
+  grid.innerHTML = cats.map(cardHTML).join('') ||
+    `<div class="empty"><p>This page is empty.</p><div class="row" style="justify-content:center"><button class="btn primary" data-act="newCat">New category</button><button class="btn" data-act="add">Add widget…</button></div></div>`;
+  tickClocks();
+}
+let renderPageT;
+const renderPageSoon = () => { clearTimeout(renderPageT); renderPageT = setTimeout(() => { renderPage(); renderHeader(); }, 120); };
+function renderLegend() {
+  const l = $('#legend');
+  l.hidden = !state.settings.legend;
+  l.innerHTML = `<kbd>Ctrl/⌘ K</kbd> search · type a shortcut to open · <kbd>1</kbd>–<kbd>9</kbd> pages · <kbd>Shift N</kbd> add · <kbd>Shift A</kbd> look · <kbd>Shift D</kbd> light/dark · paste a link → Inbox · <kbd>?</kbd> all shortcuts`;
+}
+function renderBanner() {
+  const stored = localStorage.getItem(LS_HASH), has = !!localStorage.getItem(LS_KEY);
+  const show = has && stored && stored !== DEFAULTS_HASH;
+  const b = $('#banner'); b.hidden = !show;
+  if (show) b.innerHTML = `<span>The built-in defaults in this file have changed since you started customising.</span>
+    <button class="btn sm primary" data-act="dfMerge">Add new defaults</button><button class="btn sm" data-act="dfReset">Replace with defaults</button><button class="btn sm" data-act="dfKeep">Keep mine</button>`;
+}
+
+/* ---------- widgets ---------- */
+const notesEditing = new Set();
+function md(src) {
+  const lines = esc(src || '').split('\n');
+  let out = '', list = null, ci = 0;
+  const inline = s => s
+    .replace(/`([^`]+)`/g, '<code>$1</code>')
+    .replace(/\*\*([^*]+)\*\*/g, '<b>$1</b>')
+    .replace(/(^|[^*])\*([^*\s][^*]*)\*/g, '$1<i>$2</i>')
+    .replace(/\[([^\]]+)\]\((https?:[^)\s]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>')
+    .replace(/(^|\s)(https?:\/\/[^\s<]+)/g, '$1<a href="$2" target="_blank" rel="noopener">$2</a>');
+  const open = t => { if (list !== t) { close(); out += t === 'task' ? '<ul class="task">' : `<${t}>`; list = t; } };
+  const close = () => { if (list) out += list === 'task' ? '</ul>' : `</${list}>`; list = null; };
+  for (const ln of lines) {
+    let m;
+    if ((m = ln.match(/^\s*[-*] \[( |x|X)\] ?(.*)$/))) { open('task'); const done = m[1] !== ' '; out += `<li class="${done ? 'done' : ''}"><input type="checkbox" data-ci="${ci++}" ${done ? 'checked' : ''}><span>${inline(m[2])}</span></li>`; }
+    else if ((m = ln.match(/^\s*[-*] (.*)$/))) { open('ul'); out += `<li>${inline(m[1])}</li>`; }
+    else if ((m = ln.match(/^\s*\d+[.)] (.*)$/))) { open('ol'); out += `<li>${inline(m[1])}</li>`; }
+    else {
+      close();
+      if ((m = ln.match(/^(#{1,3}) (.*)$/))) out += `<h${m[1].length}>${inline(m[2])}</h${m[1].length}>`;
+      else if (/^\s*---+\s*$/.test(ln)) out += '<hr>';
+      else if (ln.trim()) out += `<p>${inline(ln)}</p>`;
+    }
+  }
+  close();
+  return out;
+}
+function notesHTML(c) {
+  if (notesEditing.has(c.id)) return `<textarea class="notes-ta" data-notes="${c.id}" placeholder="Markdown: # heading, - list, - [ ] task, **bold**, \`code\`, [link](https://…)">${esc(c.content)}</textarea><div class="row" style="margin-top:6px"><button class="btn sm" data-act="notesDone" data-id="${c.id}">Done</button><small>Saved as you type</small></div>`;
+  return `<div class="md" data-notesview="${c.id}" title="Double-click to edit">${md(c.content) || '<p class="muted">Double-click to write notes…</p>'}</div>`;
+}
+const calOff = {};
+function calHTML(c) {
+  const off = calOff[c.id] || 0, d = new Date(), ws = +state.settings.weekStart || 0;
+  const first = new Date(d.getFullYear(), d.getMonth() + off, 1);
+  const lead = (first.getDay() - ws + 7) % 7, days = new Date(first.getFullYear(), first.getMonth() + 1, 0).getDate();
+  const wd = [...Array(7)].map((_, i) => new Date(2024, 0, 7 + ((i + ws) % 7)).toLocaleDateString([], { weekday: 'narrow' }));
+  let cells = wd.map(w => `<div class="wd">${w}</div>`).join('') + '<div></div>'.repeat(lead);
+  for (let i = 1; i <= days; i++) cells += `<div class="dd ${off === 0 && i === d.getDate() ? 'today' : ''}">${i}</div>`;
+  return `<div class="cal-h"><button class="ibtn sm" data-act="calNav" data-id="${c.id}" data-d="-1">‹</button><b data-act="calNav" data-id="${c.id}" data-d="0" title="Back to today">${first.toLocaleDateString([], { month: 'long', year: 'numeric' })}</b><button class="ibtn sm" data-act="calNav" data-id="${c.id}" data-d="1">›</button></div><div class="cal">${cells}</div>`;
+}
+
+/* ======================================================================
+   Actions
+   ====================================================================== */
+function goPage(id) {
+  if (!pageById(id)) return;
+  state.activePage = id; save(); renderHeader(); renderPage();
+}
+function stepPage(d) {
+  const i = state.pages.findIndex(p => p.id === state.activePage);
+  goPage(state.pages[(i + d + state.pages.length) % state.pages.length].id);
+}
+function newPage() {
+  const name = prompt('Page name', 'Page ' + (state.pages.length + 1));
+  if (name == null) return;
+  const p = { id: uid(), name: name.trim() || 'Page' };
+  state.pages.push(p); state.activePage = p.id; commit();
+}
+function newCategory(pid = state.activePage) {
+  const name = prompt('Category name', 'New category');
+  if (name == null) return;
+  const c = mkCat({ name: name.trim() || 'Category' }, pid);
+  state.categories.push(c); commit();
+  return c;
+}
+function addWidget(type) {
+  const names = { notes: 'Notes', calendar: 'Calendar', clock: 'Clocks', search: 'Web search' };
+  const icons = { notes: '📝', calendar: '📅', clock: '🕒', search: '🔎' };
+  const c = mkCat({ name: names[type], icon: icons[type], type }, state.activePage);
+  state.categories.push(c);
+  if (type === 'notes') notesEditing.add(c.id);
+  commit();
+  if (type === 'notes') $(`[data-notes="${c.id}"]`)?.focus();
+}
+function newBookmark(catId, preset = {}) {
+  const cid = catId === null ? null : (catId || firstBmCat()?.id);
+  const b = mkBm({ url: '', ...preset }, cid);
+  if (!preset.name) b.name = '';
+  b._new = true;
+  state.bookmarks.push(b); save(); renderPage();
+  openEditor(b.id);
+  setTimeout(() => $('#drawer [data-f=url]')?.focus(), 200);
+}
+function recordOpen(id) {
+  const b = bmById(id); if (!b) return;
+  b.openCount = (b.openCount || 0) + 1; b.opened = now();
+  const d = Math.floor(now() / DAY); b.hist = b.hist || {};
+  b.hist[d] = (b.hist[d] || 0) + 1;
+  for (const k of Object.keys(b.hist)) if (d - k > 90) delete b.hist[k];
+  saveNow();
+}
+function openBm(b, forceNew) {
+  if (!b || !validUrl(b.url)) return;
+  recordOpen(b.id);
+  if (forceNew || state.settings.newTab) window.open(b.url, '_blank', 'noopener');
+  else location.href = b.url;
+}
+function deleteBm(id) {
+  const b = bmById(id); if (!b) return;
+  if (editing === id) closeEditor(true);
+  withUndo(`Moved “${b.name}” to Trash`, () => { b.deleted = now(); });
+}
+function deleteCategory(id) {
+  const c = catById(id); if (!c) return;
+  const bms = catBms(id);
+  if (!confirm(`Delete “${c.name}”${bms.length ? ` and move its ${bms.length} bookmark(s) to Trash` : ''}?`)) return;
+  withUndo(`Deleted “${c.name}”`, () => {
+    bms.forEach(b => { b.deleted = now(); b.categoryId = null; b.fromCat = c.name; });
+    state.categories = state.categories.filter(x => x.id !== id);
+  });
+}
+function deletePage(id) {
+  if (state.pages.length < 2) return toast('You need at least one page.');
+  const p = pageById(id);
+  if (!confirm(`Delete page “${p.name}”? Its bookmarks go to Trash.`)) return;
+  withUndo(`Deleted page “${p.name}”`, () => {
+    pageCats(id).forEach(c => catBms(c.id).forEach(b => { b.deleted = now(); b.categoryId = null; b.fromCat = c.name; }));
+    state.categories = state.categories.filter(c => c.pageId !== id);
+    state.pages = state.pages.filter(x => x.id !== id);
+    if (state.activePage === id) state.activePage = state.pages[0].id;
+  });
+}
+function movePage(id, d) {
+  const i = state.pages.findIndex(p => p.id === id), j = i + d;
+  if (j < 0 || j >= state.pages.length) return;
+  [state.pages[i], state.pages[j]] = [state.pages[j], state.pages[i]]; commit();
+}
+function moveBm(id, catId, targetId, after) {
+  const arr = state.bookmarks, i = arr.findIndex(b => b.id === id);
+  if (i < 0 || id === targetId) return;
+  const [b] = arr.splice(i, 1);
+  b.categoryId = catId; b.snooze = 0;
+  let j = arr.length;
+  if (targetId) { j = arr.findIndex(x => x.id === targetId); if (j < 0) j = arr.length; else if (after) j++; }
+  arr.splice(j, 0, b);
+  const c = catById(catId); if (c && targetId) c.sort = 'manual';
+  commit();
+}
+function moveCat(id, targetId, after) {
+  if (id === targetId) return;
+  const arr = state.categories, i = arr.findIndex(c => c.id === id);
+  const [c] = arr.splice(i, 1);
+  let j = arr.findIndex(x => x.id === targetId);
+  if (j < 0) j = arr.length; else if (after) j++;
+  c.pageId = (catById(targetId) || c).pageId;
+  arr.splice(j, 0, c); commit();
+}
+function withUndo(msg, fn) {
+  const snap = JSON.stringify(state);
+  fn(); commit();
+  toast(msg, { action: 'Undo', fn: () => { state = sanitize(JSON.parse(snap)); commit(); } });
+}
+function toast(msg, { action, fn, ms = 5000 } = {}) {
+  const t = document.createElement('div');
+  t.className = 'toast'; t.innerHTML = `<span>${esc(msg)}</span>`;
+  if (action) {
+    const b = document.createElement('button');
+    b.className = 'btn sm'; b.textContent = action;
+    b.onclick = () => { fn(); t.remove(); };
+    t.append(b);
+  }
+  $('#toasts').append(t);
+  setTimeout(() => t.remove(), ms);
+}
+
+/* ---------- link checks ---------- */
+async function checkLink(b) {
+  if (!/^https?:/i.test(b.url)) { b.check = { ok: false, ms: 0, at: now(), err: 'Not an http(s) link' }; return b.check; }
+  const t0 = performance.now(), ctl = new AbortController(), tm = setTimeout(() => ctl.abort(), 10000);
+  try {
+    await fetch(b.url, { mode: 'no-cors', cache: 'no-store', credentials: 'omit', signal: ctl.signal, referrerPolicy: 'no-referrer' });
+    b.check = { ok: true, ms: Math.round(performance.now() - t0), at: now() };
+  } catch (e) {
+    b.check = { ok: false, ms: Math.round(performance.now() - t0), at: now(), err: e.name === 'AbortError' ? 'Timed out' : 'Unreachable' };
+  } finally { clearTimeout(tm); }
+  return b.check;
+}
+async function checkAll(list = live()) {
+  const q = list.filter(b => /^https?:/i.test(b.url));
+  if (!q.length) return toast('No web links to check.');
+  toast(`Checking ${q.length} link(s)…`);
+  let i = 0, bad = 0;
+  const worker = async () => { while (i < q.length) { const b = q[i++]; if (!(await checkLink(b)).ok) bad++; } };
+  await Promise.all([1, 2, 3, 4].map(worker));
+  commit();
+  toast(`Checked ${q.length} link(s): ${q.length - bad} reachable, ${bad} unreachable.`);
+}
+
+/* ======================================================================
+   Menus & preview
+   ====================================================================== */
+let menuEl = null;
+function closeMenu() { menuEl?.remove(); menuEl = null; }
+function showMenu(x, y, items) {
+  closeMenu();
+  const m = document.createElement('div'); m.className = 'menu'; m.setAttribute('role', 'menu');
+  for (const it of items) {
+    if (it === '-') { m.append(document.createElement('hr')); continue; }
+    if (it.header) { const h = document.createElement('div'); h.className = 'mh'; h.textContent = it.header; m.append(h); continue; }
+    const b = document.createElement('button');
+    b.innerHTML = `<span>${esc(it.label)}</span>${it.keys ? `<kbd>${esc(it.keys)}</kbd>` : ''}`;
+    if (it.danger) b.className = 'danger';
+    b.onclick = e => { e.stopPropagation(); closeMenu(); it.fn(); };
+    m.append(b);
+  }
+  document.body.append(m); menuEl = m;
+  const r = m.getBoundingClientRect();
+  m.style.left = Math.max(8, Math.min(x, innerWidth - r.width - 8)) + 'px';
+  m.style.top = Math.max(8, Math.min(y, innerHeight - r.height - 8)) + 'px';
+}
+function addMenu(x, y) {
+  showMenu(x, y, [
+    { label: 'New bookmark', keys: 'Shift N', fn: () => newBookmark() },
+    { label: 'New category', keys: 'Shift C', fn: () => newCategory() },
+    { label: 'New page', keys: 'Shift P', fn: newPage },
+    '-', { header: 'Widgets' },
+    { label: 'Notes', fn: () => addWidget('notes') },
+    { label: 'Calendar', fn: () => addWidget('calendar') },
+    { label: 'Clocks', fn: () => addWidget('clock') },
+    { label: 'Web search', fn: () => addWidget('search') },
+    '-', { label: 'Import file…', fn: () => $('#fileIn').click() },
+  ]);
+}
+function bmMenu(id, x, y) {
+  const b = bmById(id); if (!b) return;
+  const items = [
+    { label: 'Open', fn: () => openBm(b) },
+    { label: 'Open in new tab', fn: () => openBm(b, true) },
+    { label: 'Edit…', fn: () => openEditor(id) },
+    { label: 'Copy link', fn: () => navigator.clipboard?.writeText(b.url).then(() => toast('Link copied')) },
+    { label: b.pinned ? 'Unpin' : 'Pin', fn: () => { b.pinned = !b.pinned; commit(); } },
+    { label: 'Check reachability', fn: async () => { await checkLink(b); commit(); toast(b.check.ok ? `Reachable · ${b.check.ms} ms` : b.check.err); } },
+    { label: 'Move to Inbox', fn: () => { b.categoryId = null; commit(); } },
+    '-', { label: 'Delete', danger: true, fn: () => deleteBm(id) },
+  ];
+  showMenu(x, y, items);
+}
+function catMenu(id, x, y) {
+  const c = catById(id); if (!c) return;
+  const items = [];
+  if (c.type === 'bookmarks') items.push({ label: 'Add bookmark', fn: () => newBookmark(id) });
+  items.push({ label: 'Edit…', fn: () => editCategory(id) });
+  if (c.type === 'bookmarks') {
+    items.push('-', { header: 'Sort' });
+    [['manual', 'Manual (drag)'], ['name', 'Name'], ['count', 'Most opened'], ['opened', 'Recently opened'], ['added', 'Recently added']]
+      .forEach(([k, l]) => items.push({ label: (c.sort === k ? '✓ ' : '   ') + l, fn: () => { c.sort = k; commit(); } }));
+    items.push('-');
+  }
+  items.push({ label: c.span === 2 ? 'Single width' : 'Span two columns', fn: () => { c.span = c.span === 2 ? 1 : 2; commit(); } });
+  items.push({ label: c.collapsed ? 'Expand' : 'Collapse', fn: () => { c.collapsed = !c.collapsed; commit(); } });
+  const others = state.pages.filter(p => p.id !== c.pageId);
+  if (others.length) { items.push('-', { header: 'Move to page' }); others.forEach(p => items.push({ label: p.name, fn: () => { c.pageId = p.id; commit(); toast(`Moved to “${p.name}”`); } })); }
+  items.push('-', { label: 'Delete', danger: true, fn: () => deleteCategory(id) });
+  showMenu(x, y, items);
+}
+function pageMenu(id, x, y) {
+  const p = pageById(id);
+  showMenu(x, y, [
+    { label: 'Rename…', fn: () => { const n = prompt('Page name', p.name); if (n != null) { p.name = n.trim() || p.name; commit(); } } },
+    { label: 'Move left', fn: () => movePage(id, -1) },
+    { label: 'Move right', fn: () => movePage(id, 1) },
+    { label: 'New category here', fn: () => { goPage(id); newCategory(id); } },
+    { label: 'Share as template…', fn: () => exportPageTemplate(id) },
+    '-', { label: 'Delete page', danger: true, fn: () => deletePage(id) },
+  ]);
+}
+function editCategory(id) {
+  const c = catById(id); if (!c) return;
+  showModal('cat', 'Edit category', `
+    <label class="f"><span>Name</span><input data-cf="name" value="${esc(c.name)}"></label>
+    <div class="row"><label class="f" style="flex:1"><span>Icon (emoji)</span><input data-cf="icon" value="${esc(c.icon)}" maxlength="8"></label>
+    <label class="f"><span>Colour</span><div class="row"><input type="color" data-cf="color" value="${esc(c.color || '#4f8cff')}"><button class="btn sm" data-act="catColorClear" data-id="${id}">Theme colour</button></div></label></div>
+    <div class="row">
+      <label class="f" style="flex:1"><span>Page</span><select data-cf="pageId">${state.pages.map(p => `<option value="${p.id}" ${p.id === c.pageId ? 'selected' : ''}>${esc(p.name)}</option>`).join('')}</select></label>
+      <label class="f" style="flex:1"><span>Width</span><select data-cf="span"><option value="1">Single</option><option value="2" ${c.span === 2 ? 'selected' : ''}>Two columns</option></select></label>
+      ${c.type === 'bookmarks' ? `<label class="f" style="flex:1"><span>Sort</span><select data-cf="sort">${[['manual', 'Manual'], ['name', 'Name'], ['count', 'Most opened'], ['opened', 'Recently opened'], ['added', 'Recently added']].map(([k, l]) => `<option value="${k}" ${c.sort === k ? 'selected' : ''}>${l}</option>`).join('')}</select></label>` : ''}
+    </div>
+    <p class="muted">Type: ${esc(c.type)} · changes apply immediately.</p>
+    <div class="row"><button class="btn danger" data-act="catDelete" data-id="${id}">Delete category</button><span class="spacer"></span><button class="btn primary" data-act="closeModal">Done</button></div>`);
+  const body = $('#modal .mbody');
+  body.addEventListener('input', e => {
+    const f = e.target.dataset.cf; if (!f) return;
+    c[f] = f === 'span' ? +e.target.value : e.target.value;
+    save(); renderPage(); renderHeader();
+  });
+}
+
+let pvT;
+document.addEventListener('mouseover', e => {
+  const a = e.target.closest?.('#grid a[data-bm], #pinned a[data-bm]');
+  if (!a || !state.settings.previews || drag) return;
+  clearTimeout(pvT);
+  pvT = setTimeout(() => {
+    const b = bmById(a.dataset.bm); if (!b) return;
+    const p = $('#preview');
+    p.innerHTML = `<b>${esc(b.name)}</b><div class="u">${esc(b.url)}</div>${b.tags.length ? `<div style="margin-top:6px">${b.tags.map(t => `<span class="chip">#${esc(t)}</span>`).join('')}</div>` : ''}${b.notes ? `<div class="n">${esc(b.notes)}</div>` : ''}<div class="u" style="margin-top:6px">Opened ${b.openCount || 0}× · last ${ago(b.opened)}${b.shortcut ? ` · shortcut <kbd>${esc(b.shortcut)}</kbd>` : ''}</div>`;
+    p.hidden = false;
+    const r = a.getBoundingClientRect(), pr = p.getBoundingClientRect();
+    let x = r.right + 8, y = r.top;
+    if (x + pr.width > innerWidth - 8) x = Math.max(8, r.left - pr.width - 8);
+    if (y + pr.height > innerHeight - 8) y = innerHeight - pr.height - 8;
+    p.style.left = x + 'px'; p.style.top = y + 'px';
+  }, 650);
+});
+document.addEventListener('mouseout', e => {
+  const a = e.target.closest?.('a[data-bm]');
+  if (a && !a.contains(e.relatedTarget)) { clearTimeout(pvT); $('#preview').hidden = true; }
+});
+
+/* ======================================================================
+   Click / context / input delegation
+   ====================================================================== */
+const ACT = {
+  page: el => goPage(el.dataset.id),
+  newPage: () => newPage(),
+  newCat: () => newCategory(),
+  search: () => openSearch(),
+  add: (el, e) => { const r = el.getBoundingClientRect(); addMenu(r.left, r.bottom + 6); e.stopPropagation(); },
+  inbox: () => openInbox(),
+  bv: () => openBookmarksView(),
+  tags: () => openTags(),
+  look: () => openLook(),
+  mode: () => toggleMode(),
+  settings: () => openSettings(),
+  addBm: el => newBookmark(el.dataset.cat),
+  catMenu: (el, e) => { const r = el.getBoundingClientRect(); catMenu(el.dataset.id, r.left, r.bottom + 4); e.stopPropagation(); },
+  collapse: el => { const c = catById(el.dataset.id); c.collapsed = !c.collapsed; commit(); },
+  editBm: el => openEditor(el.dataset.id),
+  closeModal: () => closeModal(),
+  closeEditor: () => closeEditor(),
+  notesDone: el => { notesEditing.delete(el.dataset.id); renderPage(); },
+  calNav: el => { const d = +el.dataset.d; calOff[el.dataset.id] = d ? (calOff[el.dataset.id] || 0) + d : 0; renderPage(); },
+  catColorClear: el => { catById(el.dataset.id).color = ''; save(); renderPage(); },
+  catDelete: el => { closeModal(); deleteCategory(el.dataset.id); },
+  dfMerge: () => { mergeDefaults(); },
+  dfReset: () => resetDefaults(),
+  dfKeep: () => { localStorage.setItem(LS_HASH, DEFAULTS_HASH); renderBanner(); },
+};
+document.addEventListener('click', e => {
+  if (menuEl && !e.target.closest('.menu')) closeMenu();
+  const el = e.target.closest('[data-act]');
+  if (el && ACT[el.dataset.act]) { e.preventDefault(); ACT[el.dataset.act](el, e); return; }
+  const a = e.target.closest('a[data-bm]');
+  if (a) {
+    if (a.getAttribute('href') === '#') { e.preventDefault(); return; }
+    recordOpen(a.dataset.bm);
+  }
+});
+document.addEventListener('auxclick', e => { const a = e.target.closest?.('a[data-bm]'); if (a && e.button === 1) recordOpen(a.dataset.bm); });
+document.addEventListener('contextmenu', e => {
+  const a = e.target.closest('a[data-bm]'), h = e.target.closest('.card-h'), p = e.target.closest('[data-droppage]');
+  if (a) { e.preventDefault(); bmMenu(a.dataset.bm, e.clientX, e.clientY); }
+  else if (h) { e.preventDefault(); catMenu(h.dataset.dragcat, e.clientX, e.clientY); }
+  else if (p) { e.preventDefault(); pageMenu(p.dataset.droppage, e.clientX, e.clientY); }
+});
+$('#brand').addEventListener('dblclick', () => { const t = prompt('Dashboard title', state.title); if (t != null) { state.title = t.trim() || 'Dashboard'; commit(); } });
+$('#pages').addEventListener('dblclick', e => { const p = e.target.closest('[data-droppage]'); if (p) pageMenu(p.dataset.droppage, e.clientX, e.clientY); });
+$('#grid').addEventListener('dblclick', e => {
+  const v = e.target.closest('[data-notesview]');
+  if (v && !e.target.closest('a,input')) { notesEditing.add(v.dataset.notesview); renderPage(); const ta = $(`[data-notes="${v.dataset.notesview}"]`); ta?.focus(); }
+});
+$('#grid').addEventListener('input', e => {
+  const id = e.target.dataset.notes;
+  if (id) { const c = catById(id); if (c) { c.content = e.target.value; save(); } }
+});
+$('#grid').addEventListener('change', e => {
+  const cb = e.target.closest('[data-notesview] input[type=checkbox]');
+  if (!cb) return;
+  const c = catById(cb.closest('[data-notesview]').dataset.notesview), want = +cb.dataset.ci;
+  let i = 0;
+  c.content = c.content.replace(/^(\s*[-*] \[)( |x|X)(\])/gm, (m, a, x, z) => (i++ === want ? a + (x === ' ' ? 'x' : ' ') + z : m));
+  commit();
+});
+$('#grid').addEventListener('submit', e => {
+  const f = e.target.closest('[data-websearch]'); if (!f) return;
+  e.preventDefault();
+  const q = f.querySelector('input').value.trim(); if (!q) return;
+  const fp = finderPrefix(q);
+  runFinder(fp ? fp.finder : defaultFinder(), fp ? fp.rest : q);
+  f.reset();
+});
+
+/* ---------- paste & drag/drop ---------- */
+document.addEventListener('paste', e => {
+  if (isTyping(e.target) || !state.settings.pasteToInbox) return;
+  const t = (e.clipboardData?.getData('text') || '').trim();
+  const urls = t.split(/\s+/).filter(looksUrl);
+  if (!urls.length) return;
+  e.preventDefault();
+  let last;
+  urls.forEach(u => { last = mkBm({ url: u }, null); state.bookmarks.push(last); });
+  commit();
+  toast(`Added ${urls.length} link${urls.length > 1 ? 's' : ''} to Inbox`, { action: 'Edit', fn: () => openEditor(last.id) });
+});
+
+let drag = null;
+const clearDrop = () => $$('.drop-before,.drop-after,.drop-in,.drop').forEach(x => x.classList.remove('drop-before', 'drop-after', 'drop-in', 'drop'));
+document.addEventListener('dragstart', e => {
+  const h = e.target.closest?.('[data-dragcat]'), a = e.target.closest?.('a[data-bm]');
+  $('#preview').hidden = true; clearTimeout(pvT);
+  if (h) {
+    drag = { type: 'cat', id: h.dataset.dragcat };
+    e.dataTransfer.effectAllowed = 'move'; e.dataTransfer.setData('text/plain', catById(drag.id)?.name || '');
+    h.closest('.card').classList.add('dragging');
+  } else if (a) {
+    drag = { type: 'bm', id: a.dataset.bm };
+    const b = bmById(drag.id);
+    e.dataTransfer.effectAllowed = 'copyMove';
+    e.dataTransfer.setData('text/uri-list', b.url); e.dataTransfer.setData('text/plain', b.url);
+  }
+});
+document.addEventListener('dragend', () => { drag = null; clearDrop(); $$('.dragging').forEach(x => x.classList.remove('dragging')); });
+function dropTarget(e) {
+  const tab = e.target.closest?.('[data-droppage]');
+  const card = e.target.closest?.('#grid .card');
+  const bmEl = e.target.closest?.('#grid a[data-bm]');
+  return { tab, card, bmEl };
+}
+document.addEventListener('dragover', e => {
+  if (!$('#modal').hidden || !$('#search').hidden) { if (!isTyping(e.target)) e.preventDefault(); return; }
+  const { tab, card, bmEl } = dropTarget(e);
+  e.preventDefault();
+  clearDrop();
+  if (tab) { tab.classList.add('drop'); return; }
+  if (!drag || drag.type === 'bm') {
+    if (bmEl && drag) { const r = bmEl.getBoundingClientRect(); bmEl.classList.add(e.clientY > r.top + r.height / 2 ? 'drop-after' : 'drop-before'); }
+    else if (card && catById(card.dataset.cat)?.type === 'bookmarks') card.classList.add('drop-in');
+  } else if (drag.type === 'cat' && card && card.dataset.cat !== drag.id) {
+    const r = card.getBoundingClientRect(); card.classList.add(e.clientX > r.left + r.width / 2 ? 'drop-after' : 'drop-before');
+  }
+});
+document.addEventListener('drop', e => {
+  if (!$('#modal').hidden || !$('#search').hidden) { if (!isTyping(e.target)) e.preventDefault(); return; }
+  e.preventDefault(); clearDrop();
+  const { tab, card, bmEl } = dropTarget(e);
+  if (drag?.type === 'bm') {
+    if (tab) { const c = firstBmCat(tab.dataset.droppage); moveBm(drag.id, c.id); toast(`Moved to “${pageById(tab.dataset.droppage).name}”`); }
+    else if (card && catById(card.dataset.cat)?.type === 'bookmarks') {
+      const r = bmEl?.getBoundingClientRect();
+      moveBm(drag.id, card.dataset.cat, bmEl?.dataset.bm || null, r ? e.clientY > r.top + r.height / 2 : false);
+    }
+  } else if (drag?.type === 'cat') {
+    if (tab) { const c = catById(drag.id); c.pageId = tab.dataset.droppage; state.categories.push(state.categories.splice(state.categories.indexOf(c), 1)[0]); commit(); toast(`Moved to “${pageById(c.pageId).name}”`); }
+    else if (card) { const r = card.getBoundingClientRect(); moveCat(drag.id, card.dataset.cat, e.clientX > r.left + r.width / 2); }
+  } else if (e.dataTransfer) {
+    const raw = (e.dataTransfer.getData('text/uri-list') || e.dataTransfer.getData('text/plain') || '').split('\n').map(s => s.trim()).filter(s => s && !s.startsWith('#'));
+    const urls = raw.filter(looksUrl);
+    if (e.dataTransfer.files?.length) { importFile(e.dataTransfer.files[0]); }
+    else if (urls.length) {
+      const pageId = tab?.dataset.droppage;
+      const cid = card && catById(card.dataset.cat)?.type === 'bookmarks' ? card.dataset.cat : pageId ? firstBmCat(pageId).id : null;
+      urls.forEach(u => state.bookmarks.push(mkBm({ url: u }, cid)));
+      commit();
+      toast(`Added ${urls.length} link(s) to ${cid ? '“' + catById(cid).name + '”' : 'Inbox'}`);
+    }
+  }
+  drag = null;
+});
+
+/* ======================================================================
+   Keyboard
+   ====================================================================== */
+let scBuf = '', scT;
+function clearScHl() { $$('.bm.hl').forEach(x => x.classList.remove('hl')); }
+function onShortcutChar(ch) {
+  scBuf += ch; clearTimeout(scT);
+  const all = live().filter(b => b.shortcut && !isInbox(b));
+  const exact = all.find(b => b.shortcut === scBuf);
+  const longer = all.some(b => b.shortcut !== scBuf && b.shortcut.startsWith(scBuf));
+  clearScHl();
+  if (exact && !longer) { scBuf = ''; openBm(exact); return; }
+  if (!exact && !longer) { const t = scBuf; scBuf = ''; openSearch(t); return; }
+  all.filter(b => b.shortcut.startsWith(scBuf)).forEach(b => $$(`a[data-bm="${b.id}"]`).forEach(a => a.classList.add('hl')));
+  scT = setTimeout(() => { clearScHl(); const b = exact; scBuf = ''; if (b) openBm(b); }, 900);
+}
+const SHIFT_KEYS = {
+  F: () => openSearch(), N: () => newBookmark(), C: () => newCategory(), P: newPage,
+  W: () => addMenu(innerWidth / 2 - 100, 120), B: () => openBookmarksView(), I: () => openInbox(),
+  T: () => openTrash(), S: () => openSettings(), A: () => openLook(), D: toggleMode, R: randomTheme,
+  Z: () => { state.settings.showShortcuts = state.settings.legend = !state.settings.legend; commit(); },
+  L: () => checkAll(),
+};
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    if (menuEl) return closeMenu();
+    if (!$('#search').hidden) return closeSearch();
+    if (editing) return closeEditor();
+    if (!$('#modal').hidden) return closeModal();
+    scBuf = ''; clearScHl(); return;
+  }
+  if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') { e.preventDefault(); $('#search').hidden ? openSearch() : closeSearch(); return; }
+  if (e.key === 'F1') { e.preventDefault(); openCheat(); return; }
+  if (isTyping(e.target) || e.metaKey || e.ctrlKey || e.altKey) return;
+  if (!$('#search').hidden) return;
+  if (!$('#modal').hidden || editing) { if (!editing && modalKeys && modalKeys(e)) e.preventDefault(); return; }
+  const k = e.key;
+  if (k === '?') { e.preventDefault(); return openCheat(); }
+  if (k === '/') { e.preventDefault(); return openTags(); }
+  if (k === ':') { e.preventDefault(); return openSearch(':'); }
+  if (k === '[') return stepPage(-1);
+  if (k === ']') return stepPage(1);
+  if (e.shiftKey && SHIFT_KEYS[k]) { e.preventDefault(); return SHIFT_KEYS[k](); }
+  if (!scBuf && /^[1-9]$/.test(k)) { const p = state.pages[+k - 1]; if (p) goPage(p.id); return; }
+  if (/^[a-z0-9]$/i.test(k) && !e.shiftKey) { e.preventDefault(); onShortcutChar(k.toLowerCase()); }
+});
+
+/* ======================================================================
+   Search / command palette
+   ====================================================================== */
+const S = { mode: 'all', sel: 0, items: [] };
+const MODES = [['all', 'All'], ['commands', 'Commands'], ['tags', 'Tags'], ['web', 'Web']];
+const defaultFinder = () => state.finders.find(f => f.key === state.settings.defaultFinder) || state.finders[0] || { key: 'g', name: 'Google', url: 'https://www.google.com/search?q=%s' };
+function runFinder(f, q) {
+  const url = f.url.includes('%s') ? f.url.replace(/%s/g, encodeURIComponent(q)) : f.url + encodeURIComponent(q);
+  if (state.settings.newTab) window.open(url, '_blank', 'noopener'); else location.href = url;
+}
+function finderPrefix(q) {
+  const m = q.match(/^(\S+)\s+(.+)$/); if (!m) return null;
+  const f = state.finders.find(f => f.key.toLowerCase() === m[1].toLowerCase());
+  return f ? { finder: f, rest: m[2] } : null;
+}
+function openSearch(initial = '', mode = 'all') {
+  closeMenu(); clearScHl(); scBuf = '';
+  $('#search').hidden = false;
+  S.mode = mode; S.sel = 0;
+  const q = $('#q'); q.value = initial; q.focus();
+  runSearch();
+}
+function closeSearch() { $('#search').hidden = true; }
+$('#search').addEventListener('mousedown', e => { if (e.target.id === 'search') closeSearch(); });
+
+function parseQuery(q) {
+  const f = { nameOnly: false, terms: [], conds: [] };
+  q = q.trim();
+  if (q.startsWith('/')) { f.nameOnly = true; q = q.slice(1); }
+  for (const tok of q.match(/-?\w+:"[^"]*"|"[^"]*"|\S+/g) || []) {
+    const m = tok.match(/^(-?)(tag|cat|category|in|page|is|site|added|opened):(.+)$/i);
+    if (m) f.conds.push({ neg: !!m[1], k: m[2].toLowerCase(), v: m[3].toLowerCase().replace(/^"|"$/g, '') });
+    else if (tok.startsWith('-') && tok.length > 1) f.conds.push({ neg: true, k: 'text', v: tok.slice(1).toLowerCase() });
+    else f.terms.push(tok.replace(/^"|"$/g, '').toLowerCase());
+  }
+  return f;
+}
+function ageMatch(ts, v) {
+  if (v === 'never') return !ts;
+  if (!ts) return false;
+  if (v === 'today') return now() - ts < DAY;
+  const m = v.match(/^([<>])?(\d+)([hdwmy])?$/); if (!m) return true;
+  const lim = +m[2] * { h: 36e5, d: DAY, w: 7 * DAY, m: 30 * DAY, y: 365 * DAY }[m[3] || 'd'], age = now() - ts;
+  return m[1] === '>' ? age > lim : age <= lim;
+}
+const hay = b => (b.name + ' ' + b.url + ' ' + b.tags.join(' ') + ' ' + b.notes + ' ' + (catOf(b)?.name || 'inbox')).toLowerCase();
+function condMatch(b, c) {
+  let r;
+  switch (c.k) {
+    case 'tag': r = c.v.endsWith('*') ? b.tags.some(t => t.startsWith(c.v.slice(0, -1))) : b.tags.includes(c.v); break;
+    case 'cat': case 'category': case 'in': r = (catOf(b)?.name || 'inbox').toLowerCase().includes(c.v); break;
+    case 'page': r = (pageOf(b)?.name || '').toLowerCase().includes(c.v); break;
+    case 'site': r = domain(b.url).includes(c.v); break;
+    case 'is': r = ({
+      pinned: b.pinned, inbox: isInbox(b), untagged: !b.tags.length, tagged: b.tags.length > 0, never: !b.openCount, unopened: !b.openCount,
+      opened: b.openCount > 0, dup: isDup(b), duplicate: isDup(b), noted: !!b.notes, shortcut: !!b.shortcut,
+      broken: !!(b.check && !b.check.ok), ok: !!(b.check && b.check.ok), snoozed: b.snooze > now(), http: /^http:/i.test(b.url),
+    })[c.v] ?? false; break;
+    case 'added': r = ageMatch(b.created, c.v); break;
+    case 'opened': r = ageMatch(b.opened, c.v); break;
+    default: r = hay(b).includes(c.v);
+  }
+  return c.neg ? !r : r;
+}
+const fuzzy = (s, t) => { let i = 0; for (const ch of s) { if (ch === t[i]) i++; if (i === t.length) return true; } return !t.length; };
+function matchScore(b, f) {
+  for (const c of f.conds) if (!condMatch(b, c)) return -1;
+  let s = 1; const name = b.name.toLowerCase();
+  for (const t of f.terms) {
+    if (name.startsWith(t)) s += 30;
+    else if (name.includes(t)) s += 20;
+    else if (!f.nameOnly && b.tags.some(x => x.startsWith(t))) s += 12;
+    else if (!f.nameOnly && hay(b).includes(t)) s += 6;
+    else if (t.length > 1 && fuzzy(name, t)) s += 3;
+    else return -1;
+  }
+  if (b.shortcut && f.terms.length === 1 && b.shortcut === f.terms[0]) s += 50;
+  return s + Math.min(10, Math.log2(1 + (b.openCount || 0)) * 2) + (b.pinned ? 2 : 0);
+}
+function filterBms(list, q) {
+  if (!q.trim()) return list;
+  const f = parseQuery(q);
+  return list.map(b => [b, matchScore(b, f)]).filter(x => x[1] >= 0).sort((a, b) => b[1] - a[1]).map(x => x[0]);
+}
+function commands() {
+  return [
+    ['New bookmark', 'Shift N', () => newBookmark()],
+    ['New category', 'Shift C', () => newCategory()],
+    ['New page', 'Shift P', newPage],
+    ['Add notes widget', '', () => addWidget('notes')],
+    ['Add calendar widget', '', () => addWidget('calendar')],
+    ['Add clocks widget', '', () => addWidget('clock')],
+    ['Add web search widget', '', () => addWidget('search')],
+    ['Bookmarks view', 'Shift B', () => openBookmarksView()],
+    ['Inbox', 'Shift I', () => openInbox()],
+    ['Tag cloud', '/', () => openTags()],
+    ['Trash', 'Shift T', () => openTrash()],
+    ['Settings', 'Shift S', () => openSettings()],
+    ['Look studio', 'Shift A', () => openLook()],
+    ['Keyboard shortcuts', '?', () => openCheat()],
+    ['Toggle light / dark', 'Shift D', toggleMode],
+    ['Follow system light / dark', '', () => { state.settings.mode = 'system'; commit(); }],
+    ['Random theme', 'Shift R', randomTheme],
+    ['Toggle shortcut badges & key legend', 'Shift Z', SHIFT_KEYS.Z],
+    ['Check all links', 'Shift L', () => checkAll()],
+    ['Statistics', '', () => openSettings('stats')],
+    ['Export backup (JSON)', '', exportJSON],
+    ['Export bookmarks (HTML)', '', exportHTML],
+    ['Export bookmarks (CSV)', '', () => exportCSV(live())],
+    ['Import file…', '', () => $('#fileIn').click()],
+    ['Copy as defaults JSON', '', copyDefaultsJSON],
+    ['Reset to defaults', '', resetDefaults],
+    ...state.pages.map((p, i) => ['Go to page: ' + p.name, i < 9 ? String(i + 1) : '', () => goPage(p.id)]),
+    ...Object.entries(THEMES).map(([k, t]) => ['Theme: ' + t.name, '', () => { state.settings.theme = k; commit(); }]),
+  ].map(([name, keys, run]) => ({ name, keys, run }));
+}
+function runSearch() {
+  const raw = $('#q').value;
+  let mode = S.mode, q = raw;
+  if (mode === 'all') {
+    if (/^[:>]/.test(q)) { mode = 'commands'; q = q.slice(1); }
+    else if (q.startsWith('#')) { mode = 'tags'; q = q.slice(1); }
+  }
+  const items = [];
+  const bmItem = b => ({ icon: avatar(b), title: esc(b.name), sub: `${esc(domain(b.url) || b.url)} · ${esc(catPath(b))}${b.tags.length ? ' · ' + b.tags.map(t => '#' + esc(t)).join(' ') : ''}`, kbd: b.shortcut, run: ev => { closeSearch(); ev?.shiftKey ? openEditor(b.id) : openBm(b, ev?.ctrlKey || ev?.metaKey); } });
+  const finderItem = (f, text) => ({ icon: '🔎', title: `Search ${esc(f.name)} for “${esc(text)}”`, sub: esc(f.url.replace('%s', '…')), kbd: f.key, run: () => { closeSearch(); runFinder(f, text); } });
+  if (mode === 'commands') {
+    const t = q.trim().toLowerCase();
+    commands().filter(c => !t || c.name.toLowerCase().includes(t) || fuzzy(c.name.toLowerCase(), t)).forEach(c =>
+      items.push({ icon: '›', title: esc(c.name), sub: '', kbd: c.keys, run: () => { closeSearch(); c.run(); } }));
+  } else if (mode === 'tags') {
+    const t = q.trim().toLowerCase();
+    [...tagCounts()].filter(([k]) => !t || k.includes(t)).sort((a, b) => b[1] - a[1]).forEach(([k, n]) =>
+      items.push({ icon: '#', title: esc(k), sub: `${n} bookmark${n > 1 ? 's' : ''}`, run: () => { $('#q').value = 'tag:' + k + ' '; S.mode = 'all'; renderStabs(); runSearch(); } }));
+  } else if (mode === 'web') {
+    const t = q.trim();
+    const fp = finderPrefix(t);
+    if (fp) items.push(finderItem(fp.finder, fp.rest));
+    else state.finders.forEach(f => items.push(t ? finderItem(f, t) : { icon: '🔎', title: esc(f.name), sub: `type “${esc(f.key)} something”`, kbd: f.key, run: () => { $('#q').value = f.key + ' '; $('#q').focus(); runSearch(); } }));
+  } else {
+    const t = q.trim();
+    if (t && looksUrl(t) && !t.includes(' ')) items.push({ icon: '↗', title: `Go to ${esc(normUrl(t))}`, sub: 'Enter to open · Shift+Enter to save to Inbox', run: ev => {
+      closeSearch();
+      if (ev?.shiftKey) { state.bookmarks.push(mkBm({ url: t }, null)); commit(); toast('Saved to Inbox'); }
+      else if (state.settings.newTab) window.open(normUrl(t), '_blank', 'noopener'); else location.href = normUrl(t);
+    } });
+    const fp = finderPrefix(t);
+    if (fp) items.push(finderItem(fp.finder, fp.rest));
+    const bms = t ? filterBms(live(), t) : live().filter(b => b.opened).sort((a, b) => b.opened - a.opened);
+    if (!t) items.push({ grp: 'Recently opened' });
+    bms.slice(0, 40).forEach(b => items.push(bmItem(b)));
+    if (t && !/\w+:/.test(t)) {
+      const tl = t.toLowerCase();
+      commands().filter(c => c.name.toLowerCase().includes(tl)).slice(0, 4).forEach(c => items.push({ icon: '›', title: esc(c.name), sub: 'Command', kbd: c.keys, run: () => { closeSearch(); c.run(); } }));
+    }
+    if (t && !fp) items.push(finderItem(defaultFinder(), t));
+    if (!t && !bms.length) items.push({ grp: 'Type to search bookmarks · : for commands · # for tags' });
+  }
+  S.items = items.filter(i => !i.grp);
+  S.sel = Math.min(S.sel, Math.max(0, S.items.length - 1));
+  let n = 0;
+  $('#res').innerHTML = items.map(it => it.grp ? `<li class="grp">${esc(it.grp)}</li>` :
+    `<li data-i="${n}" class="${n++ === S.sel ? 'on' : ''}"><span class="ico">${it.icon}</span><div class="t"><div>${it.title}</div>${it.sub ? `<div class="sub">${it.sub}</div>` : ''}</div>${it.kbd ? `<kbd>${esc(it.kbd)}</kbd>` : ''}</li>`).join('') ||
+    `<li class="grp">No matches</li>`;
+  renderStabs();
+}
+function renderStabs() {
+  $('#stabs').innerHTML = MODES.map(([k, l]) => `<button class="chip ${S.mode === k ? 'on' : ''}" data-mode="${k}" tabindex="-1">${l}</button>`).join('');
+}
+$('#stabs').addEventListener('click', e => { const b = e.target.closest('[data-mode]'); if (b) { S.mode = b.dataset.mode; S.sel = 0; runSearch(); $('#q').focus(); } });
+$('#q').addEventListener('input', () => { S.sel = 0; runSearch(); });
+$('#q').addEventListener('keydown', e => {
+  const move = d => { S.sel = (S.sel + d + S.items.length) % Math.max(1, S.items.length); $$('#res li[data-i]').forEach(li => li.classList.toggle('on', +li.dataset.i === S.sel)); $(`#res li[data-i="${S.sel}"]`)?.scrollIntoView({ block: 'nearest' }); };
+  if (e.key === 'ArrowDown') { e.preventDefault(); move(1); }
+  else if (e.key === 'ArrowUp') { e.preventDefault(); move(-1); }
+  else if (e.key === 'Enter') { e.preventDefault(); S.items[S.sel]?.run(e); }
+  else if (e.key === 'Tab') { e.preventDefault(); const i = MODES.findIndex(m => m[0] === S.mode); S.mode = MODES[(i + (e.shiftKey ? -1 : 1) + MODES.length) % MODES.length][0]; S.sel = 0; runSearch(); }
+});
+$('#res').addEventListener('mousemove', e => { const li = e.target.closest('li[data-i]'); if (li && +li.dataset.i !== S.sel) { S.sel = +li.dataset.i; $$('#res li[data-i]').forEach(x => x.classList.toggle('on', x === li)); } });
+$('#res').addEventListener('click', e => { const li = e.target.closest('li[data-i]'); if (li) S.items[+li.dataset.i]?.run(e); });
+
+/* ======================================================================
+   Modal framework
+   ====================================================================== */
+let modalRefresh = null, modalKeys = null, modalKind = null;
+function showModal(kind, title, html, { wide = false, refresh = null, keys = null, flush = false } = {}) {
+  closeMenu();
+  const o = $('#modal'); o.hidden = false;
+  o.innerHTML = `<div class="modal ${wide ? 'wide' : ''}" role="dialog" aria-label="${esc(title)}"><header><h3>${esc(title)}</h3><button class="ibtn" data-act="closeModal" title="Close (Esc)">${I('x')}</button></header><div class="mbody ${flush ? 'flush' : ''}">${html}</div></div>`;
+  modalKind = kind; modalRefresh = refresh; modalKeys = keys;
+}
+function closeModal() { const o = $('#modal'); o.hidden = true; o.innerHTML = ''; modalKind = modalRefresh = modalKeys = null; }
+$('#modal').addEventListener('mousedown', e => { if (e.target.id === 'modal') closeModal(); });
+
+/* ======================================================================
+   Bookmark editor drawer
+   ====================================================================== */
+let editing = null, edTab = 'details', autoName = false;
+function openEditor(id, tab = 'details') {
+  const b = bmById(id); if (!b) return;
+  closeMenu();
+  editing = id; edTab = tab; autoName = !b.name;
+  $('#drawer').classList.add('open'); $('#drawer').setAttribute('aria-hidden', 'false');
+  renderEditor();
+}
+function closeEditor(silent) {
+  const b = bmById(editing);
+  editing = null;
+  $('#drawer').classList.remove('open'); $('#drawer').setAttribute('aria-hidden', 'true');
+  if (b) {
+    if (b._new && !b.url) state.bookmarks = state.bookmarks.filter(x => x !== b);
+    else if (b._new && !silent) toast(`Saved “${b.name}”`);
+    delete b._new;
+    if (!b.name) b.name = domain(b.url) || 'Untitled';
+  }
+  commit();
+}
+function tagSuggestions(b) {
+  const d = domain(b.url), have = new Set(b.tags), out = new Map();
+  if (d) {
+    live().filter(x => x !== b && domain(x.url) === d).forEach(x => x.tags.forEach(t => out.set(t, (out.get(t) || 0) + 5)));
+    const parts = d.split('.'); const sld = parts.length > 1 ? parts[parts.length - 2] : parts[0];
+    if (sld && sld.length > 2 && !['co', 'com'].includes(sld)) out.set(sld, (out.get(sld) || 0) + 2);
+  }
+  const words = (b.name + ' ' + b.notes).toLowerCase().split(/[^a-z0-9]+/);
+  for (const [t, n] of tagCounts()) if (words.includes(t)) out.set(t, (out.get(t) || 0) + 3 + n / 10);
+  const c = catOf(b); if (c) catBms(c.id).forEach(x => x !== b && x.tags.forEach(t => out.set(t, (out.get(t) || 0) + 1)));
+  return [...out].filter(([t]) => !have.has(t)).sort((a, b) => b[1] - a[1]).slice(0, 8).map(x => x[0]);
+}
+function scWarn(b) {
+  if (!b.shortcut) return '';
+  if (/^\d/.test(b.shortcut)) return 'Shortcuts starting with a digit clash with page switching.';
+  const other = live().find(x => x !== b && x.shortcut && (x.shortcut === b.shortcut || x.shortcut.startsWith(b.shortcut) || b.shortcut.startsWith(x.shortcut)));
+  return other ? `Overlaps with “${other.name}” (${other.shortcut}) — the shorter one waits a moment before opening.` : '';
+}
+function renderEditor() {
+  const b = bmById(editing); if (!b) { editing = null; $('#drawer').classList.remove('open'); return; }
+  const tabs = [['details', 'Details'], ['health', 'Health'], ['usage', 'Usage']];
+  let body = '';
+  if (edTab === 'details') {
+    const sug = tagSuggestions(b);
+    body = `
+      <label class="f"><span>URL</span><input data-f="url" value="${esc(b.url)}" placeholder="https://example.com" inputmode="url"></label>
+      <label class="f"><span>Name</span><input data-f="name" value="${esc(b.name)}" placeholder="${esc(domain(b.url) || 'Name')}"></label>
+      <label class="f"><span>Category</span><select data-f="categoryId"><option value="">Inbox</option>${catOptions(b.categoryId)}</select></label>
+      <label class="f"><span>Tags <small>comma separated</small></span><input data-f="tags" value="${esc(b.tags.join(', '))}" placeholder="work, reading"></label>
+      ${sug.length ? `<div style="margin:-6px 0 12px"><small>Suggested:</small> ${sug.map(t => `<span class="chip" data-addtag="${esc(t)}">+ ${esc(t)}</span>`).join('')}</div>` : ''}
+      <div class="row" style="align-items:flex-start">
+        <label class="f" style="flex:1"><span>Keyboard shortcut</span><input data-f="shortcut" value="${esc(b.shortcut)}" maxlength="6" placeholder="e.g. gm"><small class="warn" id="scWarn">${esc(scWarn(b))}</small></label>
+        <label class="f" style="flex:1"><span>Icon <small>emoji or image URL</small></span><input data-f="icon" value="${esc(b.icon)}" placeholder="auto"></label>
+      </div>
+      <label class="f"><span>Notes</span><textarea data-f="notes" rows="4" placeholder="Shown in the hover preview">${esc(b.notes)}</textarea></label>
+      <label class="chk"><input type="checkbox" data-f="pinned" ${b.pinned ? 'checked' : ''}> Pin to the top of every page</label>
+      <small>Changes save as you type.</small>`;
+  } else if (edTab === 'health') {
+    const sc = score(b), dups = live().filter(x => x !== b && ukey(x.url) === ukey(b.url));
+    const row = (ok, label, extra = '') => `<li><span>${ok ? '✅' : '⚠️'}</span><span style="flex:1">${label}${extra ? `<br><small>${extra}</small>` : ''}</span></li>`;
+    body = `<div class="row" style="margin-bottom:12px"><span class="score ${scoreCls(sc.s)}" style="font-size:20px;padding:4px 10px">${sc.s}</span><span class="muted">Health score out of 100</span></div>
+      <ul class="checks">
+        ${row(validUrl(b.url), 'Valid URL')}
+        ${row(!/^http:/i.test(b.url), 'Uses HTTPS')}
+        ${row(b.tags.length, 'Has tags')}
+        ${row(!dups.length, 'Not a duplicate', dups.map(d => `<a href="#" data-act="editBm" data-id="${d.id}">${esc(d.name)}</a> in ${esc(catPath(d))}`).join('<br>'))}
+        ${row(b.openCount && now() - b.opened < 60 * DAY, 'Opened in the last 60 days', 'Last opened ' + ago(b.opened))}
+        ${row(!b.check || b.check.ok, 'Reachable', b.check ? `${b.check.ok ? b.check.ms + ' ms' : esc(b.check.err)} · checked ${ago(b.check.at)}` : 'Not checked yet')}
+      </ul>
+      <div class="row" style="margin-top:12px"><button class="btn" data-ed="check">Check now</button></div>
+      <p><small>The check runs from your browser and can only tell whether the site answered, not the HTTP status (browsers hide that from other sites).</small></p>`;
+  } else {
+    const d0 = Math.floor(now() / DAY), days = [...Array(30)].map((_, i) => (b.hist || {})[d0 - 29 + i] || 0), max = Math.max(1, ...days);
+    body = `<dl class="kv"><dt>Added</dt><dd>${fmtDate(b.created)}</dd><dt>Last opened</dt><dd>${b.opened ? fmtDate(b.opened) + ' (' + ago(b.opened) + ')' : 'never'}</dd><dt>Times opened</dt><dd>${b.openCount || 0}</dd><dt>Location</dt><dd>${esc(catPath(b))}</dd></dl>
+      <h4 class="sec" style="margin-top:18px">Last 30 days</h4><div class="bars">${days.map((n, i) => `<i style="height:${(n / max) * 100}%" title="${new Date((d0 - 29 + i) * DAY).toLocaleDateString()}: ${n}"></i>`).join('')}</div>
+      <button class="btn sm" data-ed="resetUsage">Reset usage</button>`;
+  }
+  $('#drawer').innerHTML = `<header><h3>${esc(b.name || 'New bookmark')}</h3><button class="ibtn" data-act="closeEditor" title="Close (Esc)">${I('x')}</button></header>
+    <div class="tabs">${tabs.map(([k, l]) => `<button data-edtab="${k}" class="${k === edTab ? 'on' : ''}">${l}</button>`).join('')}</div>
+    <div class="dbody">${body}</div>
+    <footer><button class="btn primary" data-ed="open">Open</button><button class="btn" data-ed="dup">Duplicate</button><span class="spacer"></span><button class="btn danger" data-ed="delete">Delete</button></footer>`;
+}
+$('#drawer').addEventListener('input', e => {
+  const f = e.target.dataset.f; if (!f) return;
+  const b = bmById(editing); if (!b) return;
+  const v = e.target.type === 'checkbox' ? e.target.checked : e.target.value;
+  switch (f) {
+    case 'url':
+      b.url = v.trim() ? normUrl(v) : '';
+      if (autoName) { b.name = domain(b.url); $('#drawer [data-f=name]').value = b.name; }
+      break;
+    case 'name': b.name = v; autoName = !v; break;
+    case 'tags': b.tags = parseTags(v); break;
+    case 'shortcut': b.shortcut = v.toLowerCase().replace(/[^a-z0-9]/g, ''); if (e.target.value !== b.shortcut) e.target.value = b.shortcut; $('#scWarn').textContent = scWarn(b); break;
+    case 'categoryId': b.categoryId = v || null; b.snooze = 0; break;
+    default: b[f] = v;
+  }
+  $('#drawer header h3').textContent = b.name || 'New bookmark';
+  save(); renderPageSoon();
+});
+$('#drawer').addEventListener('change', e => { if (e.target.dataset.f === 'categoryId' || e.target.dataset.f === 'pinned') e.target.dispatchEvent(new Event('input', { bubbles: true })); });
+$('#drawer').addEventListener('click', async e => {
+  const b = bmById(editing); if (!b) return;
+  const tab = e.target.closest('[data-edtab]');
+  if (tab) { edTab = tab.dataset.edtab; renderEditor(); return; }
+  const add = e.target.closest('[data-addtag]');
+  if (add) { b.tags = [...new Set([...b.tags, add.dataset.addtag])]; save(); renderPageSoon(); renderEditor(); return; }
+  const a = e.target.closest('[data-ed]')?.dataset.ed;
+  if (a === 'open') openBm(b, true);
+  else if (a === 'dup') { const c = { ...structuredClone(b), id: uid(), name: b.name + ' (copy)', shortcut: '', created: now(), openCount: 0, opened: 0, hist: {} }; delete c._new; state.bookmarks.splice(state.bookmarks.indexOf(b) + 1, 0, c); commit(); openEditor(c.id); }
+  else if (a === 'delete') { if (b._new && !b.url) closeEditor(); else deleteBm(b.id); }
+  else if (a === 'check') { e.target.textContent = 'Checking…'; await checkLink(b); save(); renderPage(); renderEditor(); }
+  else if (a === 'resetUsage') { b.openCount = 0; b.opened = 0; b.hist = {}; commit(); renderEditor(); }
+});
+
+/* ======================================================================
+   Bookmarks view
+   ====================================================================== */
+const BV = { filter: 'all', q: '', sort: 'manual', group: 'none', sel: new Set() };
+function smartFilters() {
+  return [
+    ['all', 'All bookmarks', () => true],
+    ['pinned', 'Pinned', b => b.pinned],
+    ['inbox', 'Inbox', isInbox],
+    ['recent', 'Added this week', b => now() - b.created < 7 * DAY],
+    ['most', 'Most opened', b => b.openCount > 0],
+    ['never', 'Never opened', b => !b.openCount],
+    ['neglected', 'Neglected (60d+)', b => b.openCount && now() - b.opened > 60 * DAY],
+    ['dups', 'Duplicates', isDup],
+    ['untagged', 'Untagged', b => !b.tags.length],
+    ['broken', 'Unreachable', b => !!(b.check && !b.check.ok)],
+    ['low', 'Needs attention (<70)', b => score(b).s < 70],
+  ];
+}
+function bvList() {
+  let pred = () => true, defSort = null;
+  const sf = smartFilters().find(f => f[0] === BV.filter);
+  if (sf) { pred = sf[2]; if (BV.filter === 'most') defSort = 'count'; if (BV.filter === 'recent') defSort = 'added'; }
+  else if (BV.filter.startsWith('cat:')) { const id = BV.filter.slice(4); pred = b => b.categoryId === id; }
+  else if (BV.filter.startsWith('page:')) { const id = BV.filter.slice(5); pred = b => pageOf(b)?.id === id; }
+  else if (BV.filter.startsWith('coll:')) { const c = state.collections.find(c => c.id === BV.filter.slice(5)); const f = parseQuery(c?.query || ''); pred = b => matchScore(b, f) >= 0; }
+  let list = live().filter(pred);
+  if (BV.q.trim()) { const f = parseQuery(BV.q); list = list.filter(b => matchScore(b, f) >= 0); }
+  const sort = BV.sort === 'manual' && defSort ? defSort : BV.sort;
+  if (sort === 'score') list.sort((a, b) => score(a).s - score(b).s);
+  else if (sort === 'domain') list.sort((a, b) => domain(a.url).localeCompare(domain(b.url)));
+  else sortBms(list, sort);
+  return list;
+}
+function openBookmarksView(preset) {
+  if (preset) Object.assign(BV, preset);
+  BV.sel = new Set();
+  const opt = (arr, v) => arr.map(([k, l]) => `<option value="${k}" ${k === v ? 'selected' : ''}>${l}</option>`).join('');
+  showModal('bv', 'Bookmarks', `<div class="bv"><nav class="rail" id="bvRail"></nav><div class="bvmain">
+    <div class="toolbar row"><input id="bvQ" placeholder="Filter… e.g. tag:work -is:pinned opened:never site:github" value="${esc(BV.q)}" style="flex:1;min-width:200px">
+      <select id="bvSort" title="Sort">${opt([['manual', 'Sort: manual'], ['name', 'Sort: name'], ['added', 'Sort: newest'], ['opened', 'Sort: last opened'], ['count', 'Sort: most opened'], ['score', 'Sort: health'], ['domain', 'Sort: site']], BV.sort)}</select>
+      <select id="bvGroup" title="Group">${opt([['none', 'Group: none'], ['category', 'Group: category'], ['page', 'Group: page'], ['tag', 'Group: tag'], ['domain', 'Group: site']], BV.group)}</select>
+      <button class="btn" data-bv="saveColl" title="Save the filter as a collection">Save as collection</button>
+      <button class="btn" data-bv="csv">Export CSV</button>
+      <button class="btn" data-bv="check">Check links</button>
+      <button class="btn primary" data-bv="new">+ New</button></div>
+    <div id="bvBulk"></div><div id="bvList" class="list"></div></div></div>`,
+    { wide: true, flush: true, refresh: bvRefresh, keys: e => { if (e.key === 'h') { BV.filter = 'low'; BV.sort = 'score'; $('#bvSort').value = 'score'; bvRefresh(); return true; } } });
+  $('#bvQ').addEventListener('input', e => { BV.q = e.target.value; bvRefresh(); });
+  $('#bvSort').addEventListener('change', e => { BV.sort = e.target.value; bvRefresh(); });
+  $('#bvGroup').addEventListener('change', e => { BV.group = e.target.value; bvRefresh(); });
+  const root = $('#modal .bv');
+  root.addEventListener('click', bvClick);
+  root.addEventListener('change', bvChange);
+  root.addEventListener('keydown', e => { if (e.target.dataset.bulk === 'tag' && e.key === 'Enter') { bulk('tag', e.target.value); e.target.value = ''; } });
+  bvRefresh();
+  if (!preset) $('#bvQ').focus();
+}
+function bvRefresh() {
+  if (modalKind !== 'bv') return;
+  const all = live(), cnt = pred => all.filter(pred).length;
+  const btn = (f, label, n, cls = '') => `<button data-bvf="${esc(f)}" class="${BV.filter === f ? 'on' : ''} ${cls}"><span>${esc(label)}</span><span>${n}</span></button>`;
+  let rail = '<h4>Smart</h4>' + smartFilters().map(([k, l, p]) => btn(k, l, cnt(p))).join('');
+  rail += '<h4>Collections</h4>' + (state.collections.map(c => { const f = parseQuery(c.query); return btn('coll:' + c.id, c.name, cnt(b => matchScore(b, f) >= 0)); }).join('') || '<div class="muted" style="padding:2px 8px;font-size:12px">Type a filter, then “Save as collection”.</div>');
+  rail += '<h4>Pages</h4>' + state.pages.map(p => btn('page:' + p.id, p.name, cnt(b => pageOf(b)?.id === p.id)) + pageCats(p.id).filter(c => c.type === 'bookmarks').map(c => btn('cat:' + c.id, c.name, cnt(b => b.categoryId === c.id), 'sub1')).join('')).join('');
+  $('#bvRail').innerHTML = rail;
+  const list = bvList();
+  for (const id of BV.sel) if (!list.some(b => b.id === id)) BV.sel.delete(id);
+  const row = b => { const sc = score(b); return `<div class="r"><input type="checkbox" data-sel="${b.id}" ${BV.sel.has(b.id) ? 'checked' : ''} aria-label="Select"><span>${avatar(b)}</span>
+    <span><a href="${esc(safeHref(b.url))}" target="_blank" rel="noopener noreferrer" data-bm="${b.id}" title="${esc(b.url)}">${esc(b.name)}</a> <span class="muted">${esc(domain(b.url))}</span></span>
+    <span class="muted" title="${esc(catPath(b))}">${esc(catPath(b))}</span>
+    <span>${b.tags.map(t => `<span class="chip" data-bvtag="${esc(t)}">#${esc(t)}</span>`).join('')}</span>
+    <span class="num">${b.openCount || 0}</span><span class="muted">${ago(b.opened)}</span>
+    <span class="score ${scoreCls(sc.s)}" title="${esc(sc.issues.join(', ') || 'All good')}">${sc.s}</span>
+    <button class="ibtn sm" data-act="editBm" data-id="${b.id}" title="Edit">${I('edit', 14)}</button></div>`; };
+  let html = `<div class="r hd"><input type="checkbox" data-selall ${list.length && list.every(b => BV.sel.has(b.id)) ? 'checked' : ''} aria-label="Select all"><span></span><span>Name · ${list.length}</span><span>Location</span><span>Tags</span><span class="num">Opens</span><span>Last opened</span><span>Health</span><span></span></div>`;
+  if (BV.group === 'none') html += list.map(row).join('');
+  else {
+    const groups = new Map();
+    const keyOf = b => BV.group === 'category' ? [catPath(b)] : BV.group === 'page' ? [pageOf(b)?.name || 'Inbox'] : BV.group === 'domain' ? [domain(b.url) || '(none)'] : (b.tags.length ? b.tags : ['(untagged)']);
+    list.forEach(b => keyOf(b).forEach(k => { if (!groups.has(k)) groups.set(k, []); groups.get(k).push(b); }));
+    [...groups].sort((a, b) => a[0].localeCompare(b[0])).forEach(([k, bs]) => { html += `<div class="gh">${esc(k)} · ${bs.length}</div>` + bs.map(row).join(''); });
+  }
+  if (!list.length) html += '<p class="muted" style="padding:20px">Nothing here.</p>';
+  $('#bvList').innerHTML = html;
+  const n = BV.sel.size;
+  $('#bvBulk').innerHTML = n ? `<div class="bulk row"><b>${n} selected</b>
+    <select data-bulk="move"><option value="">Move to…</option><option value="__inbox">Inbox</option>${catOptions()}</select>
+    <input data-bulk="tag" placeholder="Add tag + Enter" style="width:150px">
+    <select data-bulk="untag"><option value="">Remove tag…</option>${[...new Set(list.filter(b => BV.sel.has(b.id)).flatMap(b => b.tags))].map(t => `<option>${esc(t)}</option>`).join('')}</select>
+    <button class="btn sm" data-bv="pin">Pin</button><button class="btn sm" data-bv="unpin">Unpin</button><button class="btn sm" data-bv="checkSel">Check</button><button class="btn sm" data-bv="csvSel">CSV</button><button class="btn sm danger" data-bv="del">Delete</button><button class="btn sm" data-bv="clear">Clear</button></div>` : '';
+}
+function bulk(op, val) {
+  const bs = [...BV.sel].map(bmById).filter(Boolean);
+  if (!bs.length) return;
+  if (op === 'move') { const cid = val === '__inbox' ? null : val; bs.forEach(b => { b.categoryId = cid; b.snooze = 0; }); commit(); toast(`Moved ${bs.length} bookmark(s)`); }
+  else if (op === 'tag') { const t = normTag(val); if (!t) return; bs.forEach(b => { if (!b.tags.includes(t)) b.tags.push(t); }); commit(); }
+  else if (op === 'untag') { bs.forEach(b => { b.tags = b.tags.filter(x => x !== val); }); commit(); }
+  else if (op === 'pin' || op === 'unpin') { bs.forEach(b => { b.pinned = op === 'pin'; }); commit(); }
+  else if (op === 'del') { withUndo(`Moved ${bs.length} bookmark(s) to Trash`, () => { bs.forEach(b => { b.deleted = now(); }); BV.sel.clear(); }); }
+  else if (op === 'check') checkAll(bs);
+  else if (op === 'csv') exportCSV(bs);
+}
+function bvClick(e) {
+  const f = e.target.closest('[data-bvf]');
+  if (f) { BV.filter = f.dataset.bvf; BV.sel.clear(); bvRefresh(); return; }
+  const t = e.target.closest('[data-bvtag]');
+  if (t) { BV.q = 'tag:' + t.dataset.bvtag; $('#bvQ').value = BV.q; bvRefresh(); return; }
+  const a = e.target.closest('[data-bv]')?.dataset.bv;
+  if (!a) return;
+  if (a === 'saveColl') {
+    const q = BV.q.trim(); if (!q) return toast('Type a filter first, e.g. tag:work opened:<30d');
+    const name = prompt('Collection name', q); if (!name) return;
+    const c = { id: uid(), name, query: q }; state.collections.push(c); BV.filter = 'coll:' + c.id; BV.q = ''; $('#bvQ').value = ''; commit();
+  } else if (a === 'csv') exportCSV(bvList());
+  else if (a === 'check') checkAll(bvList());
+  else if (a === 'new') newBookmark();
+  else if (a === 'clear') { BV.sel.clear(); bvRefresh(); }
+  else if (a === 'checkSel') bulk('check');
+  else if (a === 'csvSel') bulk('csv');
+  else bulk(a);
+}
+function bvChange(e) {
+  const s = e.target.dataset.sel;
+  if (s) { e.target.checked ? BV.sel.add(s) : BV.sel.delete(s); bvRefresh(); return; }
+  if (e.target.hasAttribute('data-selall')) { const l = bvList(); if (e.target.checked) l.forEach(b => BV.sel.add(b.id)); else BV.sel.clear(); bvRefresh(); return; }
+  const op = e.target.dataset.bulk;
+  if (op === 'move' || op === 'untag') { if (e.target.value) bulk(op, e.target.value); }
+}
+document.addEventListener('contextmenu', e => {
+  const c = e.target.closest?.('[data-bvf^="coll:"]'); if (!c) return;
+  e.preventDefault();
+  const coll = state.collections.find(x => x.id === c.dataset.bvf.slice(5));
+  showMenu(e.clientX, e.clientY, [
+    { label: 'Rename…', fn: () => { const n = prompt('Collection name', coll.name); if (n) { coll.name = n; commit(); } } },
+    { label: 'Edit filter…', fn: () => { const q = prompt('Filter', coll.query); if (q != null) { coll.query = q; commit(); } } },
+    '-', { label: 'Delete collection', danger: true, fn: () => { state.collections = state.collections.filter(x => x !== coll); BV.filter = 'all'; commit(); } },
+  ]);
+});
+
+/* ======================================================================
+   Inbox
+   ====================================================================== */
+const IB = { pile: 'all', triage: false, idx: 0 };
+function inboxItems() {
+  let l = state.bookmarks.filter(b => !b.deleted && isInbox(b));
+  const snoozed = b => b.snooze > now();
+  if (IB.pile === 'snoozed') return l.filter(snoozed).sort((a, b) => a.snooze - b.snooze);
+  l = l.filter(b => !snoozed(b));
+  if (IB.pile === 'longest') return l.sort((a, b) => a.created - b.created);
+  if (IB.pile === 'week') l = l.filter(b => now() - b.created < 7 * DAY);
+  if (IB.pile === 'noted') l = l.filter(b => b.notes);
+  return l.sort((a, b) => b.created - a.created);
+}
+function openInbox() {
+  showModal('inbox', 'Inbox', `<div class="row" style="margin-bottom:12px"><input id="ibAdd" placeholder="Paste or type a link and press Enter to save it for later" style="flex:1"><button class="btn" id="ibTriage">Triage (t)</button></div><div id="ibBody"></div>`,
+    { refresh: ibRefresh, keys: ibKeys });
+  $('#ibAdd').addEventListener('keydown', e => {
+    if (e.key !== 'Enter') return;
+    const urls = e.target.value.trim().split(/\s+/).filter(looksUrl);
+    if (!urls.length) return toast('That does not look like a link.');
+    urls.forEach(u => state.bookmarks.push(mkBm({ url: u }, null)));
+    e.target.value = ''; commit();
+  });
+  $('#ibTriage').onclick = () => { IB.triage = !IB.triage; IB.idx = 0; ibRefresh(); };
+  const body = $('#ibBody');
+  body.addEventListener('click', ibClick);
+  body.addEventListener('change', e => { const id = e.target.dataset.promote; if (id && e.target.value) promote(id, e.target.value); });
+  ibRefresh();
+}
+function promote(id, cid) { const b = bmById(id); b.categoryId = cid; b.snooze = 0; commit(); toast(`Filed “${b.name}” in ${catById(cid).name}`); }
+function keep(id) { const b = bmById(id); b.categoryId = unsortedCat().id; b.snooze = 0; commit(); toast(`Kept “${b.name}” in Unsorted`); }
+function snooze(id, days) { const b = bmById(id); b.snooze = now() + days * DAY; commit(); toast(`Snoozed for ${days} day${days > 1 ? 's' : ''}`); }
+function ibRefresh() {
+  if (modalKind !== 'inbox') return;
+  const piles = [['all', 'All'], ['longest', 'Waiting longest'], ['week', 'New this week'], ['noted', 'With a note'], ['snoozed', 'Snoozed']];
+  const items = inboxItems();
+  $('#ibTriage').classList.toggle('on', IB.triage);
+  let html = `<div class="row" style="margin-bottom:8px">${piles.map(([k, l]) => `<span class="chip ${IB.pile === k ? 'on' : ''}" data-pile="${k}">${l}</span>`).join('')}</div>`;
+  if (!items.length) html += `<p class="muted">Nothing here. Paste a link anywhere on the dashboard to drop it in the Inbox.</p>`;
+  else if (IB.triage) {
+    IB.idx = Math.min(IB.idx, items.length - 1);
+    const b = items[IB.idx];
+    html += `<div class="triage"><small>${IB.idx + 1} of ${items.length} · added ${ago(b.created)}</small><h2>${esc(b.name)}</h2><div class="muted">${esc(b.url)}</div>${b.notes ? `<p>${esc(b.notes)}</p>` : ''}
+      <div class="row" style="justify-content:center;margin-top:16px"><select data-promote="${b.id}"><option value="">Promote to… (p)</option>${catOptions()}</select>
+      <button class="btn" data-ib="open" data-id="${b.id}">Open (o)</button><button class="btn" data-ib="keep" data-id="${b.id}">Keep (k)</button><button class="btn" data-ib="snooze" data-d="7" data-id="${b.id}">Snooze 1w (s)</button><button class="btn" data-ib="edit" data-id="${b.id}">Edit (e)</button><button class="btn danger" data-ib="del" data-id="${b.id}">Delete (d)</button></div>
+      <div class="row" style="justify-content:center;margin-top:12px"><button class="btn sm" data-ib="prev">← Prev</button><button class="btn sm" data-ib="next">Next →</button></div></div>`;
+  } else {
+    html += items.map(b => `<div class="irow">${avatar(b)}<div class="t"><a href="${esc(safeHref(b.url))}" target="_blank" rel="noopener noreferrer" data-bm="${b.id}">${esc(b.name)}</a><div class="muted" style="font-size:12px">${esc(domain(b.url))} · ${b.snooze > now() ? 'back ' + new Date(b.snooze).toLocaleDateString() : 'added ' + ago(b.created)}${b.notes ? ' · ' + esc(b.notes.slice(0, 80)) : ''}</div></div>
+      <select data-promote="${b.id}"><option value="">Promote to…</option>${catOptions()}</select>
+      <button class="btn sm" data-ib="keep" data-id="${b.id}" title="File in Unsorted">Keep</button>
+      ${b.snooze > now() ? `<button class="btn sm" data-ib="unsnooze" data-id="${b.id}">Wake</button>` : `<button class="btn sm" data-ib="snooze" data-d="1" data-id="${b.id}">1d</button><button class="btn sm" data-ib="snooze" data-d="7" data-id="${b.id}">1w</button>`}
+      <button class="ibtn sm" data-act="editBm" data-id="${b.id}" title="Edit">${I('edit', 14)}</button><button class="ibtn sm" data-ib="del" data-id="${b.id}" title="Delete">${I('x', 14)}</button></div>`).join('');
+  }
+  $('#ibBody').innerHTML = html;
+}
+function ibClick(e) {
+  const p = e.target.closest('[data-pile]');
+  if (p) { IB.pile = p.dataset.pile; IB.idx = 0; ibRefresh(); return; }
+  const el = e.target.closest('[data-ib]'); if (!el) return;
+  const id = el.dataset.id, a = el.dataset.ib;
+  if (a === 'keep') keep(id);
+  else if (a === 'snooze') snooze(id, +el.dataset.d);
+  else if (a === 'unsnooze') { bmById(id).snooze = 0; commit(); }
+  else if (a === 'del') deleteBm(id);
+  else if (a === 'open') openBm(bmById(id), true);
+  else if (a === 'edit') openEditor(id);
+  else if (a === 'prev') { IB.idx = Math.max(0, IB.idx - 1); ibRefresh(); }
+  else if (a === 'next') { IB.idx++; ibRefresh(); }
+}
+function ibKeys(e) {
+  if (e.key === 't') { IB.triage = !IB.triage; IB.idx = 0; ibRefresh(); return true; }
+  if (!IB.triage) return false;
+  const items = inboxItems(), b = items[IB.idx];
+  if (e.key === 'ArrowRight' || e.key === 'j' || e.key === 'n') { IB.idx = Math.min(items.length - 1, IB.idx + 1); ibRefresh(); return true; }
+  if (e.key === 'ArrowLeft') { IB.idx = Math.max(0, IB.idx - 1); ibRefresh(); return true; }
+  if (!b) return false;
+  if (e.key === 'o') { openBm(b, true); return true; }
+  if (e.key === 'k') { keep(b.id); return true; }
+  if (e.key === 's') { snooze(b.id, 7); return true; }
+  if (e.key === 'd') { deleteBm(b.id); return true; }
+  if (e.key === 'e') { openEditor(b.id); return true; }
+  if (e.key === 'p') { $('#ibBody [data-promote]')?.focus(); return true; }
+  return false;
+}
+
+/* ======================================================================
+   Tags
+   ====================================================================== */
+let TG = null;
+function openTags(tag) {
+  TG = tag || null;
+  showModal('tags', 'Tags', '<div id="tgBody"></div>', { refresh: tgRefresh });
+  const body = $('#tgBody');
+  body.addEventListener('click', e => {
+    const t = e.target.closest('[data-tg]'); if (t) { TG = t.dataset.tg === TG ? null : t.dataset.tg; tgRefresh(); return; }
+    const a = e.target.closest('[data-tga]')?.dataset.tga; if (!a || !TG) return;
+    if (a === 'rename') {
+      const n = normTag($('#tgName').value); if (!n || n === TG) return;
+      const old = TG, merged = tagCounts().has(n);
+      live().forEach(b => { if (b.tags.includes(old)) b.tags = [...new Set(b.tags.map(x => x === old ? n : x))]; });
+      TG = n; commit(); toast(merged ? `Merged #${old} into #${n}` : `Renamed #${old} to #${n}`);
+    } else if (a === 'remove') {
+      const old = TG;
+      withUndo(`Removed #${old} from all bookmarks`, () => { live().forEach(b => { b.tags = b.tags.filter(x => x !== old); }); TG = null; });
+    } else if (a === 'view') { closeModal(); openBookmarksView({ filter: 'all', q: 'tag:' + TG }); }
+  });
+  body.addEventListener('keydown', e => { if (e.target.id === 'tgName' && e.key === 'Enter') $('[data-tga=rename]').click(); });
+  tgRefresh();
+}
+function tgRefresh() {
+  if (modalKind !== 'tags') return;
+  const m = tagCounts(), max = Math.max(1, ...m.values());
+  if (TG && !m.has(TG)) TG = null;
+  let html = `<div class="cloud">${[...m].sort((a, b) => a[0].localeCompare(b[0])).map(([t, n]) => `<span class="chip ${t === TG ? 'on' : ''}" data-tg="${esc(t)}" style="--fs:${12 + Math.round((n / max) * 8)}px">#${esc(t)} <small>${n}</small></span>`).join('') || '<p class="muted">No tags yet. Add tags when editing a bookmark.</p>'}</div>`;
+  if (TG) {
+    const bs = live().filter(b => b.tags.includes(TG)), rel = new Map();
+    bs.forEach(b => b.tags.forEach(t => t !== TG && rel.set(t, (rel.get(t) || 0) + 1)));
+    html += `<h4 class="sec">#${esc(TG)} · ${bs.length} bookmark${bs.length > 1 ? 's' : ''} across ${new Set(bs.map(b => pageOf(b)?.id || 'inbox')).size} page(s)</h4>
+      <div class="row" style="margin-bottom:10px"><input id="tgName" value="${esc(TG)}" style="width:200px"><button class="btn" data-tga="rename" title="Renaming to an existing tag merges them">Rename / merge</button><button class="btn danger" data-tga="remove">Remove from all</button><button class="btn" data-tga="view">Open in Bookmarks view</button></div>
+      ${rel.size ? `<div style="margin-bottom:8px"><small>Related:</small> ${[...rel].sort((a, b) => b[1] - a[1]).slice(0, 12).map(([t]) => `<span class="chip" data-tg="${esc(t)}">#${esc(t)}</span>`).join('')}</div>` : ''}
+      ${bs.map(b => `<div class="irow">${avatar(b)}<div class="t"><a href="${esc(safeHref(b.url))}" target="_blank" rel="noopener noreferrer" data-bm="${b.id}">${esc(b.name)}</a> <span class="muted" style="font-size:12px">${esc(catPath(b))}</span></div><button class="ibtn sm" data-act="editBm" data-id="${b.id}">${I('edit', 14)}</button></div>`).join('')}`;
+  }
+  $('#tgBody').innerHTML = html;
+}
+
+/* ======================================================================
+   Trash
+   ====================================================================== */
+function openTrash() {
+  showModal('trash', 'Trash', '<div id="trBody"></div>', { refresh: trRefresh });
+  $('#trBody').addEventListener('click', e => {
+    const el = e.target.closest('[data-tr]'); if (!el) return;
+    const a = el.dataset.tr, b = bmById(el.dataset.id);
+    if (a === 'restore') { b.deleted = 0; commit(); toast(`Restored “${b.name}”${isInbox(b) ? ' to Inbox' : ''}`); }
+    else if (a === 'purge') { state.bookmarks = state.bookmarks.filter(x => x !== b); commit(); }
+    else if (a === 'empty') { if (confirm('Permanently delete everything in Trash?')) { state.bookmarks = state.bookmarks.filter(x => !x.deleted); commit(); } }
+    else if (a === 'restoreAll') { state.bookmarks.forEach(x => { x.deleted = 0; }); commit(); }
+  });
+  trRefresh();
+}
+function trRefresh() {
+  if (modalKind !== 'trash') return;
+  const days = state.settings.trashDays || 30;
+  const items = state.bookmarks.filter(b => b.deleted).sort((a, b) => b.deleted - a.deleted);
+  $('#trBody').innerHTML = (items.length ? `<div class="row" style="margin-bottom:8px"><span class="muted" style="flex:1">${items.length} item(s) · kept for ${days} days</span><button class="btn sm" data-tr="restoreAll">Restore all</button><button class="btn sm danger" data-tr="empty">Empty trash</button></div>` : '<p class="muted">Trash is empty.</p>') +
+    items.map(b => `<div class="irow">${avatar(b)}<div class="t">${esc(b.name)}<div class="muted" style="font-size:12px">${esc(domain(b.url))} · from ${esc(b.fromCat || catPath(b))} · deleted ${ago(b.deleted)} · ${Math.max(0, Math.ceil((b.deleted + days * DAY - now()) / DAY))}d left</div></div><button class="btn sm" data-tr="restore" data-id="${b.id}">Restore</button><button class="btn sm danger" data-tr="purge" data-id="${b.id}">Delete forever</button></div>`).join('');
+}
+
+/* ======================================================================
+   Look studio
+   ====================================================================== */
+function openLook() {
+  showModal('look', 'Look studio', '<div id="lkBody"></div>', { refresh: lkRefresh });
+  const body = $('#lkBody');
+  body.addEventListener('click', e => {
+    const t = e.target.closest('[data-theme]'); if (t) { state.settings.theme = t.dataset.theme; commit(); return; }
+    const sg = e.target.closest('[data-seg]'); if (sg) { state.settings[sg.dataset.seg] = sg.dataset.v; commit(); return; }
+    const a = e.target.closest('[data-lk]')?.dataset.lk;
+    if (a === 'random') randomTheme();
+    if (a === 'accentReset') { state.settings.accent = ''; commit(); }
+    if (a === 'reset') { const keep = ['theme', 'mode', 'style', 'font', 'accent', 'backdrop', 'backdropIntensity', 'radius', 'density', 'columns', 'headerStyle']; const d = { ...BASE_SETTINGS, ...(DEFAULTS.settings || {}) }; keep.forEach(k => { state.settings[k] = d[k]; }); commit(); }
+  });
+  body.addEventListener('input', settingInput);
+  lkRefresh();
+}
+function lkRefresh() {
+  if (modalKind !== 'look') return;
+  const s = state.settings, dark = isDark();
+  const seg = (k, opts) => `<div class="seg">${opts.map(([v, l]) => `<button data-seg="${k}" data-v="${v}" class="${String(s[k]) === v ? 'on' : ''}">${l}</button>`).join('')}</div>`;
+  const sel = (k, opts) => `<select data-set="${k}">${opts.map(([v, l]) => `<option value="${v}" ${String(s[k]) === String(v) ? 'selected' : ''}>${l}</option>`).join('')}</select>`;
+  $('#lkBody').innerHTML = `
+    <div class="row" style="justify-content:space-between"><h4 class="sec" style="margin:0">Mode</h4>${seg('mode', [['light', '☀︎ Light'], ['dark', '☾ Dark'], ['system', 'System']])}</div>
+    <h4 class="sec">Theme <button class="btn sm" data-lk="random" style="float:right">Random (Shift R)</button></h4>
+    <div class="themes">${Object.entries(THEMES).map(([k, t]) => { const p = t[dark ? 'dark' : 'light']; return `<button class="theme ${s.theme === k ? 'on' : ''}" data-theme="${k}" title="${t.name}"><span class="sw">${[0, 1, 2, 5, 3].map(i => `<i style="background:${p[i]}"></i>`).join('')}</span><span class="nm">${t.name}</span></button>`; }).join('')}</div>
+    <div class="row" style="margin-top:14px"><label class="row">Accent override <input type="color" data-set="accent" value="${esc(s.accent || getComputedStyle(document.documentElement).getPropertyValue('--accent').trim() || '#4f8cff')}"></label><button class="btn sm" data-lk="accentReset">Use theme accent</button></div>
+    <h4 class="sec">Surfaces</h4>
+    <div class="row" style="gap:16px">
+      <label class="f"><span>Card style</span>${sel('style', [['solid', 'Solid'], ['glass', 'Glass'], ['outline', 'Outline'], ['soft', 'Soft shadow'], ['terminal', 'Terminal']])}</label>
+      <label class="f"><span>Category header</span>${sel('headerStyle', [['accent', 'Coloured text'], ['plain', 'Plain'], ['filled', 'Filled'], ['underline', 'Underline']])}</label>
+      <label class="f"><span>Font</span>${sel('font', [['sans', 'Sans'], ['mono', 'Monospace'], ['serif', 'Serif'], ['rounded', 'Rounded']])}</label>
+      <label class="f"><span>Corner radius · ${s.radius}px</span><input type="range" min="0" max="24" data-set="radius" value="${s.radius}"></label>
+    </div>
+    <h4 class="sec">Backdrop</h4>
+    <div class="row" style="gap:16px">
+      <label class="f"><span>Pattern</span>${sel('backdrop', [['none', 'None'], ['dots', 'Dots'], ['grid', 'Grid'], ['gradient', 'Gradient'], ['aurora', 'Aurora'], ['stripes', 'Stripes']])}</label>
+      <label class="f"><span>Intensity · ${s.backdropIntensity}%</span><input type="range" min="0" max="100" data-set="backdropIntensity" value="${s.backdropIntensity}"></label>
+    </div>
+    <h4 class="sec">Layout</h4>
+    <div class="row" style="gap:16px">
+      <label class="f"><span>Columns</span>${sel('columns', [[0, 'Auto'], [1, '1'], [2, '2'], [3, '3'], [4, '4'], [5, '5'], [6, '6']])}</label>
+      <label class="f"><span>Density</span>${sel('density', [['compact', 'Compact'], ['comfortable', 'Comfortable'], ['spacious', 'Spacious']])}</label>
+      <label class="f"><span>Icons</span>${sel('favicons', [['google', 'Site icons (Google service)'], ['duckduckgo', 'Site icons (DuckDuckGo service)'], ['site', 'Site icons (from each site)'], ['off', 'Letters only (no requests)']])}</label>
+    </div>
+    <div class="row"><label class="chk"><input type="checkbox" data-set="showShortcuts" ${s.showShortcuts ? 'checked' : ''}> Shortcut badges</label><label class="chk"><input type="checkbox" data-set="showPinned" ${s.showPinned ? 'checked' : ''}> Pinned strip</label><label class="chk"><input type="checkbox" data-set="previews" ${s.previews ? 'checked' : ''}> Hover previews</label><label class="chk"><input type="checkbox" data-set="legend" ${s.legend ? 'checked' : ''}> Key legend</label></div>
+    <div class="row" style="margin-top:10px"><button class="btn" data-lk="reset">Reset look to defaults</button></div>`;
+}
+function settingInput(e) {
+  const k = e.target.dataset.set; if (!k) return;
+  let v = e.target.type === 'checkbox' ? e.target.checked : e.target.value;
+  if (e.target.type === 'range' || e.target.type === 'number' || ['columns', 'weekStart', 'trashDays'].includes(k)) v = +v;
+  if (k === 'hour12') v = v === true || v === 'true';
+  state.settings[k] = v;
+  save(); applyLook(); renderHeader(); renderClocks(); renderPage(); renderLegend();
+  const lab = e.target.closest('label.f')?.querySelector('span');
+  if (lab && e.target.type === 'range') lab.textContent = lab.textContent.replace(/·.*$/, '· ' + v + (k === 'radius' ? 'px' : '%'));
+}
+
+/* ======================================================================
+   Settings
+   ====================================================================== */
+let stTab = 'general';
+function openSettings(tab) {
+  if (tab) stTab = tab;
+  showModal('settings', 'Settings', `<div class="tabs" id="stTabs" style="margin:-16px -18px 16px"></div><div id="stBody"></div>`, { refresh: () => { if (!$('#stBody')?.contains(document.activeElement)) stRefresh(); } });
+  $('#stTabs').addEventListener('click', e => { const t = e.target.closest('[data-st]'); if (t) { stTab = t.dataset.st; stRefresh(); } });
+  const body = $('#stBody');
+  body.addEventListener('input', e => {
+    if (e.target.dataset.set) return settingInput(e);
+    if (e.target.dataset.top) { state[e.target.dataset.top] = e.target.value; save(); renderHeader(); return; }
+    const ci = e.target.dataset.clock; if (ci != null) { state.clocks[+ci][e.target.dataset.k] = e.target.value; save(); renderClocks(); renderPage(); return; }
+    const fi = e.target.dataset.finder; if (fi != null) { state.finders[+fi][e.target.dataset.k] = e.target.value.trim(); save(); return; }
+    const pi = e.target.dataset.pagename; if (pi) { pageById(pi).name = e.target.value; save(); renderHeader(); }
+  });
+  body.addEventListener('change', e => { if (e.target.tagName === 'SELECT' && e.target.dataset.set) settingInput(e); });
+  body.addEventListener('click', stClick);
+  stRefresh();
+}
+function stRefresh() {
+  if (modalKind !== 'settings') return;
+  const tabs = [['general', 'General'], ['clocks', 'Clocks'], ['search', 'Search'], ['pages', 'Pages'], ['data', 'Data'], ['stats', 'Statistics']];
+  $('#stTabs').innerHTML = tabs.map(([k, l]) => `<button data-st="${k}" class="${k === stTab ? 'on' : ''}">${l}</button>`).join('');
+  const s = state.settings, chk = (k, l) => `<label class="chk"><input type="checkbox" data-set="${k}" ${s[k] ? 'checked' : ''}> ${l}</label>`;
+  let h = '';
+  if (stTab === 'general') {
+    h = `<label class="f"><span>Dashboard title</span><input data-top="title" value="${esc(state.title)}"></label>
+      ${chk('newTab', 'Open bookmarks in a new tab')}${chk('pasteToInbox', 'Pasting a link anywhere saves it to the Inbox')}${chk('previews', 'Show a preview card when hovering a bookmark')}${chk('showPinned', 'Show pinned bookmarks above every page')}${chk('showShortcuts', 'Show shortcut badges on bookmarks')}${chk('legend', 'Show the key legend at the bottom')}
+      <div class="row" style="margin-top:8px"><label class="f"><span>Keep deleted items for (days)</span><input type="number" min="1" max="365" data-set="trashDays" value="${s.trashDays}" style="width:120px"></label>
+      <label class="f"><span>Calendar weeks start on</span><select data-set="weekStart"><option value="0" ${!+s.weekStart ? 'selected' : ''}>Sunday</option><option value="1" ${+s.weekStart === 1 ? 'selected' : ''}>Monday</option></select></label></div>
+      <p><button class="btn" data-act="look">Open Look studio…</button></p>`;
+  } else if (stTab === 'clocks') {
+    const zones = (Intl.supportedValuesOf?.('timeZone') || ['UTC', 'America/Chicago', 'America/New_York', 'America/Los_Angeles', 'Europe/London', 'Europe/Paris', 'Asia/Singapore', 'Asia/Tokyo', 'Australia/Sydney']);
+    h = `<p class="muted">Clocks appear on the right of the header and in the Clocks widget. Time zones use IANA names such as <code>America/Chicago</code> (US Central, switches between CST and CDT automatically).</p>
+      <datalist id="tzList">${zones.map(z => `<option value="${esc(z)}">`).join('')}</datalist>
+      <table class="tbl"><tr><th>Label</th><th>Time zone</th><th></th><th></th></tr>${state.clocks.map((c, i) => `<tr><td><input data-clock="${i}" data-k="label" value="${esc(c.label)}"></td><td><input data-clock="${i}" data-k="timeZone" value="${esc(c.timeZone)}" list="tzList"></td><td style="white-space:nowrap"><button class="ibtn sm" data-sta="clockUp" data-i="${i}" title="Move up">↑</button></td><td><button class="ibtn sm" data-sta="clockDel" data-i="${i}" title="Remove">${I('x', 14)}</button></td></tr>`).join('')}</table>
+      <div class="row" style="margin-top:10px"><button class="btn" data-sta="clockAdd">+ Add clock</button><button class="btn" data-sta="clockLocal">+ Add my local time</button></div>
+      <h4 class="sec">Format</h4>
+      <div class="row"><label class="f"><span>Hours</span><select data-set="hour12"><option value="false" ${!s.hour12 ? 'selected' : ''}>24-hour</option><option value="true" ${s.hour12 ? 'selected' : ''}>12-hour</option></select></label></div>
+      ${chk('showSeconds', 'Show seconds')}${chk('showDate', 'Show the date under each clock')}`;
+  } else if (stTab === 'search') {
+    h = `<p class="muted">Finders let you search a site straight from the search panel: type the key, a space, then your query (e.g. <code>yt lo-fi</code>). Use <code>%s</code> where the query goes.</p>
+      <table class="tbl"><tr><th style="width:70px">Key</th><th style="width:150px">Name</th><th>URL</th><th></th></tr>${state.finders.map((f, i) => `<tr><td><input data-finder="${i}" data-k="key" value="${esc(f.key)}"></td><td><input data-finder="${i}" data-k="name" value="${esc(f.name)}"></td><td><input data-finder="${i}" data-k="url" value="${esc(f.url)}"></td><td><button class="ibtn sm" data-sta="finderDel" data-i="${i}">${I('x', 14)}</button></td></tr>`).join('')}</table>
+      <div class="row" style="margin-top:10px"><button class="btn" data-sta="finderAdd">+ Add finder</button>
+      <label class="row">Default: <select data-set="defaultFinder" style="width:auto">${state.finders.map(f => `<option value="${esc(f.key)}" ${f.key === s.defaultFinder ? 'selected' : ''}>${esc(f.name)}</option>`).join('')}</select></label></div>
+      <h4 class="sec">Search syntax</h4>
+      <dl class="kv"><dt><code>word</code></dt><dd>name, address, tags, notes, category</dd><dt><code>/word</code></dt><dd>name only</dd><dt><code>tag:x</code> <code>-tag:x</code></dt><dd>has / lacks a tag (<code>tag:dev*</code> for prefix)</dd><dt><code>cat:</code> <code>page:</code> <code>site:</code></dt><dd>category, page or domain contains</dd><dt><code>is:</code></dt><dd>pinned, inbox, untagged, never, dup, noted, shortcut, broken, snoozed, http</dd><dt><code>added:</code> <code>opened:</code></dt><dd><code>&lt;7d</code>, <code>&gt;3m</code>, <code>today</code>, <code>never</code> (h, d, w, m, y)</dd><dt><code>-word</code></dt><dd>exclude</dd><dt><code>:</code> / <code>#</code></dt><dd>commands / tags</dd></dl>`;
+  } else if (stTab === 'pages') {
+    h = state.pages.map((p, i) => `<div class="irow"><span class="muted" style="width:20px">${i + 1}</span><input data-pagename="${p.id}" value="${esc(p.name)}" style="flex:1;width:auto"><span class="muted" style="font-size:12px">${pageCats(p.id).length} card(s)</span>
+      <button class="ibtn sm" data-sta="pageUp" data-id="${p.id}" title="Move up">↑</button><button class="ibtn sm" data-sta="pageDown" data-id="${p.id}" title="Move down">↓</button><button class="btn sm" data-sta="pageTpl" data-id="${p.id}">Share as template</button><button class="btn sm danger" data-sta="pageDel" data-id="${p.id}">Delete</button></div>`).join('') +
+      `<div class="row" style="margin-top:12px"><button class="btn" data-act="newPage">+ New page</button><button class="btn" data-sta="import">Import page template…</button></div>
+      <p class="muted">A template is a JSON file with one page, its cards and links. Importing adds it as a new page.</p>`;
+  } else if (stTab === 'data') {
+    let used = 0; try { used = (localStorage.getItem(LS_KEY) || '').length; } catch { /* ignore */ }
+    h = `<h4 class="sec">Back up &amp; restore</h4>
+      <div class="row"><button class="btn" data-sta="exportJSON">Export backup (JSON)</button><button class="btn" data-sta="import">Import file…</button></div>
+      <p class="muted">Import accepts a backup (.json, replaces everything), a page template (.json, adds a page), a browser bookmarks export (.html — Chrome, Firefox, Safari, Edge, and most bookmark services), or a .csv with columns like <code>name,url,tags,notes,category,page</code>. You can also drop a file onto the dashboard.</p>
+      <h4 class="sec">Export bookmarks</h4>
+      <div class="row"><button class="btn" data-sta="exportHTML">Browser format (HTML)</button><button class="btn" data-sta="exportCSV">Spreadsheet (CSV)</button></div>
+      <h4 class="sec">Defaults for this file</h4>
+      <p class="muted">Copy your current dashboard as a JSON block and paste it over the <code>dash-defaults</code> block near the top of this HTML file. Everyone who opens the file will then start from your layout.</p>
+      <div class="row"><button class="btn" data-sta="copyDefaults">Copy as defaults JSON</button><button class="btn" data-sta="saveDefaults">Download defaults JSON</button></div>
+      <h4 class="sec">Reset</h4>
+      <div class="row"><button class="btn" data-sta="merge">Add any missing default links</button><button class="btn danger" data-sta="reset">Reset to defaults</button></div>
+      <p class="muted">Everything is stored in this browser only (localStorage key <code>${esc(LS_KEY)}</code>, ${(used / 1024).toFixed(1)} KB). Nothing is sent anywhere. Other tabs update automatically.</p>`;
+  } else if (stTab === 'stats') {
+    const all = live(), tags = tagCounts(), opens = all.reduce((a, b) => a + (b.openCount || 0), 0);
+    const avg = all.length ? Math.round(all.reduce((a, b) => a + score(b).s, 0) / all.length) : 100;
+    const stat = (n, l) => `<div class="stat"><b>${n}</b><span>${l}</span></div>`;
+    const doms = new Map(); all.forEach(b => { const d = domain(b.url); if (d) doms.set(d, (doms.get(d) || 0) + 1); });
+    h = `<div class="stats">${stat(all.length, 'bookmarks')}${stat(state.pages.length, 'pages')}${stat(state.categories.filter(c => c.type === 'bookmarks').length, 'categories')}${stat(state.categories.filter(c => c.type !== 'bookmarks').length, 'widgets')}${stat(tags.size, 'tags')}${stat(opens, 'total opens')}${stat(inboxVisible().length, 'in Inbox')}${stat(state.bookmarks.filter(b => b.deleted).length, 'in Trash')}${stat(all.filter(b => !b.openCount).length, 'never opened')}${stat(all.filter(isDup).length, 'duplicates')}${stat(all.filter(b => !b.tags.length).length, 'untagged')}${stat(`<span class="score ${scoreCls(avg)}" style="font-size:20px">${avg}</span>`, 'cleanup score')}</div>
+      <div class="row" style="align-items:flex-start;gap:30px;margin-top:10px">
+      <div style="flex:1;min-width:220px"><h4 class="sec">Most opened</h4>${[...all].filter(b => b.openCount).sort((a, b) => b.openCount - a.openCount).slice(0, 8).map(b => `<div class="row">${avatar(b)}<span style="flex:1">${esc(b.name)}</span><span class="num muted">${b.openCount}</span></div>`).join('') || '<p class="muted">Nothing opened yet.</p>'}</div>
+      <div style="flex:1;min-width:220px"><h4 class="sec">Top sites</h4>${[...doms].sort((a, b) => b[1] - a[1]).slice(0, 8).map(([d, n]) => `<div class="row"><span style="flex:1">${esc(d)}</span><span class="num muted">${n}</span></div>`).join('')}</div></div>
+      <p><button class="btn" data-sta="health">Review bookmarks that need attention</button></p>`;
+  }
+  $('#stBody').innerHTML = h;
+}
+function stClick(e) {
+  const el = e.target.closest('[data-sta]'); if (!el) return;
+  const a = el.dataset.sta, i = +el.dataset.i, id = el.dataset.id;
+  const re = () => { commit(); stRefresh(); };
+  switch (a) {
+    case 'clockAdd': state.clocks.push({ label: 'UTC', timeZone: 'UTC' }); re(); break;
+    case 'clockLocal': { const tz = Intl.DateTimeFormat().resolvedOptions().timeZone; state.clocks.push({ label: 'Local', timeZone: tz }); re(); break; }
+    case 'clockDel': state.clocks.splice(i, 1); re(); break;
+    case 'clockUp': if (i > 0) { [state.clocks[i - 1], state.clocks[i]] = [state.clocks[i], state.clocks[i - 1]]; re(); } break;
+    case 'finderAdd': state.finders.push({ key: 'x', name: 'New finder', url: 'https://example.com/search?q=%s' }); re(); break;
+    case 'finderDel': state.finders.splice(i, 1); re(); break;
+    case 'pageUp': movePage(id, -1); stRefresh(); break;
+    case 'pageDown': movePage(id, 1); stRefresh(); break;
+    case 'pageTpl': exportPageTemplate(id); break;
+    case 'pageDel': deletePage(id); stRefresh(); break;
+    case 'import': $('#fileIn').click(); break;
+    case 'exportJSON': exportJSON(); break;
+    case 'exportHTML': exportHTML(); break;
+    case 'exportCSV': exportCSV(live()); break;
+    case 'copyDefaults': copyDefaultsJSON(); break;
+    case 'saveDefaults': download('dashboard-defaults.json', defaultsJSON(), 'application/json'); break;
+    case 'merge': mergeDefaults(); stRefresh(); break;
+    case 'reset': resetDefaults(); break;
+    case 'health': closeModal(); openBookmarksView({ filter: 'low', sort: 'score', q: '' }); break;
+  }
+}
+
+/* ======================================================================
+   Cheat sheet
+   ====================================================================== */
+const KEYS = [
+  ['Ctrl/⌘ K · Shift F', 'Open search'], ['a–z, 0–9', 'Open a bookmark by its shortcut (anything else starts a search)'], ['1 – 9', 'Switch to page'], ['[ ]', 'Previous / next page'],
+  ['Shift N', 'New bookmark'], ['Shift C', 'New category'], ['Shift P', 'New page'], ['Shift W', 'Add widget'],
+  ['Shift B', 'Bookmarks view'], ['Shift I', 'Inbox'], ['/', 'Tag cloud'], ['Shift T', 'Trash'], ['Shift S', 'Settings'],
+  ['Shift A', 'Look studio'], ['Shift D', 'Toggle light / dark'], ['Shift R', 'Random theme'], ['Shift Z', 'Toggle shortcut badges & key legend'],
+  ['Shift L', 'Check all links'], [':', 'Command palette'], ['? · F1', 'This cheat sheet'], ['Esc', 'Close the top panel'], ['Ctrl/⌘ V', 'Paste a link to save it to the Inbox'],
+  ['Right-click', 'Bookmark, category or page options'], ['Drag', 'Reorder bookmarks & categories; drop on a page tab to move there'], ['Double-click', 'Rename title / edit notes'],
+  ['Search: ↑ ↓ Enter', 'Move and open'], ['Search: Shift Enter', 'Edit the bookmark'], ['Search: Ctrl/⌘ Enter', 'Open in a new tab'], ['Search: Tab', 'Switch mode (All, Commands, Tags, Web)'],
+  ['Search: g query', 'Search with a finder (see Settings → Search)'],
+  ['Bookmarks view: h', 'Show bookmarks that need attention'], ['Inbox: t', 'Triage mode'], ['Triage: o k s d e p', 'Open, keep, snooze, delete, edit, promote'], ['Triage: ← →', 'Previous / next'],
+];
+function openCheat() {
+  showModal('cheat', 'Keyboard shortcuts', `<input id="ckQ" placeholder="Filter shortcuts…" style="margin-bottom:10px"><div id="ckList"></div>`);
+  const draw = () => { const q = $('#ckQ').value.toLowerCase(); $('#ckList').innerHTML = `<dl class="kv" style="grid-template-columns:210px 1fr">${KEYS.filter(k => (k[0] + k[1]).toLowerCase().includes(q)).map(([k, d]) => `<dt><kbd>${esc(k)}</kbd></dt><dd>${esc(d)}</dd>`).join('')}</dl>`; };
+  $('#ckQ').addEventListener('input', draw); draw(); $('#ckQ').focus();
+}
+
+/* ======================================================================
+   Import / export
+   ====================================================================== */
+function catToDef(c) {
+  const o = { name: c.name };
+  if (c.icon) o.icon = c.icon;
+  if (c.color) o.color = c.color;
+  if (c.type !== 'bookmarks') o.type = c.type;
+  if (c.span === 2) o.span = 2;
+  if (c.sort && c.sort !== 'manual') o.sort = c.sort;
+  if (c.content) o.content = c.content;
+  if (c.type === 'bookmarks') o.bookmarks = catBms(c.id).map(b => {
+    const x = { name: b.name, url: b.url };
+    if (b.tags.length) x.tags = b.tags;
+    if (b.shortcut) x.shortcut = b.shortcut;
+    if (b.notes) x.notes = b.notes;
+    if (b.pinned) x.pinned = true;
+    if (b.icon) x.icon = b.icon;
+    return x;
+  });
+  return o;
+}
+function defaultsJSON() {
+  const s = {};
+  for (const k of Object.keys(BASE_SETTINGS)) if (state.settings[k] !== BASE_SETTINGS[k]) s[k] = state.settings[k];
+  const inbox = inboxVisible().map(b => ({ name: b.name, url: b.url, ...(b.tags.length ? { tags: b.tags } : {}) }));
+  return JSON.stringify({
+    storageKey: DEFAULTS.storageKey || 'dashboard', title: state.title,
+    pages: state.pages.map(p => ({ name: p.name, categories: pageCats(p.id).map(catToDef) })),
+    ...(inbox.length ? { inbox } : {}),
+    clocks: state.clocks, finders: state.finders,
+    ...(state.collections.length ? { collections: state.collections.map(c => ({ name: c.name, query: c.query })) } : {}),
+    settings: s,
+  }, null, 2);
+}
+function copyDefaultsJSON() {
+  const t = defaultsJSON();
+  (navigator.clipboard?.writeText(t) || Promise.reject()).then(() => toast('Defaults JSON copied — paste it into the dash-defaults block'), () => download('dashboard-defaults.json', t, 'application/json'));
+}
+function exportJSON() { saveNow(); download(`dashboard-backup-${today()}.json`, JSON.stringify({ app: 'dashboard', version: 1, exported: new Date().toISOString(), data: state }, null, 2), 'application/json'); }
+function exportPageTemplate(id) {
+  const p = pageById(id);
+  download(`page-${p.name.toLowerCase().replace(/[^a-z0-9]+/g, '-')}.json`, JSON.stringify({ app: 'dashboard', type: 'page-template', page: { name: p.name, categories: pageCats(id).map(catToDef) } }, null, 2), 'application/json');
+}
+function exportHTML() {
+  const a = b => `<DT><A HREF="${esc(b.url)}" ADD_DATE="${Math.floor(b.created / 1000)}"${b.opened ? ` LAST_VISIT="${Math.floor(b.opened / 1000)}"` : ''}${b.tags.length ? ` TAGS="${esc(b.tags.join(','))}"` : ''}>${esc(b.name)}</A>\n${b.notes ? `<DD>${esc(b.notes)}\n` : ''}`;
+  let o = '<!DOCTYPE NETSCAPE-Bookmark-file-1>\n<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8">\n<TITLE>Bookmarks</TITLE>\n<H1>Bookmarks</H1>\n<DL><p>\n';
+  state.pages.forEach(p => {
+    o += `<DT><H3>${esc(p.name)}</H3>\n<DL><p>\n`;
+    pageCats(p.id).filter(c => c.type === 'bookmarks').forEach(c => { o += `<DT><H3>${esc(c.name)}</H3>\n<DL><p>\n${catBms(c.id).map(a).join('')}</DL><p>\n`; });
+    o += '</DL><p>\n';
+  });
+  const ib = live().filter(isInbox);
+  if (ib.length) o += `<DT><H3>Inbox</H3>\n<DL><p>\n${ib.map(a).join('')}</DL><p>\n`;
+  download(`bookmarks-${today()}.html`, o + '</DL><p>\n', 'text/html');
+}
+const csvCell = v => { let s = String(v ?? ''); if (/^[=+\-@\t\r]/.test(s)) s = "'" + s; return /[",\n\r]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s; };
+function exportCSV(list) {
+  const rows = [['name', 'url', 'tags', 'notes', 'category', 'page', 'shortcut', 'pinned', 'added', 'last_opened', 'open_count', 'health']];
+  list.forEach(b => rows.push([b.name, b.url, b.tags.join(';'), b.notes, catOf(b)?.name || 'Inbox', pageOf(b)?.name || '', b.shortcut, b.pinned ? 'yes' : '', new Date(b.created).toISOString(), b.opened ? new Date(b.opened).toISOString() : '', b.openCount || 0, score(b).s]));
+  download(`bookmarks-${today()}.csv`, rows.map(r => r.map(csvCell).join(',')).join('\r\n'), 'text/csv');
+}
+function parseCSV(t) {
+  const rows = []; let row = [], f = '', q = false;
+  for (let i = 0; i < t.length; i++) {
+    const c = t[i];
+    if (q) { if (c === '"') { if (t[i + 1] === '"') { f += '"'; i++; } else q = false; } else f += c; }
+    else if (c === '"') q = true;
+    else if (c === ',') { row.push(f); f = ''; }
+    else if (c === '\n' || c === '\r') { if (c === '\r' && t[i + 1] === '\n') i++; row.push(f); rows.push(row); row = []; f = ''; }
+    else f += c;
+  }
+  if (f || row.length) { row.push(f); rows.push(row); }
+  return rows.filter(r => r.some(x => x.trim()));
+}
+function importCSV(text) {
+  const rows = parseCSV(text.replace(/^﻿/, ''));
+  if (rows.length < 2) return toast('The CSV has no rows.');
+  const hd = rows[0].map(h => h.trim().toLowerCase());
+  const col = (...names) => hd.findIndex(h => names.includes(h));
+  const ci = { name: col('name', 'title'), url: col('url', 'link', 'href', 'address'), tags: col('tags', 'tag', 'labels'), notes: col('notes', 'note', 'description', 'excerpt', 'comment'), cat: col('category', 'folder', 'collection', 'group'), page: col('page') };
+  if (ci.url < 0) return toast('The CSV needs a url column.');
+  const have = new Set(live().map(b => ukey(b.url)));
+  let n = 0, skip = 0, impPage = null;
+  const getCat = (cname, pname) => {
+    let p = pname ? state.pages.find(x => x.name.toLowerCase() === pname.toLowerCase()) : null;
+    if (pname && !p) { p = { id: uid(), name: pname }; state.pages.push(p); }
+    if (!p) { if (!impPage) { impPage = { id: uid(), name: 'Imported' }; state.pages.push(impPage); } p = impPage; }
+    let c = pageCats(p.id).find(x => x.type === 'bookmarks' && x.name.toLowerCase() === cname.toLowerCase());
+    if (!c) { c = mkCat({ name: cname }, p.id); state.categories.push(c); }
+    return c.id;
+  };
+  rows.slice(1).forEach(r => {
+    const url = normUrl(r[ci.url] || ''); if (!url || !validUrl(url)) return;
+    if (have.has(ukey(url))) { skip++; return; }
+    have.add(ukey(url));
+    const cname = ci.cat >= 0 ? (r[ci.cat] || '').trim() : '', pname = ci.page >= 0 ? (r[ci.page] || '').trim() : '';
+    const b = mkBm({ url, name: ci.name >= 0 ? r[ci.name] : '', tags: ci.tags >= 0 ? (r[ci.tags] || '').split(/[,;|]/) : [], notes: ci.notes >= 0 ? r[ci.notes] : '' }, cname && cname.toLowerCase() !== 'inbox' ? getCat(cname, pname) : null);
+    state.bookmarks.push(b); n++;
+  });
+  commit(); toast(`Imported ${n} bookmark(s)${skip ? `, skipped ${skip} duplicate(s)` : ''}.`);
+}
+function importNetscape(html) {
+  const doc = new DOMParser().parseFromString(html, 'text/html');
+  const have = new Set(live().map(b => ukey(b.url)));
+  const page = { id: uid(), name: 'Imported' };
+  const cats = new Map();
+  let n = 0, skip = 0;
+  doc.querySelectorAll('a[href]').forEach(a => {
+    const url = a.getAttribute('href');
+    if (!/^(https?|ftp|file):/i.test(url)) return;
+    if (have.has(ukey(url))) { skip++; return; }
+    have.add(ukey(url));
+    const path = [];
+    for (let el = a.parentElement; el; el = el.parentElement) {
+      if (el.tagName === 'DL') { const h = el.previousElementSibling; if (h && h.tagName === 'H3') path.unshift(h.textContent.trim()); }
+    }
+    const cname = path.slice(-2).join(' / ') || 'Bookmarks';
+    if (!cats.has(cname)) { const c = mkCat({ name: cname }, page.id); cats.set(cname, c); state.categories.push(c); }
+    const dd = a.closest('dt')?.nextElementSibling;
+    const b = mkBm({ url, name: a.textContent.trim(), tags: (a.getAttribute('tags') || '').split(','), notes: dd?.tagName === 'DD' ? dd.textContent.trim() : '' }, cats.get(cname).id);
+    const ad = +a.getAttribute('add_date'); if (ad) b.created = ad > 1e12 ? Math.floor(ad / 1000) : ad * 1000;
+    state.bookmarks.push(b); n++;
+  });
+  if (n) { state.pages.push(page); state.activePage = page.id; }
+  commit(); toast(`Imported ${n} bookmark(s) into “Imported”${skip ? `, skipped ${skip} duplicate(s)` : ''}.`);
+}
+function importPage(p) {
+  const pid = uid();
+  state.pages.push({ id: pid, name: p.name || 'Imported page' });
+  (p.categories || []).forEach(c => { const cat = mkCat(c, pid); state.categories.push(cat); (c.bookmarks || []).forEach(b => state.bookmarks.push(mkBm(b, cat.id))); });
+  state.activePage = pid; commit(); toast(`Added page “${p.name}”`);
+}
+function importJSONText(text) {
+  let d; try { d = JSON.parse(text); } catch (e) { return toast('Invalid JSON: ' + e.message); }
+  if (d && d.data && Array.isArray(d.data.pages)) {
+    if (!confirm('Replace your whole dashboard with this backup? (You can undo right after.)')) return;
+    withUndo('Backup restored', () => { state = sanitize(d.data); });
+  } else if (d && d.type === 'page-template' && d.page) importPage(d.page);
+  else if (d && Array.isArray(d.pages)) {
+    if (!confirm('This looks like a defaults file. Replace your dashboard with it?')) return;
+    withUndo('Dashboard replaced', () => { state = sanitize(fromDefaultsObj(d)); });
+  } else if (Array.isArray(d)) {
+    let n = 0; d.forEach(x => { const url = x.url || x.link || x.href; if (url) { state.bookmarks.push(mkBm({ url, name: x.name || x.title, tags: x.tags, notes: x.notes || x.excerpt || x.description }, null)); n++; } });
+    commit(); toast(`Added ${n} link(s) to the Inbox.`);
+  } else toast('Did not recognise this JSON file.');
+}
+function importFile(file) {
+  if (!file) return;
+  const r = new FileReader();
+  r.onload = () => {
+    const t = String(r.result), name = file.name.toLowerCase();
+    if (name.endsWith('.json') || /^\s*[[{]/.test(t)) importJSONText(t);
+    else if (name.endsWith('.csv')) importCSV(t);
+    else if (/<a\s/i.test(t)) importNetscape(t);
+    else { const urls = t.split(/\s+/).filter(looksUrl); urls.forEach(u => state.bookmarks.push(mkBm({ url: u }, null))); commit(); toast(`Added ${urls.length} link(s) to the Inbox.`); }
+  };
+  r.readAsText(file);
+}
+$('#fileIn').addEventListener('change', e => { importFile(e.target.files[0]); e.target.value = ''; });
+
+function resetDefaults() {
+  if (!confirm('Reset the dashboard to the defaults in this file? Your changes will be replaced (you can undo right after).')) return;
+  withUndo('Reset to defaults', () => { state = fromDefaults(); });
+  localStorage.setItem(LS_HASH, DEFAULTS_HASH);
+  renderBanner();
+}
+function mergeDefaults() {
+  const d = fromDefaults(), have = new Set(live().map(b => ukey(b.url)));
+  let added = 0;
+  d.pages.forEach(dp => {
+    let p = state.pages.find(x => x.name === dp.name);
+    if (!p) { p = { id: uid(), name: dp.name }; state.pages.push(p); }
+    d.categories.filter(c => c.pageId === dp.id).forEach(dc => {
+      let c = state.categories.find(x => x.pageId === p.id && x.name === dc.name);
+      if (!c) { c = { ...dc, id: uid(), pageId: p.id }; state.categories.push(c); }
+      d.bookmarks.filter(b => b.categoryId === dc.id).forEach(b => { if (!have.has(ukey(b.url))) { state.bookmarks.push({ ...b, id: uid(), categoryId: c.id }); added++; } });
+    });
+  });
+  d.clocks.forEach(c => { if (!state.clocks.some(x => x.timeZone === c.timeZone)) state.clocks.push(c); });
+  d.finders.forEach(f => { if (!state.finders.some(x => x.key === f.key)) state.finders.push(f); });
+  localStorage.setItem(LS_HASH, DEFAULTS_HASH);
+  commit(); toast(added ? `Added ${added} default link(s).` : 'You already have every default link.');
+}
+
+/* ======================================================================
+   Boot
+   ====================================================================== */
+$$('[data-icon]').forEach(b => b.insertAdjacentHTML('afterbegin', I(b.dataset.icon)));
+renderAll();
+})();
+</script>
+</body>
+</html>
