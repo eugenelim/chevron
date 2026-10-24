@@ -2,7 +2,7 @@
 
 A personal start page in **one HTML file**. There's no server, build step, account or database. Open `index.html` in a browser and it works. Your changes are saved in the browser's `localStorage`.
 
-It comes with three pages of links already set up — **Productivity** (Gmail, Google Calendar, Google Drive, Dropbox, GitHub, ChatGPT, Claude, Gemini, DuckDuckGo, Maps, YouTube, LinkedIn, WhatsApp, Instagram, X, Reddit, Windy weather and more), **News** (general, tech, AI and engineering blogs) and **Finance** (news from Reuters and AP to Bloomberg, the FT and The Economist, plus tools, commentary and economists) — with a **Stocks** card of 7-day charts for Apple, Alphabet and Amazon on the Finance page, and CST and London clocks with the local weather on the right. You can change all of these defaults by editing the file. That makes it easy to hand out one prepared dashboard to a team or class.
+It comes with three pages of links already set up — **Productivity** (Gmail, Google Calendar, Google Drive, Dropbox, GitHub, ChatGPT, Claude, Gemini, DuckDuckGo, Maps, YouTube, LinkedIn, WhatsApp, Instagram, X, Reddit, Windy weather and more), **News** (world news, politics, sports, tech, AI and engineering blogs) and **Finance** (news from Reuters and AP to Bloomberg, the FT and The Economist, plus tools, commentary and economists) — with a **Stocks** card of 7-day charts for Apple, Alphabet and Amazon on the Finance page, and CST and London clocks with the local weather on the right. You can change all of these defaults by editing the file. That makes it easy to hand out one prepared dashboard to a team or class.
 
 ![A tour of the dashboard: shortcuts, search, pages, the stocks card and its price chart, renaming a page tab, the hourly and 7-day weather, the bookmark editor, the bookmarks view, tags, the Look studio and light mode](docs/demo.gif)
 
@@ -121,6 +121,16 @@ These come with the file. Type a shortcut on the dashboard to open the link. You
 | News | [AP News](https://apnews.com/) | `ap` |
 | News | [BBC News](https://www.bbc.com/news) | `bbc` |
 | News | [The Guardian](https://www.theguardian.com/) | `gu` |
+| News | [Al Jazeera](https://www.aljazeera.com/) | `aj` |
+| News | [The Age](https://www.theage.com.au/) | `ta` |
+| News | [Politico Europe](https://www.politico.eu/) | `pe` |
+| News | [AP Politics](https://apnews.com/politics) | `us` |
+| Sports | [ESPN](https://www.espn.com/) | `es` |
+| Sports | [BBC Sport](https://www.bbc.com/sport) | `bs` |
+| Sports | [BBC Football](https://www.bbc.com/sport/football) | `bf` |
+| Sports | [FotMob](https://www.fotmob.com/) | `fm` |
+| Sports | [Tennis.com](https://www.tennis.com/) | `tn` |
+| Sports | [Formula 1](https://www.formula1.com/) | `f1` |
 | Tech News | [Hacker News](https://news.ycombinator.com/) | `hn` |
 | Tech News | [Ars Technica](https://arstechnica.com/) | `at` |
 | Tech News | [Crunchbase News](https://news.crunchbase.com/) | `cb` |
