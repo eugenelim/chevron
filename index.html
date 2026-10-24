@@ -106,7 +106,8 @@
             { "name": "Al Jazeera", "url": "https://www.aljazeera.com/", "tags": ["news", "world"], "shortcut": "aj" },
             { "name": "The Age", "url": "https://www.theage.com.au/", "tags": ["news", "australia"], "shortcut": "ta" },
             { "name": "Politico Europe", "url": "https://www.politico.eu/", "tags": ["news", "politics", "europe"], "shortcut": "pe" },
-            { "name": "AP Politics", "url": "https://apnews.com/politics", "tags": ["news", "politics", "us"], "shortcut": "us", "notes": "US politics from the AP wire" }
+            { "name": "AP Politics", "url": "https://apnews.com/politics", "tags": ["news", "politics", "us"], "shortcut": "us", "notes": "US politics from the AP wire" },
+            { "name": "Kagi News", "url": "https://news.kagi.com/", "tags": ["news", "world"], "shortcut": "kn", "notes": "Daily summaries of the top stories" }
           ]
         },
         {
@@ -167,7 +168,7 @@
           "name": "Stocks",
           "icon": "📈",
           "type": "stocks",
-          "symbols": ["NASDAQ:AAPL", "NASDAQ:GOOGL", "NASDAQ:AMZN"]
+          "symbols": ["AMEX:SPY", "NASDAQ:AAPL", "NASDAQ:GOOGL"]
         },
         {
           "name": "Finance News",
@@ -633,7 +634,7 @@ const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const now = () => Date.now();
 const DAY = 864e5;
-const STOCK_DEFAULTS = ['NASDAQ:AAPL', 'NASDAQ:GOOGL', 'NASDAQ:AMZN'];
+const STOCK_DEFAULTS = ['AMEX:SPY', 'NASDAQ:AAPL', 'NASDAQ:GOOGL'];
 const hashStr = s => { let h = 5381; for (let i = 0; i < s.length; i++) h = ((h << 5) + h + s.charCodeAt(i)) | 0; return (h >>> 0).toString(36); };
 const domain = u => { try { return new URL(u).hostname.replace(/^www\./, ''); } catch { return ''; } };
 const origin = u => { try { return new URL(u).origin; } catch { return ''; } };
