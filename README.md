@@ -18,10 +18,10 @@ You can also host it on any static host, such as GitHub Pages, Netlify or an int
 
 ### The screen
 
-![The Productivity page in dark mode, with the CST and London clocks and their weather on the right](docs/screenshot.png)
+![The Productivity page in dark mode, with the CST and London clocks on the right, each showing its weather beside the time](docs/screenshot.png)
 
 - **Top left:** the dashboard title (double-click to rename it) and the **page tabs**. Click a tab, or press `1`–`9`, to switch pages. The `+` tab adds a page.
-- **Top right:** the toolbar, then the **clocks** with each city's current weather. Click a clock for its hourly forecast, then switch to the 7-day forecast. The toolbar buttons are, from left to right:
+- **Top right:** the toolbar, then the **clocks**. Each clock shows the city's current weather at its top left, beside the time (e.g. `🌙 51°F  03:17`), with the city and date underneath. Click a clock for its hourly forecast, then switch to the 7-day forecast. The toolbar buttons are, from left to right:
 
   | Button | Does | Key |
   | --- | --- | --- |
@@ -302,7 +302,7 @@ Add them from the + menu or with `Shift W`:
 
 ### Clocks and weather
 
-- CST (`America/Chicago`) and London are on the right of the header by default, each with its current weather, for example "CST · ☀️ 68°F".
+- CST (`America/Chicago`) and London are on the right of the header by default. Each clock shows its current weather at the top left, beside the time, for example `☀️ 68°F  14:05`, with the city and date on the line below. Hover over a clock for the conditions and today's high and low.
 - **Click a clock** (or press `Shift O`) for that city's **hourly forecast** for the next 24 hours, including the chance of rain. Switch to the **7-day forecast** with the button or `d`, back to hourly with `h`, and between cities with `←` `→`.
 - Add, remove, reorder and rename clocks in **Settings → Clocks & weather**, which includes a time-zone picker, a **city search** that fills in the time zone and coordinates for you, and a **Use my location** button.
 - Choose °C or °F per city, 12- or 24-hour time, and whether to show seconds and the date. Weather can be turned off entirely.

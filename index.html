@@ -288,8 +288,9 @@ header.top{display:flex;align-items:center;gap:16px;padding:12px 24px;position:s
 .clock{text-align:right;line-height:1.15}
 .clock .t{font-size:20px;font-weight:650;font-variant-numeric:tabular-nums;letter-spacing:-.01em}
 .clock .l{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;white-space:nowrap}
-.clock .l .d,.clock .l .wx{text-transform:none;letter-spacing:0}
-.clock .l .wx{color:var(--text)}
+.clock .l .d{text-transform:none;letter-spacing:0}
+.clock .top{display:flex;align-items:baseline;justify-content:space-between;gap:10px}
+.clock .wx{font-size:13px;font-weight:500;color:var(--text);white-space:nowrap}
 
 .banner{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:16px 24px 0;padding:10px 14px;border:1px solid var(--accent);background:color-mix(in srgb,var(--accent) 12%,var(--surface));border-radius:10px}
 .banner span{flex:1;min-width:200px}
@@ -897,7 +898,7 @@ function renderHeader() {
 }
 function renderClocks() {
   $('#clocks').innerHTML = state.clocks.map(c =>
-    `<div class="clock ${wxData(c)?.cur ? 'haswx' : ''}" data-tz="${esc(c.timeZone)}" title="${esc(wxTitle(c) + (wxData(c)?.cur ? ' · click for hourly and 7-day forecast' : ''))}" data-act="wxOpen" data-i="${state.clocks.indexOf(c)}"><div class="t"></div><div class="l">${esc(c.label)}${state.settings.showDate ? ' · <span class="d"></span>' : ''}${wxInline(c)}</div></div>`
+    `<div class="clock ${wxData(c)?.cur ? 'haswx' : ''}" data-tz="${esc(c.timeZone)}" title="${esc(wxTitle(c) + (wxData(c)?.cur ? ' · click for hourly and 7-day forecast' : ''))}" data-act="wxOpen" data-i="${state.clocks.indexOf(c)}"><div class="top">${wxInline(c)}<span class="t"></span></div><div class="l">${esc(c.label)}${state.settings.showDate ? ' · <span class="d"></span>' : ''}</div></div>`
   ).join('');
   $('#clocks').hidden = !state.clocks.length;
   tickClocks();
@@ -935,7 +936,7 @@ const wxUnit = c => c.unit === 'fahrenheit' ? '°F' : '°C';
 const wxData = c => state.settings.weather && hasLoc(c) ? wx[wxKey(c)] : null;
 function wxInline(c) {
   const w = wxData(c);
-  return w && w.cur ? ` · <span class="wx">${wxIcon(w.cur.code, w.cur.day)} ${Math.round(w.cur.t)}${wxUnit(c)}</span>` : '';
+  return w && w.cur ? `<span class="wx">${wxIcon(w.cur.code, w.cur.day)} ${Math.round(w.cur.t)}${wxUnit(c)}</span>` : '';
 }
 function wxTitle(c) {
   const w = wxData(c);
