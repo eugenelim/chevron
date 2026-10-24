@@ -35,7 +35,7 @@ You can also host it on any static host, such as GitHub Pages, Netlify or an int
   | Sliders | Settings | `Shift S` |
 
 - **Main area:** cards of links (called categories) and widgets. Each card's menu (`⋯`, or right-click the header) adds, sorts, resizes, moves or deletes it. Click a card's title to collapse it.
-- **Bottom:** a one-line reminder of the main keys. Hide it with `Shift Z`.
+- **Bottom:** a one-line reminder of the main keys. It stays at the bottom of the window, or follows the last card when a page is taller than the window. Hide it with `Shift Z`.
 
 ### Opening links
 
