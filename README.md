@@ -4,6 +4,8 @@ A personal start page in **one HTML file**. There's no server, build step, accou
 
 It comes with three pages of links already set up — **Productivity** (Gmail, Google Calendar, Google Drive, Dropbox, GitHub, ChatGPT, Claude, Gemini, DuckDuckGo, Maps, YouTube, LinkedIn, WhatsApp, Instagram, X, Reddit, Windy weather and more), **News** (general, tech, AI and engineering blogs) and **Finance** (news, tools, commentary, economists and a group of paid sources) — and shows CST and London clocks on the right. You can change all of these defaults by editing the file. That makes it easy to hand out one prepared dashboard to a team or class.
 
+![A tour of the dashboard: shortcuts, search, pages, the bookmark editor, the bookmarks view, tags, the Look studio and light mode](docs/demo.gif)
+
 ## Quick start
 
 1. Download `index.html`.
@@ -15,6 +17,8 @@ You can also host it on any static host, such as GitHub Pages, Netlify or an int
 ## Using the dashboard
 
 ### The screen
+
+![The Productivity page in dark mode, with the CST and London clocks on the right](docs/screenshot.png)
 
 - **Top left:** the dashboard title (double-click to rename it) and the **page tabs**. Click a tab, or press `1`–`9`, to switch pages. The `+` tab adds a page.
 - **Top right:** the toolbar, then the **clocks**. The toolbar buttons are, from left to right:
