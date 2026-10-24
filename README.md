@@ -2,9 +2,9 @@
 
 A personal start page in **one HTML file**. There's no server, build step, account or database. Open `index.html` in a browser and it works. Your changes are saved in the browser's `localStorage`.
 
-It comes with three pages of links already set up — **Productivity** (Gmail, Google Calendar, Google Drive, Dropbox, GitHub, ChatGPT, Claude, Gemini, DuckDuckGo, Maps, YouTube, LinkedIn, WhatsApp, Instagram, X, Reddit, Windy weather and more), **News** (general, tech, AI and engineering blogs) and **Finance** (news, tools, commentary, economists and a group of paid sources) — and shows CST and London clocks on the right. You can change all of these defaults by editing the file. That makes it easy to hand out one prepared dashboard to a team or class.
+It comes with three pages of links already set up — **Productivity** (Gmail, Google Calendar, Google Drive, Dropbox, GitHub, ChatGPT, Claude, Gemini, DuckDuckGo, Maps, YouTube, LinkedIn, WhatsApp, Instagram, X, Reddit, Windy weather and more), **News** (general, tech, AI and engineering blogs) and **Finance** (news, tools, commentary, economists and a group of paid sources) — and shows CST and London clocks with the local weather on the right. You can change all of these defaults by editing the file. That makes it easy to hand out one prepared dashboard to a team or class.
 
-![A tour of the dashboard: shortcuts, search, pages, the bookmark editor, the bookmarks view, tags, the Look studio and light mode](docs/demo.gif)
+![A tour of the dashboard: shortcuts, search, pages, the hourly and 7-day weather, the bookmark editor, the bookmarks view, tags, the Look studio and light mode](docs/demo.gif)
 
 ## Quick start
 
@@ -18,10 +18,10 @@ You can also host it on any static host, such as GitHub Pages, Netlify or an int
 
 ### The screen
 
-![The Productivity page in dark mode, with the CST and London clocks on the right](docs/screenshot.png)
+![The Productivity page in dark mode, with the CST and London clocks and their weather on the right](docs/screenshot.png)
 
 - **Top left:** the dashboard title (double-click to rename it) and the **page tabs**. Click a tab, or press `1`–`9`, to switch pages. The `+` tab adds a page.
-- **Top right:** the toolbar, then the **clocks**. The toolbar buttons are, from left to right:
+- **Top right:** the toolbar, then the **clocks** with each city's current weather. Click a clock for its hourly forecast, then switch to the 7-day forecast. The toolbar buttons are, from left to right:
 
   | Button | Does | Key |
   | --- | --- | --- |
@@ -205,8 +205,8 @@ It holds plain JSON with the pages, categories, bookmarks, clocks, search finder
     }
   ],
   "clocks": [
-    { "label": "CST", "timeZone": "America/Chicago" },
-    { "label": "London", "timeZone": "Europe/London" }
+    { "label": "CST", "timeZone": "America/Chicago", "lat": 41.88, "lon": -87.63, "unit": "fahrenheit" },
+    { "label": "London", "timeZone": "Europe/London", "lat": 51.51, "lon": -0.13, "unit": "celsius" }
   ],
   "settings": { "theme": "cocoa", "mode": "system" }
 }
@@ -216,10 +216,10 @@ It holds plain JSON with the pages, categories, bookmarks, clocks, search finder
 | --- | --- |
 | `storageKey` | Name used for the saved data. Give each copy of the file its own key so dashboards on the same machine don't share data. Browsers often treat every local `file://` page as the same site. |
 | `title` | The text in the top-left corner and the browser tab. |
-| `pages[].categories[]` | Cards on a page. `type` can be `bookmarks` (the default), `notes`, `calendar`, `clock` or `search`. Optional fields: `icon` (emoji), `color`, `span` (`1` or `2` columns), `sort` (`manual`, `name`, `count`, `opened`, `added`) and `content` (Markdown for notes). |
+| `pages[].categories[]` | Cards on a page. `type` can be `bookmarks` (the default), `notes`, `calendar`, `clock`, `weather` or `search`. Optional fields: `icon` (emoji), `color`, `span` (`1` or `2` columns), `sort` (`manual`, `name`, `count`, `opened`, `added`) and `content` (Markdown for notes). |
 | `bookmarks[]` | `name`, `url`, plus optional `tags`, `shortcut`, `notes`, `pinned`, and `icon` (an emoji or image URL). |
 | `inbox[]` | Optional links that start in the Inbox. |
-| `clocks[]` | `label` and an IANA `timeZone`, such as `America/Chicago` (switches between CST and CDT on its own), `Europe/London` or `Asia/Singapore`. |
+| `clocks[]` | `label` and an IANA `timeZone`, such as `America/Chicago` (switches between CST and CDT on its own), `Europe/London` or `Asia/Singapore`. Add `lat`, `lon` and `unit` (`celsius` or `fahrenheit`) to show that city's weather. |
 | `finders[]` | Site searches for the search panel. `key` is what you type, and `%s` in `url` is replaced by your query. |
 | `collections[]` | Saved filters, e.g. `{ "name": "Work", "query": "tag:work" }`. |
 | `settings` | Any look or behaviour setting. See [Settings reference](#settings-reference). |
@@ -297,13 +297,17 @@ Add them from the + menu or with `Shift W`:
 - **Notes:** Markdown with headings, lists, `- [ ]` checkboxes you can tick, bold, code and links.
 - **Calendar:** a month view.
 - **Clocks:** larger copies of your header clocks.
+- **Weather:** current conditions and a 5-day forecast for each clock city.
 - **Web search:** a search box that uses your default finder.
 
-### Clocks
+### Clocks and weather
 
-- CST (`America/Chicago`) and London are on the right of the header by default.
-- Add, remove, reorder and rename clocks in **Settings → Clocks**, which includes a time-zone picker.
-- Choose 12- or 24-hour time, and whether to show seconds and the date.
+- CST (`America/Chicago`) and London are on the right of the header by default, each with its current weather, for example "CST · ☀️ 68°F".
+- **Click a clock** (or press `Shift O`) for that city's **hourly forecast** for the next 24 hours, including the chance of rain. Switch to the **7-day forecast** with the button or `d`, back to hourly with `h`, and between cities with `←` `→`.
+- Add, remove, reorder and rename clocks in **Settings → Clocks & weather**, which includes a time-zone picker, a **city search** that fills in the time zone and coordinates for you, and a **Use my location** button.
+- Choose °C or °F per city, 12- or 24-hour time, and whether to show seconds and the date. Weather can be turned off entirely.
+- Weather comes from [Open-Meteo](https://open-meteo.com/), a free forecast service that needs no account or API key. It refreshes at most every 30 minutes and is cached in the browser. Forecast data is licensed [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/), credited as "Weather data by Open-Meteo.com".
+- **Use my location** relies on the browser's location feature. Browsers usually only allow it on `https://` pages, so it may not work when you open the file directly. Searching for your city always works.
 
 ### Look studio (`Shift A`)
 
@@ -385,6 +389,7 @@ Press `?` or `F1` in the app for a searchable list. Shortcuts don't fire while y
 | `Shift R` | Random theme |
 | `Shift Z` | Hide or show shortcut badges and the key legend |
 | `Shift L` | Check all links |
+| `Shift O` | Weather forecast (same as clicking a clock) |
 | `Ctrl/⌘ V` | Save a copied link to the Inbox |
 | `?`, `F1` | Keyboard shortcut list |
 | `Esc` | Close the top panel |
@@ -404,6 +409,8 @@ Press `?` or `F1` in the app for a searchable list. Shortcuts don't fire while y
 | Where | Keys | Action |
 | --- | --- | --- |
 | Bookmarks view | `h` | Show bookmarks that need attention |
+| Weather | `h` / `d` | Hourly / 7-day forecast |
+| Weather | `←` / `→` | Previous / next city |
 | Inbox | `t` | Turn triage mode on or off |
 | Triage mode | `o` `k` `s` `d` `e` `p` | Open, keep, snooze a week, delete, edit, promote |
 | Triage mode | `←` / `→` | Previous / next link |
@@ -417,6 +424,7 @@ Press `?` or `F1` in the app for a searchable list. Shortcuts don't fire while y
 | Double-click the title | Rename the dashboard |
 | Double-click a page tab | Page options |
 | Double-click a notes widget | Edit the notes |
+| Click a clock | Hourly and 7-day weather for that city |
 
 ## Settings reference
 
@@ -439,6 +447,7 @@ Use any of these in the `settings` object of the defaults block.
 | `newTab` | `true` |
 | `hour12` | `false` |
 | `showSeconds` / `showDate` | `false` / `true` |
+| `weather` | `true` (show weather next to clocks that have a location) |
 | `weekStart` | `0` (Sunday) or `1` (Monday) |
 | `defaultFinder` | `g` (any finder key) |
 | `showShortcuts`, `showPinned`, `previews`, `legend`, `pasteToInbox` | `true` |
@@ -449,6 +458,8 @@ Use any of these in the `settings` object of the defaults block.
 Everything stays in your browser's `localStorage`. The page makes only these network requests:
 
 - **Site icons,** from the icon service you choose. Set **Icons → Letters only** to stop these.
+- **Weather,** from Open-Meteo, at most every 30 minutes. Only each clock city's coordinates are sent, never your own location unless you use **Use my location**. Turn weather off in **Settings → Clocks & weather** to stop these.
+- **City search,** to Open-Meteo's place search, only when you search for a city.
 - **Link checks,** and only when you ask for one.
 
 Clearing your browser's site data erases your dashboard, so use **Export backup** if you've customised a lot.
