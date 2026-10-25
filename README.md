@@ -12,7 +12,7 @@
 - **One file you own.** Keep it on disk, host it anywhere, or hand a pre-filled copy to your team.
 - **Everything in one box.** `Ctrl/⌘ K` searches bookmarks, runs commands and searches the web (`yt lofi`, `gh react`, `$ AAPL`).
 - **Built to stay tidy.** An inbox for links you paste, tags, health checks, duplicate detection and a trash with undo.
-- **Glanceable.** Clocks with local weather, stock charts, notes and a calendar.
+- **Glanceable.** A big timer, stopwatch and alarm, clocks with local weather, stock charts, notes and a calendar.
 - **Looks how you want.** 13 themes in light and dark, card styles, fonts and backdrops.
 - **Private.** Your data stays in your browser's `localStorage`.
 
@@ -60,7 +60,7 @@ To change what **new visitors** see, edit the defaults block near the top of `in
 | --- | --- |
 | `storageKey` | Name for the saved data. Give each copy its own key, since browsers often treat all `file://` pages as one site. |
 | `title` | The browser tab's name. |
-| `pages[].categories[]` | Cards. `type` is `bookmarks` (default), `notes`, `calendar`, `clock`, `weather`, `stocks` or `search`. Optional: `icon`, `color`, `span` (1–2), `sort`, `content` (Markdown for notes), `symbols` (TradingView symbols for stocks). |
+| `pages[].categories[]` | Cards. `type` is `bookmarks` (default), `notes`, `calendar`, `clock`, `weather`, `stocks`, `timer` or `search`. Optional: `icon`, `color`, `span` (1–2), `sort`, `content` (Markdown for notes), `symbols` (TradingView symbols for stocks), `mode` (`timer`, `stopwatch` or `alarm`) and `alarms` (e.g. `[{ "at": "07:30", "label": "Stand-up" }]`). |
 | `bookmarks[]` | `name`, `url`, and optional `tags`, `shortcut`, `notes`, `pinned`, `icon`. |
 | `clocks[]` | `label`, an IANA `timeZone`, and optional `lat`, `lon`, `unit` (`celsius`/`fahrenheit`) for weather. |
 | `finders[]` | Web searches: `key` is what you type, `%s` in `url` becomes your query. |
@@ -101,7 +101,7 @@ To change what **new visitors** see, edit the defaults block near the top of `in
 
 ## Built-in bookmarks
 
-Three pages come pre-filled: **Productivity**, **News** and **Finance** (with a Stocks card for SPY, AAPL and GOOGL). Type a shortcut on the page to open its link.
+Three pages come pre-filled: **Productivity** (with a Timer card), **News** and **Finance** (with a Stocks card for SPY, AAPL and GOOGL). Type a shortcut on the page to open its link.
 
 <details>
 <summary><b>Productivity</b></summary>
@@ -224,6 +224,7 @@ Press `?` in the app for the full, searchable list.
 | `Ctrl/⌘ V` | Save a copied link to the Inbox |
 | Double-click a tab | Rename the page |
 | Click a clock / stock | Hourly and 7-day weather / price chart from 1W to 5Y |
+| Click the timer ring | Big timer view: `Space` start/pause, `l` lap, `r` reset, `1`–`3` timer/stopwatch/alarm |
 
 **Search filters** combine with words: `tag:ai`, `page:finance`, `site:github.com`, `is:pinned`, `opened:never`, `added:<7d`, `-word`. **Web finders:** `g`, `d`, `gm`, `gh`, `yt`, `w`, `m`, `$`, `fred`, then your query; add more in Settings → Search.
 
