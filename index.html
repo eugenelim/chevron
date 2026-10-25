@@ -25,7 +25,9 @@
                     (celsius | fahrenheit) to show that city's weather.
    Bookmark fields: name, url, tags[], shortcut, notes, pinned, icon
    Category fields: name, icon, color, type (bookmarks | notes | calendar |
-                    clock | weather | search), span (1 | 2), sort, content (notes)
+                    clock | weather | stocks | timer | search), span (1 | 2),
+                    sort, content (notes), symbols (stocks), mode (timer |
+                    stopwatch | alarm) and alarms [{ at: "07:30", label }] (timer)
   ==========================================================================
 -->
 <script id="dash-defaults" type="application/json">
@@ -89,6 +91,11 @@
             { "name": "X", "url": "https://x.com/", "tags": ["social"], "shortcut": "x" },
             { "name": "Reddit", "url": "https://www.reddit.com/", "tags": ["social", "forums"], "shortcut": "rd" }
           ]
+        },
+        {
+          "name": "Timer",
+          "icon": "⏱️",
+          "type": "timer"
         }
       ]
     },
@@ -406,6 +413,50 @@ kbd{font:11px/1.5 var(--mono);background:var(--surface2);border:1px solid var(--
 .stk iframe{display:block;width:125%;height:150px;border:0;pointer-events:none;transform:scale(.8);transform-origin:0 0} /* the chart needs ~240px to show its price axis */
 .stkchart{height:min(52vh,440px);border-radius:8px;overflow:hidden;border:1px solid var(--border)}
 .stkchart iframe{width:100%;height:100%;border:0;display:block}
+.tm{display:flex;flex-direction:column;align-items:center;gap:10px}
+.tm .seg{align-self:stretch;display:flex}
+.tm .seg button{flex:1;padding:5px 4px;font-size:12px}
+.tmring{position:relative;width:min(100%,230px);aspect-ratio:1;container-type:inline-size}
+.tmring[data-act]{cursor:pointer}
+.tmring svg{width:100%;height:100%;transform:rotate(-90deg);display:block}
+.tmring circle{fill:none;stroke-width:6.5;stroke-linecap:round}
+.tmring .trk{stroke:color-mix(in srgb,var(--tmc) 20%,transparent)}
+.tmring .bar{stroke:var(--tmc)}
+.tmin{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;pointer-events:none}
+.tmd{font-size:22cqi;font-weight:600;font-variant-numeric:tabular-nums;letter-spacing:-.02em;line-height:1}
+.tmsub{font-size:6.5cqi;color:var(--muted);margin-top:4cqi;font-variant-numeric:tabular-nums;max-width:70cqi;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tmbtns{display:flex;justify-content:space-between;width:min(100%,250px)}
+.tmb{width:62px;height:62px;border-radius:50%;border:0;font:inherit;font-size:13px;font-weight:600;cursor:pointer;--b:var(--muted);background:color-mix(in srgb,var(--b) 22%,transparent);color:color-mix(in srgb,var(--b) 80%,var(--text))}
+.tmb:hover{background:color-mix(in srgb,var(--b) 32%,transparent)}
+.tmb:disabled{opacity:.4;cursor:default}
+.tmb.go{--b:#30d158}.tmb.pause{--b:#ff9f0a}.tmb.stop{--b:#ff453a}
+.tmpre{display:flex;flex-wrap:wrap;justify-content:center;gap:2px}
+.tmpre .chip.on{background:var(--tmc);border-color:var(--tmc);color:#111}
+.tmlaps{width:100%;font-size:12px;font-variant-numeric:tabular-nums;max-height:110px;overflow:auto}
+.tmlaps div{display:flex;justify-content:space-between;padding:3px 2px;border-top:1px solid var(--border)}
+.tmlaps .best{color:#30d158}.tmlaps .worst{color:#ff453a}
+.alr{display:flex;align-items:center;gap:8px;width:100%;padding:4px 0;border-top:1px solid var(--border)}
+.alr .at{font-size:26px;font-weight:600;font-variant-numeric:tabular-nums;line-height:1.1}
+.alr .aw{flex:1;min-width:0;display:flex;flex-direction:column}
+.alr .lb{font-size:12px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.alr.off .at{color:var(--muted)}
+.alr .ibtn{opacity:0}.alr:hover .ibtn{opacity:1}
+.tgl{flex:none;width:40px;height:24px;border-radius:12px;border:0;background:var(--surface2);box-shadow:inset 0 0 0 1px var(--border);position:relative;cursor:pointer;padding:0}
+.tgl::after{content:"";position:absolute;top:2px;left:2px;width:20px;height:20px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.3)}
+.tgl.on{background:#30d158;box-shadow:none}.tgl.on::after{left:18px}
+.tm.big{gap:18px;padding:4px 0 8px}
+.tm.big .seg{align-self:center;width:min(420px,100%)}
+.tm.big .tmring{width:min(40vh,460px)}
+.tm.big .tmbtns{width:min(50vh,500px)}
+.tm.big .tmb{width:84px;height:84px;font-size:16px}
+.tm.big .tmlaps{max-width:420px;max-height:20vh;font-size:14px}
+.tm.big .alr{max-width:420px}.tm.big .alr .at{font-size:34px}
+#tmRing{position:fixed;inset:0;z-index:95;background:color-mix(in srgb,var(--bg) 72%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;text-align:center;padding:24px}
+#tmRing .ic{font-size:96px;line-height:1;animation:tmshake .45s ease-in-out infinite alternate}
+#tmRing h2{font-size:clamp(36px,7vw,72px);margin:0;letter-spacing:-.02em}
+#tmRing .tmbtns{width:min(320px,100%);margin-top:10px}
+#tmRing .tmb{width:112px;height:112px;font-size:19px}
+@keyframes tmshake{from{transform:rotate(-14deg)}to{transform:rotate(14deg)}}
 .wxfoot{font-size:11px;color:var(--muted);display:flex;gap:6px;align-items:center;flex-wrap:wrap}
 .wxfoot a{color:var(--muted)}
 .clock.haswx{cursor:pointer;border-radius:8px;padding:2px 6px;margin:-2px -6px}
@@ -736,6 +787,7 @@ function mkCat(c, pageId) {
     id: uid(), pageId, name: c.name || 'Category', icon: c.icon || '', color: c.color || '',
     type: c.type || 'bookmarks', span: c.span === 2 ? 2 : 1, sort: c.sort || 'manual', collapsed: !!c.collapsed, content: c.content || '',
     ...(c.type === 'stocks' ? { symbols: Array.isArray(c.symbols) ? c.symbols.map(String) : [...STOCK_DEFAULTS] } : {}),
+    ...(c.type === 'timer' ? { mode: c.mode || 'timer', alarms: (Array.isArray(c.alarms) ? c.alarms : []).filter(a => /^\d\d:\d\d$/.test(a.at || '')).map(a => ({ id: uid(), at: a.at, label: a.label || '', on: a.on !== false })) } : {}),
   };
 }
 function fromDefaultsObj(d) {
@@ -1165,6 +1217,229 @@ function editSymbols(id) {
   commit();
 }
 
+/* ---------- timer, stopwatch & alarm (one widget, three modes) ---------- */
+const TM_MODES = [['timer', 'Timer'], ['stopwatch', 'Stopwatch'], ['alarm', 'Alarm']];
+const TM_COL = { timer: '#ff9f0a', stopwatch: '#64d2ff', alarm: '#bf5af2' };
+const TM_PRESETS = [1, 3, 5, 10, 15, 25, 45, 60];
+const TMV = { id: null };
+const pad2 = n => String(n).padStart(2, '0');
+function tmInit(c) {
+  if (!TM_COL[c.mode]) c.mode = 'timer';
+  if (!c.tm) c.tm = { dur: 5 * 60e3, total: 0, end: 0, left: 0, ring: false };
+  if (!c.sw) c.sw = { start: 0, acc: 0, laps: [] };
+  if (!Array.isArray(c.alarms)) c.alarms = [];
+  return c;
+}
+const tmLeft = t => t.end ? Math.max(0, t.end - now()) : t.left || t.dur;
+const swTime = w => w.acc + (w.start ? now() - w.start : 0);
+const sum = a => a.reduce((x, y) => x + y, 0);
+function fmtDur(ms) {
+  const s = Math.ceil(ms / 1000), h = Math.floor(s / 3600), m = Math.floor(s / 60) % 60;
+  return h ? `${h}:${pad2(m)}:${pad2(s % 60)}` : `${pad2(m)}:${pad2(s % 60)}`;
+}
+function fmtSw(ms) {
+  const s = Math.floor(ms / 1000), h = Math.floor(s / 3600);
+  return `${h ? h + ':' : ''}${pad2(Math.floor(s / 60) % 60)}:${pad2(s % 60)}.${pad2(Math.floor(ms / 10) % 100)}`;
+}
+const fmtHM = ms => new Date(ms).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: !!state.settings.hour12 });
+const dayKey = (d = new Date()) => `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`;
+function alarmAt(a) { const [h, m] = a.at.split(':').map(Number), d = new Date(); d.setHours(h, m, 0, 0); return d.getTime(); }
+function nextAlarm(c) {
+  let best = null;
+  for (const a of c.alarms) {
+    if (!a.on) continue;
+    let t = a.snooze || alarmAt(a);
+    if (!a.snooze && (t <= now() || a.fired === dayKey())) t += DAY;
+    if (!best || t < best.t) best = { a, t };
+  }
+  return best;
+}
+function fmtIn(ms) { const m = Math.ceil(ms / 60e3), h = Math.floor(m / 60); return h ? `${h}h ${m % 60}m` : `${m} min`; }
+
+function timerHTML(c, big) {
+  tmInit(c);
+  const id = c.id, seg = `<div class="seg">${TM_MODES.map(([k, l]) => `<button data-act="tmMode" data-id="${id}" data-m="${k}" class="${c.mode === k ? 'on' : ''}">${l}</button>`).join('')}</div>`;
+  const ring = `<div class="tmring" ${big ? '' : `data-act="tmBig" data-id="${id}" title="Click for a big view"`}><svg viewBox="0 0 100 100" aria-hidden="true"><circle class="trk" cx="50" cy="50" r="45"/><circle class="bar" cx="50" cy="50" r="45" pathLength="100" stroke-dasharray="100"/></svg><div class="tmin"><div class="tmd"></div><div class="tmsub"></div></div></div>`;
+  const btn = (cls, act, label, off) => `<button class="tmb ${cls}" data-act="${act}" data-id="${id}" ${off ? 'disabled' : ''}>${label}</button>`;
+  let h = '';
+  if (c.mode === 'timer') {
+    const t = c.tm, run = !!t.end, paused = !run && !!t.left;
+    h = ring + `<div class="tmbtns">${btn('', 'tmReset', 'Cancel', !run && !paused)}${run ? btn('pause', 'tmGo', 'Pause') : btn('go', 'tmGo', paused ? 'Resume' : 'Start')}</div>`;
+    h += run || paused
+      ? `<div class="tmpre"><span class="chip" data-act="tmPlus" data-id="${id}">+1 min</span><span class="chip" data-act="tmPlus" data-id="${id}" data-ms="300000">+5 min</span></div>`
+      : `<div class="tmpre">${TM_PRESETS.map(p => `<span class="chip ${t.dur === p * 60e3 ? 'on' : ''}" data-act="tmSet" data-id="${id}" data-ms="${p * 60e3}">${p < 60 ? p + ' min' : '1 h'}</span>`).join('')}<span class="chip" data-act="tmCustom" data-id="${id}">Custom…</span></div>`;
+  } else if (c.mode === 'stopwatch') {
+    const w = c.sw, run = !!w.start, el = swTime(w);
+    h = ring + `<div class="tmbtns">${run || !el ? btn('', 'swLap', 'Lap', !run) : btn('', 'swLap', 'Reset')}${run ? btn('stop', 'swGo', 'Stop') : btn('go', 'swGo', 'Start')}</div>`;
+    if (w.laps.length || run) {
+      const lo = Math.min(...w.laps), hi = Math.max(...w.laps), many = w.laps.length > 1;
+      h += `<div class="tmlaps"><div class="cur"><span>Lap ${w.laps.length + 1}</span><span class="tml"></span></div>${w.laps.map((l, n) => `<div class="${many && l === lo ? 'best' : many && l === hi ? 'worst' : ''}"><span>Lap ${n + 1}</span><span>${fmtSw(l)}</span></div>`).reverse().join('')}</div>`;
+    }
+  } else {
+    const list = [...c.alarms].sort((a, b) => a.at.localeCompare(b.at));
+    h = ring + (list.map(a => `<div class="alr ${a.on ? '' : 'off'}"><div class="aw"><span class="at">${esc(fmtHM(alarmAt(a)))}</span><span class="lb" title="${esc(a.label)}">${esc(a.label || 'Alarm')}</span></div><button class="ibtn sm" data-act="alDel" data-id="${id}" data-a="${a.id}" title="Delete">${I('x', 14)}</button><button class="tgl ${a.on ? 'on' : ''}" data-act="alToggle" data-id="${id}" data-a="${a.id}" title="${a.on ? 'Turn off' : 'Turn on'}" aria-pressed="${a.on}"></button></div>`).join('') || `<p class="muted" style="margin:0;font-size:12px;text-align:center">Alarms ring every day while switched on.</p>`)
+      + `<button class="btn sm" data-act="alAdd" data-id="${id}">+ Add alarm</button>`;
+  }
+  return `<div class="tm ${big ? 'big' : ''}" data-tmr="${id}" style="--tmc:${TM_COL[c.mode]}">${seg}${h}</div>`;
+}
+function paintTimer(el, c) {
+  const d = el.querySelector('.tmd'), sub = el.querySelector('.tmsub'), bar = el.querySelector('.bar');
+  if (!d) return;
+  let txt, frac, note;
+  if (c.mode === 'timer') {
+    const t = c.tm, left = tmLeft(t);
+    txt = fmtDur(left); frac = t.end || t.left ? left / (t.total || t.dur) : 1;
+    note = t.end ? '🔔 ' + fmtHM(t.end) : t.left ? 'Paused' : 'Timer';
+  } else if (c.mode === 'stopwatch') {
+    const w = c.sw, e = swTime(w);
+    txt = fmtSw(e); frac = (e % 60e3) / 60e3;
+    note = w.start ? 'Running' : e ? 'Stopped' : 'Stopwatch';
+    const cur = el.querySelector('.tml'); if (cur) cur.textContent = fmtSw(e - sum(w.laps));
+  } else {
+    const n = new Date(), nx = nextAlarm(c);
+    txt = fmtHM(n); frac = (n.getSeconds() + n.getMilliseconds() / 1000) / 60;
+    note = nx ? `⏰ ${fmtHM(nx.t)} · in ${fmtIn(nx.t - now())}` : 'No alarms on';
+  }
+  if (d.textContent !== txt) { d.textContent = txt; d.style.fontSize = (txt.length <= 5 ? 22 : txt.length <= 7 ? 17 : txt.length <= 8 ? 15 : 13) + 'cqi'; }
+  if (sub.textContent !== note) sub.textContent = note;
+  bar.style.strokeDashoffset = (100 * (1 - frac)).toFixed(2);
+}
+function tmNotify(title, body) {
+  try { if (window.Notification && Notification.permission === 'granted') new Notification(title, { body, tag: 'chevron-timer' }); } catch { /* not allowed here */ }
+}
+function tmAskNotify() {
+  try { if (window.Notification && Notification.permission === 'default') Notification.requestPermission(); } catch { /* not allowed here */ }
+}
+// Browsers only let a page play sound after a click or key press, so open the audio context on the first one
+let actx = null, beepT = null;
+function tmUnlock() { try { actx = actx || new (window.AudioContext || window.webkitAudioContext)(); if (actx.state === 'suspended') actx.resume(); } catch { /* no audio */ } }
+document.addEventListener('pointerdown', tmUnlock, true);
+document.addEventListener('keydown', tmUnlock, true);
+function beep() {
+  if (!actx) return;
+  const t0 = actx.currentTime;
+  [0, .16, .32].forEach(d => {
+    const o = actx.createOscillator(), g = actx.createGain();
+    o.frequency.value = 880; g.gain.setValueAtTime(0, t0 + d); g.gain.linearRampToValueAtTime(.25, t0 + d + .02); g.gain.exponentialRampToValueAtTime(.001, t0 + d + .13);
+    o.connect(g).connect(actx.destination); o.start(t0 + d); o.stop(t0 + d + .14);
+  });
+}
+let ringCur = null;
+function tickTimers() {
+  const n = now(), today = dayKey(), ringing = [];
+  let changed = false;
+  for (const c of state.categories) {
+    if (c.type !== 'timer') continue;
+    const t = tmInit(c).tm;
+    if (t.end && n >= t.end) { t.end = 0; t.left = 0; t.ring = true; changed = true; tmNotify('Time’s up', fmtDur(t.total || t.dur) + ' timer'); }
+    for (const a of c.alarms) {
+      if (!a.on || a.ring) continue;
+      const at = alarmAt(a);
+      if (a.snooze ? n >= a.snooze : a.fired !== today && n >= at && n - at < 30 * 60e3) { a.ring = true; a.snooze = 0; a.fired = today; changed = true; tmNotify(a.label || 'Alarm', fmtHM(at)); }
+    }
+    if (t.ring) ringing.push({ cid: c.id });
+    c.alarms.filter(a => a.ring).forEach(a => ringing.push({ cid: c.id, aid: a.id }));
+  }
+  if (changed) commit();
+  $$('[data-tmr]').forEach(el => { const c = catById(el.dataset.tmr); if (c) paintTimer(el, c); });
+  showRing(ringing[0]);
+}
+setInterval(tickTimers, 100);
+function showRing(r) {
+  let o = $('#tmRing');
+  if (!r) {
+    if (o && !o.hidden) { o.hidden = true; o.dataset.k = ''; clearInterval(beepT); beepT = null; document.title = state.title; }
+    ringCur = null; return;
+  }
+  if (!o) {
+    o = document.createElement('div'); o.id = 'tmRing'; o.setAttribute('role', 'alertdialog'); document.body.append(o);
+    o.addEventListener('click', e => { const b = e.target.closest('[data-ring]'); if (b) ringAct(b.dataset.ring); });
+  }
+  ringCur = r;
+  const c = catById(r.cid), a = r.aid && c.alarms.find(x => x.id === r.aid), k = r.cid + (r.aid || '');
+  if (o.dataset.k !== k) {
+    o.dataset.k = k;
+    o.innerHTML = `<div class="ic">${a ? '⏰' : '⏲️'}</div><h2>${a ? esc(a.label || 'Alarm') : 'Time’s up'}</h2><div class="muted">${a ? esc(fmtHM(alarmAt(a))) : esc(fmtDur(c.tm.total || c.tm.dur)) + ' timer'}</div>
+      <div class="tmbtns"><button class="tmb" data-ring="${a ? 'snooze' : 'again'}">${a ? 'Snooze' : 'Repeat'}</button><button class="tmb pause" data-ring="stop">Stop</button></div>
+      <div class="muted" style="font-size:12px"><kbd>Enter</kbd> stops${a ? ' · snooze is 9 minutes' : ''}</div>`;
+  }
+  o.hidden = false;
+  document.title = '⏰ ' + (a ? a.label || 'Alarm' : 'Time’s up');
+  if (!beepT) { beep(); beepT = setInterval(beep, 1200); }
+}
+function ringAct(k) {
+  const c = ringCur && catById(ringCur.cid); if (!c) return;
+  if (ringCur.aid) { const a = c.alarms.find(x => x.id === ringCur.aid); if (a) { a.ring = false; if (k === 'snooze') a.snooze = now() + 9 * 60e3; } }
+  else { const t = c.tm; t.ring = false; if (k === 'again') { t.total = t.total || t.dur; t.end = now() + t.total; } }
+  commit(); tickTimers();
+}
+document.addEventListener('keydown', e => {
+  if (!ringCur || !['Enter', 'Escape', ' '].includes(e.key)) return;
+  e.preventDefault(); e.stopImmediatePropagation(); ringAct('stop');
+}, true);
+
+function tmAct(c, act, el) {
+  const t = c.tm, w = c.sw;
+  switch (act) {
+    case 'mode': c.mode = el.dataset.m; break;
+    case 'go':
+      if (t.end) { t.left = Math.max(1000, t.end - now()); t.end = 0; }
+      else { if (!t.left) t.total = t.dur; t.end = now() + (t.left || t.dur); t.left = 0; tmAskNotify(); }
+      break;
+    case 'reset': t.end = t.left = 0; break;
+    case 'set': t.dur = +el.dataset.ms; break;
+    case 'plus': { const ms = +el.dataset.ms || 60e3; t.total += ms; if (t.end) t.end += ms; else t.left += ms; break; }
+    case 'custom': {
+      const v = prompt('Timer length: minutes (e.g. 20), or h:mm:ss / mm:ss (e.g. 1:30:00, 2:30)', fmtDur(t.dur)); if (v == null) return;
+      const p = v.trim().split(':').map(Number);
+      const ms = p.length > 1 ? p.reduce((a, x) => a * 60 + x, 0) * 1000 : p[0] * 60e3;
+      if (!(ms >= 1000 && ms < 100 * 3600e3)) return toast('Try a number of minutes, or mm:ss');
+      t.dur = Math.round(ms / 1000) * 1000; break;
+    }
+    case 'swGo': if (w.start) { w.acc += now() - w.start; w.start = 0; } else w.start = now(); break;
+    case 'swLap': if (w.start) w.laps.push(swTime(w) - sum(w.laps)); else { w.acc = 0; w.laps = []; } break;
+    case 'alAdd': {
+      const v = prompt('Alarm time and an optional label, e.g. 07:30 Stand-up or 5:45pm Leave'); if (v == null) return;
+      const m = v.trim().match(/^(\d{1,2})(?:[:.](\d{2}))?\s*([ap]\.?m\.?)?\s*(.*)$/i);
+      let hh = m ? +m[1] : NaN; const mm = m ? +(m[2] || 0) : NaN;
+      if (m && m[3]) hh = hh % 12 + (/^p/i.test(m[3]) ? 12 : 0);
+      if (!(hh >= 0 && hh < 24 && mm >= 0 && mm < 60)) return toast('Try a time like 07:30 or 5:45pm');
+      const a = { id: uid(), at: `${pad2(hh)}:${pad2(mm)}`, label: m[4].trim(), on: true };
+      if (alarmAt(a) <= now()) a.fired = dayKey();
+      c.alarms.push(a); tmAskNotify(); break;
+    }
+    case 'alToggle': case 'alDel': {
+      const a = c.alarms.find(x => x.id === el.dataset.a); if (!a) return;
+      if (act === 'alDel') c.alarms.splice(c.alarms.indexOf(a), 1);
+      else { a.on = !a.on; a.ring = false; a.snooze = 0; a.fired = alarmAt(a) <= now() ? dayKey() : ''; }
+      break;
+    }
+  }
+  commit();
+}
+function openTimerBig(id) {
+  const c = catById(id); if (!c) return;
+  TMV.id = id;
+  showModal('timer', c.name, '<div id="tmBody"></div>', {
+    refresh: tmBigRender,
+    keys: e => {
+      const c = catById(TMV.id); if (!c) return false;
+      const k = e.key.toLowerCase(), m = { timer: { ' ': 'go', r: 'reset' }, stopwatch: { ' ': 'swGo', l: 'swLap', r: 'swLap' }, alarm: { a: 'alAdd' } }[c.mode][k];
+      if (/^[1-3]$/.test(k)) { tmAct(c, 'mode', { dataset: { m: TM_MODES[+k - 1][0] } }); return true; }
+      if (!m || (k === 'r' && c.mode === 'stopwatch' && c.sw.start)) return false;
+      tmAct(c, m, { dataset: {} }); return true;
+    },
+  });
+  tmBigRender();
+}
+function tmBigRender() {
+  if (modalKind !== 'timer') return;
+  const c = catById(TMV.id); if (!c) return closeModal();
+  const keys = { timer: '<kbd>Space</kbd> start / pause · <kbd>r</kbd> cancel', stopwatch: '<kbd>Space</kbd> start / stop · <kbd>l</kbd> lap · <kbd>r</kbd> reset', alarm: '<kbd>a</kbd> add an alarm' }[c.mode];
+  $('#tmBody').innerHTML = timerHTML(c, true) + `<div class="wxfoot" style="justify-content:center;margin-top:8px">${keys} · <kbd>1</kbd>–<kbd>3</kbd> timer, stopwatch, alarm</div>`;
+  tickTimers();
+}
+
 function bmLink(b) {
   const s = state.settings;
   return `<a class="bm" href="${esc(safeHref(b.url))}" ${s.newTab ? 'target="_blank" rel="noopener noreferrer"' : ''} data-bm="${b.id}" draggable="true">${avatar(b)}<span class="nm">${esc(b.name)}</span>${b.check ? `<span class="dot ${b.check.ok ? 'ok' : 'bad'}" title="${b.check.ok ? 'Reachable · ' + b.check.ms + ' ms' : esc(b.check.err || 'Unreachable')}"></span>` : ''}${s.showShortcuts && b.shortcut ? `<kbd data-sc="${esc(b.shortcut)}">${esc(b.shortcut)}</kbd>` : ''}</a>`;
@@ -1176,6 +1451,7 @@ function cardHTML(c) {
     case 'calendar': body = calHTML(c); break;
     case 'clock': body = `<div class="wclocks">${state.clocks.map(k => `<div class="wclock" data-tz="${esc(k.timeZone)}"><div class="l">${esc(k.label)}</div><div class="t"></div><div class="d muted"></div></div>`).join('') || '<span class="muted">Add clocks in Settings → Clocks.</span>'}</div>`; break;
     case 'weather': body = `<div data-wxwidget>${wxWidgetBody()}</div>`; break;
+    case 'timer': body = timerHTML(c); break;
     case 'stocks': body = c.symbols.length
       ? `<div class="stocks">${c.symbols.map((sym, n) => `<div class="stk" data-act="stock" data-id="${c.id}" data-i="${n}" title="Click for more time periods"><div class="sh"><b>${esc(tick(sym))}</b><span class="muted">7 days ›</span></div><div class="sc"><iframe src="${esc(tvChart(sym, '5D', true))}" loading="lazy" title="${esc(tick(sym))} price, last 7 days"></iframe></div></div>`).join('')}</div>`
       : `<p class="muted">No symbols yet. Use the card menu → Edit symbols…</p>`;
@@ -1299,8 +1575,8 @@ function newCategory(pid = state.activePage) {
   return c;
 }
 function addWidget(type) {
-  const names = { notes: 'Notes', calendar: 'Calendar', clock: 'Clocks', weather: 'Weather', stocks: 'Stocks', search: 'Web search' };
-  const icons = { notes: '📝', calendar: '📅', clock: '🕒', weather: '🌤️', stocks: '📈', search: '🔎' };
+  const names = { notes: 'Notes', calendar: 'Calendar', clock: 'Clocks', weather: 'Weather', stocks: 'Stocks', timer: 'Timer', search: 'Web search' };
+  const icons = { notes: '📝', calendar: '📅', clock: '🕒', weather: '🌤️', stocks: '📈', timer: '⏱️', search: '🔎' };
   const c = mkCat({ name: names[type], icon: icons[type], type }, state.activePage);
   state.categories.push(c);
   if (type === 'notes') notesEditing.add(c.id);
@@ -1454,6 +1730,7 @@ function addMenu(x, y) {
     { label: 'Clocks', fn: () => addWidget('clock') },
     { label: 'Weather', fn: () => { addWidget('weather'); refreshWeather(); } },
     { label: 'Stocks', fn: () => addWidget('stocks') },
+    { label: 'Timer, stopwatch & alarm', fn: () => addWidget('timer') },
     { label: 'Web search', fn: () => addWidget('search') },
     '-', { label: 'Import file…', fn: () => $('#fileIn').click() },
   ]);
@@ -1569,6 +1846,9 @@ document.addEventListener('mouseout', e => {
 const ACT = {
   page: el => goPage(el.dataset.id),
   stock: el => openStock(el.dataset.id, +el.dataset.i),
+  tmBig: el => openTimerBig(el.dataset.id),
+  ...Object.fromEntries(['mode', 'go', 'reset', 'set', 'plus', 'custom', 'swGo', 'swLap', 'alAdd', 'alToggle', 'alDel'].map(a =>
+    [a.startsWith('sw') || a.startsWith('al') ? a : 'tm' + a[0].toUpperCase() + a.slice(1), el => { const c = catById(el.dataset.id); if (c) tmAct(tmInit(c), a, el); }])),
   newPage: () => newPage(),
   newCat: () => newCategory(),
   search: () => openSearch(),
@@ -1858,6 +2138,7 @@ function commands() {
     ['Add clocks widget', '', () => addWidget('clock')],
     ['Add weather widget', '', () => { addWidget('weather'); refreshWeather(); }],
     ['Add stocks widget', '', () => addWidget('stocks')],
+    ['Add timer, stopwatch & alarm widget', '', () => addWidget('timer')],
     ['Refresh weather', '', () => { refreshWeather(true); toast('Refreshing weather…'); }],
     ['Weather forecast', 'Shift O', () => openWeather(Math.max(0, state.clocks.findIndex(hasLoc)))],
     ['Add web search widget', '', () => addWidget('search')],
@@ -2572,7 +2853,7 @@ const KEYS = [
   ['Shift N', 'New bookmark'], ['Shift C', 'New category'], ['Shift P', 'New page'], ['Shift W', 'Add widget'],
   ['Shift B', 'Bookmarks view'], ['Shift I', 'Inbox'], ['/', 'Tag cloud'], ['Shift T', 'Trash'], ['Shift S', 'Settings'],
   ['Shift A', 'Look studio'], ['Shift D', 'Toggle light / dark'], ['Shift R', 'Random theme'], ['Shift Z', 'Toggle shortcut badges & key legend'],
-  ['Shift L', 'Check all links'], ['Shift O · click a clock', 'Weather: hourly and 7-day forecast'], ['Weather: h d ← →', 'Hourly, 7-day, previous / next city'], [':', 'Command palette'], ['? · F1', 'This cheat sheet'], ['Esc', 'Close the top panel'], ['Ctrl/⌘ V', 'Paste a link to save it to the Inbox'],
+  ['Shift L', 'Check all links'], ['Shift O · click a clock', 'Weather: hourly and 7-day forecast'], ['Weather: h d ← →', 'Hourly, 7-day, previous / next city'], ['Timer: Space r l a 1–3', 'In the big timer view: start / pause, reset, lap, add alarm, switch mode'], [':', 'Command palette'], ['? · F1', 'This cheat sheet'], ['Esc', 'Close the top panel'], ['Ctrl/⌘ V', 'Paste a link to save it to the Inbox'],
   ['Right-click', 'Bookmark, category or page options'], ['Drag', 'Reorder bookmarks & categories; drop on a page tab to move there'], ['Double-click', 'Rename title / edit notes'],
   ['Search: ↑ ↓ Enter', 'Move and open'], ['Search: Shift Enter', 'Edit the bookmark'], ['Search: Ctrl/⌘ Enter', 'Open in a new tab'], ['Search: Tab', 'Switch mode (All, Commands, Tags, Web)'],
   ['Search: g query', 'Search with a finder (see Settings → Search)'],
@@ -2596,6 +2877,7 @@ function catToDef(c) {
   if (c.sort && c.sort !== 'manual') o.sort = c.sort;
   if (c.content) o.content = c.content;
   if (c.type === 'stocks') o.symbols = c.symbols;
+  if (c.type === 'timer') { if (c.mode && c.mode !== 'timer') o.mode = c.mode; if (c.alarms?.length) o.alarms = c.alarms.map(a => ({ at: a.at, label: a.label, ...(a.on ? {} : { on: false }) })); }
   if (c.type === 'bookmarks') o.bookmarks = catBms(c.id).map(b => {
     const x = { name: b.name, url: b.url };
     if (b.tags.length) x.tags = b.tags;
