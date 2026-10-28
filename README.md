@@ -37,7 +37,7 @@ To change what **new visitors** see, edit the defaults block near the top of `in
 <script id="dash-defaults" type="application/json">
 {
   "storageKey": "dashboard",
-  "title": "Dashboard",
+  "title": "Chevron",
   "pages": [
     { "name": "Productivity", "categories": [
       { "name": "Mail", "icon": "📬", "bookmarks": [
