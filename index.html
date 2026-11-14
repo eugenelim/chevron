@@ -658,6 +658,10 @@ h4.sec:first-child{margin-top:0}
   <div class="clocks" id="clocks"></div>
 </header>
 
+<div id="storageNotice" class="banner" role="status" hidden>
+  <span>Settings and changes will not persist after this page closes or reloads. Backups are available if this environment allows downloads.</span>
+  <button class="btn sm" data-act="settings" data-tab="data">Back up &amp; restore</button>
+</div>
 <div id="banner" class="banner" hidden></div>
 
 <main>
@@ -772,6 +776,35 @@ const DEFAULTS_HASH = hashStr(DEFAULTS_TEXT.replace(/\s+/g, ''));
 const NS = (DEFAULTS.storageKey || 'dashboard').replace(/[^\w.-]/g, '');
 const LS_KEY = NS + ':data:v1', LS_HASH = NS + ':defaultsHash';
 
+// Sandboxed pages may deny even reading the localStorage property.
+const storage = (() => {
+  const memory = new Map();
+  const blocked = () => {
+    if (!storage.persistent) return;
+    storage.persistent = false;
+    setTimeout(renderBanner, 0);
+  };
+  return {
+    persistent: true,
+    getItem(key) {
+      if (this.persistent) {
+        try {
+          const value = window.localStorage.getItem(key);
+          if (value === null) memory.delete(key); else memory.set(key, value);
+          return value;
+        } catch { blocked(); }
+      }
+      return memory.get(key) ?? null;
+    },
+    setItem(key, value) {
+      memory.set(key, String(value));
+      if (this.persistent) {
+        try { window.localStorage.setItem(key, String(value)); } catch { blocked(); }
+      }
+    },
+  };
+})();
+
 const BASE_SETTINGS = {
   theme: 'cocoa', mode: 'system', style: 'solid', font: 'sans', accent: '', backdrop: 'dots', backdropIntensity: 35,
   radius: 12, density: 'comfortable', columns: 0, headerStyle: 'accent',
@@ -840,7 +873,7 @@ function sanitize(s) {
 }
 function load() {
   let s = null;
-  try { s = JSON.parse(localStorage.getItem(LS_KEY)); } catch { /* corrupt or blocked */ }
+  try { s = JSON.parse(storage.getItem(LS_KEY)); } catch { /* corrupt or blocked */ }
   if (!s || !Array.isArray(s.pages)) s = fromDefaults();
   return sanitize(s);
 }
@@ -856,8 +889,8 @@ function save() {
 function saveNow() {
   clearTimeout(saveT);
   try {
-    localStorage.setItem(LS_KEY, JSON.stringify(state));
-    if (!localStorage.getItem(LS_HASH)) localStorage.setItem(LS_HASH, DEFAULTS_HASH);
+    storage.setItem(LS_KEY, JSON.stringify(state));
+    if (!storage.getItem(LS_HASH)) storage.setItem(LS_HASH, DEFAULTS_HASH);
   } catch (e) { toast('Could not save: ' + e.message); }
 }
 function commit() {
@@ -868,6 +901,7 @@ function commit() {
 }
 addEventListener('beforeunload', saveNow);
 addEventListener('storage', e => {
+  if (!storage.persistent) return;
   if (e.key === LS_KEY && e.newValue) { state = load(); _dup = null; renderAll(); if (modalRefresh) modalRefresh(); }
   if (e.key === WX_KEY && e.newValue) { try { wx = JSON.parse(e.newValue) || {}; } catch { wx = {}; } renderWeather(); }
 });
@@ -1028,7 +1062,7 @@ setInterval(tickClocks, 1000);
 /* ---------- weather (Open-Meteo, no key; data CC BY 4.0) ---------- */
 const WX_KEY = NS + ':weather', WX_TTL = 30 * 60e3, WX_RETRY = 5 * 60e3;
 let wx = {};
-try { wx = JSON.parse(localStorage.getItem(WX_KEY)) || {}; } catch { wx = {}; }
+try { wx = JSON.parse(storage.getItem(WX_KEY)) || {}; } catch { wx = {}; }
 const WMO = {
   0: ['Clear sky', '☀️', '🌙'], 1: ['Mainly clear', '🌤️', '🌙'], 2: ['Partly cloudy', '⛅', '☁️'], 3: ['Overcast', '☁️'],
   45: ['Fog', '🌫️'], 48: ['Freezing fog', '🌫️'],
@@ -1083,7 +1117,7 @@ async function refreshWeather(force) {
   await Promise.all(cs.map(c => fetchWx(c, force)));
   const keep = new Set(cs.map(wxKey));
   for (const k of Object.keys(wx)) if (!keep.has(k)) delete wx[k];
-  try { localStorage.setItem(WX_KEY, JSON.stringify(wx)); } catch { /* storage full or blocked */ }
+  try { storage.setItem(WX_KEY, JSON.stringify(wx)); } catch { /* storage full or blocked */ }
   renderWeather();
 }
 function renderWeather() {
@@ -1507,7 +1541,8 @@ function renderLegend() {
   l.innerHTML = `<kbd>Ctrl/⌘ K</kbd> search · type a shortcut to open · <kbd>1</kbd>–<kbd>9</kbd> pages · <kbd>Shift N</kbd> add · <kbd>Shift A</kbd> look · <kbd>Shift D</kbd> light/dark · paste a link → Inbox · <kbd>?</kbd> all shortcuts`;
 }
 function renderBanner() {
-  const stored = localStorage.getItem(LS_HASH), has = !!localStorage.getItem(LS_KEY);
+  const stored = storage.getItem(LS_HASH), has = !!storage.getItem(LS_KEY);
+  $('#storageNotice').hidden = storage.persistent;
   const show = has && stored && stored !== DEFAULTS_HASH;
   const b = $('#banner'); b.hidden = !show;
   if (show) b.innerHTML = `<span>The built-in defaults in this file have changed since you started customising.</span>
@@ -1865,7 +1900,7 @@ const ACT = {
   tags: () => openTags(),
   look: () => openLook(),
   mode: () => toggleMode(),
-  settings: () => openSettings(),
+  settings: el => openSettings(el.dataset.tab),
   addBm: el => newBookmark(el.dataset.cat),
   catMenu: (el, e) => { const r = el.getBoundingClientRect(); catMenu(el.dataset.id, r.left, r.bottom + 4); e.stopPropagation(); },
   collapse: el => { const c = catById(el.dataset.id); c.collapsed = !c.collapsed; commit(); },
@@ -1880,7 +1915,7 @@ const ACT = {
   catDelete: el => { closeModal(); deleteCategory(el.dataset.id); },
   dfMerge: () => { mergeDefaults(); },
   dfReset: () => resetDefaults(),
-  dfKeep: () => { localStorage.setItem(LS_HASH, DEFAULTS_HASH); renderBanner(); },
+  dfKeep: () => { storage.setItem(LS_HASH, DEFAULTS_HASH); renderBanner(); },
 };
 document.addEventListener('click', e => {
   if (menuEl && !e.target.closest('.menu')) closeMenu();
@@ -2786,7 +2821,7 @@ function stRefresh() {
       `<div class="row" style="margin-top:12px"><button class="btn" data-act="newPage">+ New page</button><button class="btn" data-sta="import">Import page template…</button></div>
       <p class="muted">A template is a JSON file with one page, its cards and links. Importing adds it as a new page.</p>`;
   } else if (stTab === 'data') {
-    let used = 0; try { used = (localStorage.getItem(LS_KEY) || '').length; } catch { /* ignore */ }
+    let used = 0; try { used = (storage.getItem(LS_KEY) || '').length; } catch { /* ignore */ }
     h = `<h4 class="sec">Back up &amp; restore</h4>
       <div class="row"><button class="btn" data-sta="exportJSON">Export backup (JSON)</button><button class="btn" data-sta="import">Import file…</button></div>
       <p class="muted">Import accepts a backup (.json, replaces everything), a page template (.json, adds a page), a browser bookmarks export (.html — Chrome, Firefox, Safari, Edge, and most bookmark services), or a .csv with columns like <code>name,url,tags,notes,category,page</code>. You can also drop a file onto the dashboard.</p>
@@ -2797,7 +2832,7 @@ function stRefresh() {
       <div class="row"><button class="btn" data-sta="copyDefaults">Copy as defaults JSON</button><button class="btn" data-sta="saveDefaults">Download defaults JSON</button></div>
       <h4 class="sec">Reset</h4>
       <div class="row"><button class="btn" data-sta="merge">Add any missing default links</button><button class="btn danger" data-sta="reset">Reset to defaults</button></div>
-      <p class="muted">Everything is stored in this browser only (localStorage key <code>${esc(LS_KEY)}</code>, ${(used / 1024).toFixed(1)} KB). Nothing is sent anywhere. Other tabs update automatically.</p>`;
+      <p class="muted">${storage.persistent ? `Everything is stored in this browser only (localStorage key <code>${esc(LS_KEY)}</code>, ${(used / 1024).toFixed(1)} KB). Nothing is sent anywhere. Other tabs update automatically.` : 'Settings and changes are held in memory only and will be lost when this page closes or reloads. Other tabs do not sync. Export a backup if downloads are allowed here; import it to restore your dashboard.'}</p>`;
   } else if (stTab === 'stats') {
     const all = live(), tags = tagCounts(), opens = all.reduce((a, b) => a + (b.openCount || 0), 0);
     const avg = all.length ? Math.round(all.reduce((a, b) => a + score(b).s, 0) / all.length) : 100;
@@ -3038,7 +3073,7 @@ $('#fileIn').addEventListener('change', e => { importFile(e.target.files[0]); e.
 function resetDefaults() {
   if (!confirm('Reset the dashboard to the defaults in this file? Your changes will be replaced (you can undo right after).')) return;
   withUndo('Reset to defaults', () => { state = fromDefaults(); });
-  localStorage.setItem(LS_HASH, DEFAULTS_HASH);
+  storage.setItem(LS_HASH, DEFAULTS_HASH);
   renderBanner();
 }
 function mergeDefaults() {
@@ -3059,7 +3094,7 @@ function mergeDefaults() {
     else if (!hasLoc(mine) && hasLoc(c)) Object.assign(mine, { lat: c.lat, lon: c.lon, unit: c.unit });
   });
   d.finders.forEach(f => { if (!state.finders.some(x => x.key === f.key)) state.finders.push(f); });
-  localStorage.setItem(LS_HASH, DEFAULTS_HASH);
+  storage.setItem(LS_HASH, DEFAULTS_HASH);
   commit(); toast(added ? `Added ${added} default link(s).` : 'You already have every default link.');
 }
 
